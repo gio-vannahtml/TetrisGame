@@ -159,7 +159,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rogue Blocks title_0: 422262270085292517
+      Rogue Blocks title_1: -8637131748456434687
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
