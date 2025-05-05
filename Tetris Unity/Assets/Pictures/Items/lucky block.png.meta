@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      lucky block_0: -8498492951122147863
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LEVEL - DIFFICULT_0: 5785228020409855178
+      LEVEL - DIFFICULT_1: 4789902603856792950
+      LEVEL - DIFFICULT_2: -7515679562394848353
+      LEVEL - DIFFICULT_3: 2625271105398098049
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

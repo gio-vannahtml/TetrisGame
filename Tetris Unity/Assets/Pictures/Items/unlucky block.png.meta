@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      unlucky block_0: -8406983943630505064
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
