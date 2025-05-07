@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     void SpawnTetromino()
     {
         int index = Random.Range(0, Tetrominos.Length);
-        currentTetromino = Instantiate(Tetrominos[index], new Vector3(5, 18, 0), Quaternion.identity);
+        currentTetromino = Instantiate(Tetrominos[index], new Vector3(5, 8, 0), Quaternion.identity);
     }
 
     void MoveTetromino(Vector3 direction)
