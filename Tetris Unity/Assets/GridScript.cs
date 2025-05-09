@@ -43,12 +43,6 @@ public class GridScript : MonoBehaviour
         return new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public bool IsInsideBorder(Vector2 pos)
     {
         return (int)pos.x >= 0 && (int)pos.x < width && (int)pos.y >= 0 && (int)pos.y < height;
@@ -80,7 +74,7 @@ public class GridScript : MonoBehaviour
         }
         return true;
     }
-
+    
     public void CheckForLines()
     {
         for (int y = 0; y < height; y++)
@@ -130,7 +124,4 @@ public class GridScript : MonoBehaviour
             }
         }
     }
-
-
-
 }
