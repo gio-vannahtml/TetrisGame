@@ -75,7 +75,7 @@ public class GridScript : MonoBehaviour
         return true;
     }
     
-    void CheckForLines()
+    public void CheckForLines()
     {
         for (int y = 0; y < height; y++)
         {
