@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      You Rougued It!_0: 6623183981002125061
+      You Rougued It!_1: -6547259437902688179
+      You Rougued It!_2: -28264012502252241
+      You Rougued It!_3: -8737309983961350829
+      You Rougued It!_4: -995562259212996558
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
