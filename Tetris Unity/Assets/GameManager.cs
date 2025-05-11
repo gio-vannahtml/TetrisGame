@@ -66,6 +66,16 @@ public class GameManager : MonoBehaviour
         {
             movementFrequency = 0.8f;
         }
+
+        // Hard drop tetromino
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            while(MoveTetromino(Vector3.down))
+            {
+                continue;
+            }
+        }
+        
     }
 
     // Create a new random tetromino at the top of the grid
@@ -76,7 +86,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Move the tetromino in the specified direction if possible
-    void MoveTetromino(Vector3 direction)
+    bool MoveTetromino(Vector3 direction)
     {
         currentTetromino.transform.position += direction;
         if (!IsValidPosition())
@@ -89,7 +99,9 @@ public class GameManager : MonoBehaviour
                 CheckForLines();
                 SpawnTetromino();
             }
+            return false;
         }
+        return true;
     }
 
     // Check if the current tetromino position is valid
