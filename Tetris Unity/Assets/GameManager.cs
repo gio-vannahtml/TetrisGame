@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
@@ -17,12 +16,6 @@ public class GameManager : MonoBehaviour
     
     // Reference to the currently active tetromino
     private GameObject currentTetromino;
-
-    // Number indicator for the players score
-    public int score = 0;
-
-    // Text for the score
-    public TextMeshProUGUI scoreText;
 
     // Initialize the game by spawning the first tetromino
     void Start()
@@ -41,7 +34,6 @@ public class GameManager : MonoBehaviour
             MoveTetromino(Vector3.down);
         }
         UserInput();
-        scoreText.text = "" + score.ToString();
     }
 
     // Handle keyboard input for tetromino movement and rotation
@@ -121,26 +113,6 @@ public class GameManager : MonoBehaviour
     // Check for completed lines and clear them
     void CheckForLines()
     {
-        int lines = GetComponent<GridScript>().CheckForLines();
-        
-        int linesCleared = 0;
-
-        switch (lines)
-        {
-            case 1:
-                score += 100;
-                    break;
-            case 2:
-                score += 300;
-                    break;
-            case 3:
-                score += 500;
-                    break;
-            case 4:
-                score += 800;
-                    break;
-        }
-
-        Debug.Log("" + score);
+        GetComponent<GridScript>().CheckForLines();
     }
 }
