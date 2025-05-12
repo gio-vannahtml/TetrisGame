@@ -3732,7 +3732,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 782015911}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: ba8ff3dc07a0045bd9f148f4e796f138, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &782015911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4211,7 +4223,7 @@ GameObject:
   - component: {fileID: 920280688}
   - component: {fileID: 920280687}
   m_Layer: 5
-  m_Name: Pause menu overlay
+  m_Name: Pauseoverlay
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4279,7 +4291,7 @@ Canvas:
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_TargetDisplay: 1
+  m_TargetDisplay: 0
 --- !u!224 &920280690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5677,8 +5689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8ff3dc07a0045bd9f148f4e796f138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pausePanel: {fileID: 920280686}
-  pauseButton: {fileID: 782015910}
+  pauseOverlay: {fileID: 782015907}
 --- !u!4 &1311349085
 Transform:
   m_ObjectHideFlags: 0
@@ -8398,6 +8409,7 @@ SceneRoots:
   - {fileID: 1831893001}
   - {fileID: 157463565}
   - {fileID: 668997570}
+  - {fileID: 1311349085}
   - {fileID: 920280690}
   - {fileID: 1660309094}
   - {fileID: 1213244717}
@@ -8409,5 +8421,4 @@ SceneRoots:
   - {fileID: 1381101430}
   - {fileID: 1430321486}
   - {fileID: 227793058}
-  - {fileID: 1311349085}
   - {fileID: 782015909}
