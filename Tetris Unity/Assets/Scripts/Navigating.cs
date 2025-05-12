@@ -20,4 +20,9 @@ public void OpenItemsTab()
     {
         SceneManager.LoadScene("Shop-Upgrades"); // Exact name of the Upgrades scene
     }
+    
+    public void LoadEasyLevel()
+{
+    UnityEngine.SceneManagement.SceneManager.LoadScene("Level - Easy");
+}
 }
