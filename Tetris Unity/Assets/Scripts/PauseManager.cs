@@ -1,39 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+public class PauseManager : MonoBehaviour
 {
-    public GameObject pausePanel; // Drag your Pause Panel here
-    public Button pauseButton;    // Drag your Pause Button here
-
-    void Start()
-    {
-        pausePanel.SetActive(false);
-        pauseButton.onClick.AddListener(PauseGame);
-    }
+    public GameObject pauseOverlay;
 
     public void PauseGame()
     {
-        Time.timeScale = 0f; // Freeze game time
-        pausePanel.SetActive(true);
+        pauseOverlay.SetActive(true);
+        Time.timeScale = 0f; // Freeze game
     }
 
     public void ResumeGame()
     {
-        Time.timeScale = 1f;
-        pausePanel.SetActive(false);
-    }
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void ExitToMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // Change to your menu scene name
+        pauseOverlay.SetActive(false);
+        Time.timeScale = 1f; // Resume game
     }
 }
