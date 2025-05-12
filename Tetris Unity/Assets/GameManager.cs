@@ -24,10 +24,18 @@ public class GameManager : MonoBehaviour
     // Text for the score
     public TextMeshProUGUI scoreText;
 
+    public int maxMoves = 100; // Based on level
+
+    private int remainingMoves;
+
+    public TextMeshProUGUI moveText; // UI display for moves left
+
     // Initialize the game by spawning the first tetromino
     void Start()
     {
+        remainingMoves = maxMoves;
         SpawnTetromino();
+        UpdateMoveText();
     }
 
     // Called each frame - handles automatic downward movement and user input
@@ -44,16 +52,36 @@ public class GameManager : MonoBehaviour
         scoreText.text = "" + score.ToString();
     }
 
+    void UpdateMoveText()
+    {
+        if (moveText != null)
+        {
+            moveText.text = "" + remainingMoves;
+            Debug.Log("Updated moves text: " + remainingMoves);
+        }
+        else
+        {
+            Debug.LogWarning("movesText is NOT assigned!");
+        }
+    }
+
     // Handle keyboard input for tetromino movement and rotation
     void UserInput()
     {
+        if (remainingMoves <= 0)
+            return; // Prevent input if no moves left
+
+        bool moved = false;
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             MoveTetromino(Vector3.left);
+            moved = true;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             MoveTetromino(Vector3.right);
+            moved = true;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -63,8 +91,19 @@ public class GameManager : MonoBehaviour
             {
                 currentTetromino.transform.Rotate(0, 0, -90);
             }
+            moved = true;
         }
         
+        if (moved)
+        {
+            remainingMoves--;
+            UpdateMoveText();
+            if (remainingMoves <= 0)
+            {
+                EndGame(); // Custom game-over logic
+            }
+        }
+
         // Speed up movement when down arrow is pressed
         if (Input.GetKey(KeyCode.DownArrow))
         {
@@ -142,5 +181,13 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("" + score);
+    }
+
+    // Indicate that the game has ended when there are no moves remaining
+    void EndGame()
+    {
+        Debug.Log("Out of moves! Game Over...");
+        // Disable input or show game over UI
+        enabled = false; // Disables this script
     }
 }
