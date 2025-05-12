@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI moveText; // UI display for moves left
 
+    public Transform nextPiecePreviewLocation; // Set in Inspector
+    private GameObject nextTetrominoPreview;   // The preview instance
+    private GameObject nextTetrominoPrefab;    // The prefab we'll spawn next
+
     // Initialize the game by spawning the first tetromino
     void Start()
     {
@@ -130,6 +134,39 @@ public class GameManager : MonoBehaviour
     {
         int index = Random.Range(0, Tetrominos.Length);
         currentTetromino = Instantiate(Tetrominos[index], new Vector3(3, 18, 0), Quaternion.identity);
+
+        // If there's no preview yet, create the first one
+        if (nextTetrominoPrefab == null)
+        {
+            nextTetrominoPrefab = Tetrominos[Random.Range(0, Tetrominos.Length)];
+            ShowNextTetrominoPreview();
+        }
+
+        // Generate the next preview piece
+        nextTetrominoPrefab = Tetrominos[Random.Range(0, Tetrominos.Length)];
+        ShowNextTetrominoPreview();
+    }
+
+    void ShowNextTetrominoPreview()
+    {
+        // Remove existing preview, if any
+        if (nextTetrominoPreview != null)
+        {
+            Destroy(nextTetrominoPreview);
+        }
+
+        // Instantiate preview piece
+        nextTetrominoPreview = Instantiate(nextTetrominoPrefab, nextPiecePreviewLocation.position, Quaternion.identity);
+        nextTetrominoPreview.transform.SetParent(nextPiecePreviewLocation, true);
+
+        // Optional: scale it down to fit in preview box
+        nextTetrominoPreview.transform.localScale = Vector3.one * 0.5f;
+
+        // Optional: disable script components or physics on preview
+        foreach (var rb in nextTetrominoPreview.GetComponentsInChildren<Rigidbody2D>())
+        {
+            rb.simulated = false;
+        }
     }
 
     // Move the tetromino in the specified direction if possible
