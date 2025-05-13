@@ -11,8 +11,6 @@ public class GlobalGameManager : MonoBehaviour
     // Game state flags
     private bool isPaused = false;
     private bool isRunning = false;
-    private bool isOverlayActive = false;  // Flag to track overlay visibility
-    private bool gameStarted = false;  // To track if the game has started
 
     // Core managers for gameplay and progression
     private RunManager runManager;
@@ -46,87 +44,48 @@ public class GlobalGameManager : MonoBehaviour
     }
 
     /// Called on the first frame.
-    /// Automatically starts the game run if the game has not started.
+    /// Automatically starts the game run.
     void Start()
     {
-        // Start the game only if the grid is clicked and not started yet
-        if (!gameStarted)
-        {
-            Debug.Log("Game is waiting for player to click the grid to start...");
-        }
+        StartRun();
     }
 
     /// Begins a new gameplay session (run).
     /// Resets the run state and applies any modifiers.
     public void StartRun()
     {
-        if (gameStarted) return;  // Prevent starting if already running
-
         isRunning = true;
         isPaused = false;
 
         runManager.ResetRun();       // Reset the run state (score, board, etc.)
         runManager.ApplyModifier();  // Apply active gameplay modifiers
 
-        gameStarted = true;
-
         // Example: If the level is 5, trigger the boss fight
         if (currentLevel == 5)
         {
             TriggerBossFight();
         }
-
-        Debug.Log("Game Started!");
     }
 
     /// Ends the current run. Useful for triggering game over.
     public void EndRun()
     {
         isRunning = false;
-        gameStarted = false;
         // Optionally add game over logic here
-        Debug.Log("Game Over");
     }
 
-    /// Pauses or unpauses the game. This method checks if there is an overlay.
+    /// Toggles the game's paused state.
+    /// Pauses or resumes time flow using Time.timeScale.
     public void Pause()
     {
-        if (isOverlayActive)
-        {
-            // If an overlay is active, ensure the game is paused
-            isPaused = true;
-            Time.timeScale = 0; // Pause the game
-        }
-        else
-        {
-            // Otherwise, toggle the paused state as normal
-            isPaused = !isPaused;
-            Time.timeScale = isPaused ? 0 : 1; // Freeze or unfreeze game time
-        }
-    }
+        isPaused = !isPaused;
 
-    /// Sets the state of the overlay.
-    /// Call this method to show or hide the overlay, which will automatically pause or unpause the game.
-    public void SetOverlayState(bool isActive)
-    {
-        isOverlayActive = isActive;
-
-        if (isOverlayActive)
-        {
-            // Pause the game when the overlay is shown
-            Pause();
-        }
-        else
-        {
-            // Resume the game when the overlay is hidden
-            if (!isPaused) // Ensure the game is resumed only if it was not manually paused
-            {
-                Time.timeScale = 1; // Resume time flow
-            }
-        }
+        // Freezes or unfreezes the game based on pause state
+        Time.timeScale = isPaused ? 0 : 1;
     }
 
     /// Checks if the game is currently running and not paused.
+    /// Useful for gameplay systems that depend on active state.
     public bool IsGameRunning() => isRunning && !isPaused;
 
     // Method to calculate points based on cleared blocks
