@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
     {
         int lines = GetComponent<GridScript>().CheckForLines();
         
-        int linesCleared = 0;
+        //int linesCleared = 0;
 
         switch (lines)
         {
@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
                     break;
         }
 
-        Debug.Log("" + score);
+        Debug.Log(score);
     }
 
     // Indicate that the game has ended when there are no moves remaining
