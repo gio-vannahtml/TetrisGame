@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Manages the Tetris game grid, handling block placement, position validation, and line clearing
 public class GridScript : MonoBehaviour
 {
     // 2D array representing the game grid - stores references to block Transforms
@@ -10,8 +9,7 @@ public class GridScript : MonoBehaviour
     
     // Grid dimensions
     public int width, height;
-    
-    // Initialize the grid with specified dimensions
+    // Start is called before the first frame update
     void Start()
     {
         grid = new Transform[width, height];
@@ -90,18 +88,22 @@ public class GridScript : MonoBehaviour
         return true;
     }
     
-    // Checks for completed lines and removes them
-    public void CheckForLines()
+    public int CheckForLines()
     {
+        int linesCleared = 0;
+
         for (int y = 0; y < height; y++)
         {
             if (LineIsFull(y))
             {
                 DeleteLine(y);
                 DecreaseRowsAbove(y + 1);
-                y--; // Recheck the current row after blocks have fallen
+                y--;
+                linesCleared++;
             }
         }
+
+        return linesCleared;
     }
 
     // Checks if a row is completely filled with blocks
