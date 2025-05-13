@@ -9,8 +9,8 @@ public class GridScript : MonoBehaviour
     public Transform[,] grid;
     
     // Grid dimensions
-    public int width, height;
-    
+    public int width = 10, height = 20; // Set default grid size
+
     // Initialize the grid with specified dimensions
     void Start()
     {
@@ -89,19 +89,24 @@ public class GridScript : MonoBehaviour
         }
         return true;
     }
-    
+
     // Checks for completed lines and removes them
-    public void CheckForLines()
+    public int CheckForLines()
     {
+        int linesCleared = 0;
+
+        // Loop through all rows in the grid and check if they are full
         for (int y = 0; y < height; y++)
         {
-            if (LineIsFull(y))
+            if (LineIsFull(y))  // Check if a line is full
             {
-                DeleteLine(y);
-                DecreaseRowsAbove(y + 1);
-                y--; // Recheck the current row after blocks have fallen
+                linesCleared++;
+                ClearLine(y);  // Clear the line
+                DecreaseRowsAbove(y);  // Shift lines down after clearing
             }
         }
+
+        return linesCleared;
     }
 
     // Checks if a row is completely filled with blocks
@@ -109,7 +114,7 @@ public class GridScript : MonoBehaviour
     {
         for (int x = 0; x < width; x++)
         {
-            if (grid[x, y] == null)
+            if (grid[x, y] == null)  // If any cell in the row is empty
             {
                 return false;
             }
@@ -118,27 +123,27 @@ public class GridScript : MonoBehaviour
     }
 
     // Removes all blocks in a completed row
-    void DeleteLine(int y)
+    void ClearLine(int y)
     {
         for (int x = 0; x < width; x++)
         {
-            Destroy(grid[x, y].gameObject);
-            grid[x, y] = null;
+            Destroy(grid[x, y].gameObject);  // Destroy the block GameObject
+            grid[x, y] = null;  // Set the grid cell to null
         }
     }
 
     // Moves blocks down to fill in cleared rows
     void DecreaseRowsAbove(int startRow)
     {
-        for (int y = startRow; y < height; y++)
+        for (int y = startRow; y < height - 1; y++)  // Iterate from the cleared row to the top
         {
             for (int x = 0; x < width; x++)
             {
-                if (grid[x, y] != null)
+                if (grid[x, y + 1] != null)
                 {
-                    grid[x, y - 1] = grid[x, y];
-                    grid[x, y] = null;
-                    grid[x, y - 1].position += Vector3.down;
+                    grid[x, y] = grid[x, y + 1];  // Move the block down
+                    grid[x, y + 1] = null;  // Set the original position to null
+                    grid[x, y].position += Vector3.down;  // Move the GameObject down
                 }
             }
         }
