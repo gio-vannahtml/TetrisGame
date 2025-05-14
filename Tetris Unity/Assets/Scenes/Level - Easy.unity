@@ -862,7 +862,7 @@ MonoBehaviour:
   movementFrequency: 0.8
   score: 0
   scoreText: {fileID: 773128521}
-  maxMoves: 50
+  maxMoves: 100
   moveText: {fileID: 1083572522}
   nextPiecePreviewLocation: {fileID: 1919684921}
 --- !u!114 &995211951
