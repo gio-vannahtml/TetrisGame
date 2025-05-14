@@ -180,6 +180,10 @@ public class GameManager : MonoBehaviour
             {
                 // When a tetromino can't move down anymore, lock it in place and spawn a new one
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
+
+                // Play brick landing sound
+            SoundManager.Instance.PlayBrickSound();
+
                 CheckForLines();
                 SpawnTetromino();
             }
