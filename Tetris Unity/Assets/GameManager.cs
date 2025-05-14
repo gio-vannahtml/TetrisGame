@@ -199,8 +199,6 @@ public class GameManager : MonoBehaviour
     {
         int lines = GetComponent<GridScript>().CheckForLines();
         
-        //int linesCleared = 0;
-
         switch (lines)
         {
             case 1:
@@ -214,7 +212,15 @@ public class GameManager : MonoBehaviour
                     break;
             case 4:
                 score += 800;
-                    break;
+                if (CurrencyManager.Instance != null)
+                {
+                    CurrencyManager.Instance.AddCurrency(1);
+                }
+                else
+                {
+                    Debug.LogWarning("CurrencyManager instance not found! Make sure there's a GameObject with CurrencyManager component in the scene.");
+                }
+                break;
         }
 
         Debug.Log(score);
