@@ -33,13 +33,57 @@ public class GameManager : MonoBehaviour
     public Transform nextPiecePreviewLocation; // Set in Inspector
     private GameObject nextTetrominoPreview;   // The preview instance
     private GameObject nextTetrominoPrefab;    // The prefab we'll spawn next
+    
+    // Piece pool system
+    private List<GameObject> piecePool = new List<GameObject>();
+    private const int POOL_SIZE = 5;
 
     // Initialize the game by spawning the first tetromino
     void Start()
     {
         remainingMoves = maxMoves;
+        InitializePiecePool();
         SpawnTetromino();
         UpdateMoveText();
+    }
+
+    void InitializePiecePool()
+    {
+        // Clear existing pool
+        piecePool.Clear();
+        
+        // Fill the pool with random pieces
+        for (int i = 0; i < POOL_SIZE; i++)
+        {
+            int index = Random.Range(0, Tetrominos.Length);
+            piecePool.Add(Tetrominos[index]);
+        }
+        
+        // Show initial preview
+        ShowNextTetrominoPreview();
+    }
+
+    void ShowNextTetrominoPreview()
+    {
+        // Remove existing preview, if any
+        if (nextTetrominoPreview != null)
+        {
+            Destroy(nextTetrominoPreview);
+        }
+
+        // Show the first piece in the pool as preview
+        if (piecePool.Count > 0)
+        {
+            nextTetrominoPreview = Instantiate(piecePool[0], nextPiecePreviewLocation.position, Quaternion.identity);
+            nextTetrominoPreview.transform.SetParent(nextPiecePreviewLocation, true);
+            nextTetrominoPreview.transform.localScale = Vector3.one * 0.5f;
+
+            // Disable physics on preview piece
+            foreach (var rb in nextTetrominoPreview.GetComponentsInChildren<Rigidbody2D>())
+            {
+                rb.simulated = false;
+            }
+        }
     }
 
     // Called each frame - handles automatic downward movement and user input
@@ -132,41 +176,20 @@ public class GameManager : MonoBehaviour
     // Create a new random tetromino at the top of the grid
     void SpawnTetromino()
     {
-        int index = Random.Range(0, Tetrominos.Length);
-        currentTetromino = Instantiate(Tetrominos[index], new Vector3(3, 18, 0), Quaternion.identity);
-
-        // If there's no preview yet, create the first one
-        if (nextTetrominoPrefab == null)
+        if (piecePool.Count == 0)
         {
-            nextTetrominoPrefab = Tetrominos[Random.Range(0, Tetrominos.Length)];
-            ShowNextTetrominoPreview();
+            InitializePiecePool();
         }
 
-        // Generate the next preview piece
-        nextTetrominoPrefab = Tetrominos[Random.Range(0, Tetrominos.Length)];
+        // Get the first piece from the pool
+        currentTetromino = Instantiate(piecePool[0], new Vector3(3, 18, 0), Quaternion.identity);
+        
+        // Remove the used piece and add a new one
+        piecePool.RemoveAt(0);
+        piecePool.Add(Tetrominos[Random.Range(0, Tetrominos.Length)]);
+        
+        // Update the preview
         ShowNextTetrominoPreview();
-    }
-
-    void ShowNextTetrominoPreview()
-    {
-        // Remove existing preview, if any
-        if (nextTetrominoPreview != null)
-        {
-            Destroy(nextTetrominoPreview);
-        }
-
-        // Instantiate preview piece
-        nextTetrominoPreview = Instantiate(nextTetrominoPrefab, nextPiecePreviewLocation.position, Quaternion.identity);
-        nextTetrominoPreview.transform.SetParent(nextPiecePreviewLocation, true);
-
-        // Optional: scale it down to fit in preview box
-        nextTetrominoPreview.transform.localScale = Vector3.one * 0.5f;
-
-        // Optional: disable script components or physics on preview
-        foreach (var rb in nextTetrominoPreview.GetComponentsInChildren<Rigidbody2D>())
-        {
-            rb.simulated = false;
-        }
     }
 
     // Move the tetromino in the specified direction if possible
