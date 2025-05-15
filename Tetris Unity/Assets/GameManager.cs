@@ -34,9 +34,44 @@ public class GameManager : MonoBehaviour
     private GameObject nextTetrominoPreview;   // The preview instance
     private GameObject nextTetrominoPrefab;    // The prefab we'll spawn next
 
+    
+    public static BossManager bossManager;
+    public Boss CurrentBoss { get; private set; }
+    public bool IsBossActive => CurrentBoss != null;
+
+    public BossPool bossPool;
+
+    void Awake()
+    {
+        
+            bossManager = FindFirstObjectByType<BossManager>();
+            bossPool = FindFirstObjectByType<BossPool>();
+        
+    }
+
+    public void ApplyBoss()
+    {
+        // Just an example
+        CurrentBoss = new Boss(Boss.BossType.SpeedUp);  // set based on your logic
+    }
+
+
     // Initialize the game by spawning the first tetromino
     void Start()
     {
+        bossManager = BossManager.Instance;
+
+        if (bossManager.IsBossActive)
+        {
+            SpawnBossBlock(); // You implement this method
+        }
+
+        if (bossManager.CurrentBoss.Type == Boss.BossType.SpeedUp)
+        {
+            movementFrequency *= 0.5f;
+        }
+
+
         remainingMoves = maxMoves;
         SpawnTetromino();
         UpdateMoveText();
@@ -47,6 +82,19 @@ public class GameManager : MonoBehaviour
     {
         // Track time for automatic downward movement
         passedTime += Time.deltaTime;
+        // 🧠 Modify speed if boss is active
+        if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
+        {
+            if (BossManager.Instance.CurrentBoss.Type == Boss.BossType.SpeedUp)
+            {
+                movementFrequency = 0.4f; // Faster drop speed during boss
+            }
+            else
+            {
+                movementFrequency = 0.8f; // Reset default speed
+            }
+        }
+
         if (passedTime >= movementFrequency)
         {
             passedTime -= movementFrequency;
@@ -129,11 +177,24 @@ public class GameManager : MonoBehaviour
         
     }
 
+    void SpawnBossBlock()
+    {
+        Debug.Log("Boss block spawned!");
+        // Example: spawn a block with special behavior or effect
+    }
+
+
     // Create a new random tetromino at the top of the grid
     void SpawnTetromino()
     {
         int index = Random.Range(0, Tetrominos.Length);
         currentTetromino = Instantiate(Tetrominos[index], new Vector3(3, 18, 0), Quaternion.identity);
+
+        // 🧠 Boss-specific spawn override
+        if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
+        {
+            SpawnBossBlock(); // <-- You define this method to spawn special boss-related block
+        }
 
         // If there's no preview yet, create the first one
         if (nextTetrominoPrefab == null)

@@ -2,6 +2,21 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    public BossType Type { get; set; }
+
+    public Boss(BossType type)
+    {
+        Type = type;
+    }
+
+    public enum BossType
+    {
+        SpeedUp,
+        BlockSpawn,
+        Freeze,
+        // Add more boss types if needed
+    }
+
     public int health = 100; // Example health for the boss
 
     // Initialize the boss (could set up health, abilities, etc.)

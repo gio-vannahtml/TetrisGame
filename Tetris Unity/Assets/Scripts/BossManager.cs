@@ -14,6 +14,12 @@ public class BossManager : MonoBehaviour
     // The boss prefab to spawn (you'll need to assign this in the Unity inspector)
     public GameObject bossPrefab;
 
+    public BossPool bossPool;
+
+    public Boss CurrentBoss { get; private set; } // Expose current boss
+    public bool IsBossActive => CurrentBoss != null; // True if a boss is active
+
+
     void Awake()
     {
         // Ensure only one instance of BossManager exists
@@ -34,11 +40,17 @@ public class BossManager : MonoBehaviour
         {
             isBossActive = true;
 
+            // Get a random boss from the pool
+            GameObject selectedBossPrefab = bossPool.GetRandomBoss();
+            if (selectedBossPrefab == null) return;
+
             // Spawn the boss prefab (you can adjust position as necessary)
             bossObject = Instantiate(bossPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
             // Additional setup for the boss (health, behavior, etc.) can be done here
             SetupBoss(bossObject);
+
+            Debug.Log("Boss activated: " + CurrentBoss.Type);
         }
     }
 
@@ -65,5 +77,11 @@ public class BossManager : MonoBehaviour
         {
             bossScript.Initialize(); // Initialize the boss's properties
         }
+    }
+
+    // Call when boss is defeated
+    public void ClearBoss()
+    {
+        CurrentBoss = null;
     }
 }
