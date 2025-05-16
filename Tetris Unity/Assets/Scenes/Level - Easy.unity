@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2376cf65aedfd4b975a6c12bbd4cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBossActive: 1
+  isBossActive: 0
   bossPrefab: {fileID: 0}
   bossPool: {fileID: 857830216}
 --- !u!1 &1011248432

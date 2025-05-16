@@ -61,16 +61,22 @@ public class GameManager : MonoBehaviour
     {
         bossManager = BossManager.Instance;
 
-        if (bossManager.IsBossActive)
+        if (bossManager != null)
         {
-            SpawnBossBlock(); // You implement this method
-        }
+            if (bossManager.IsBossActive)
+            {
+                SpawnBossBlock();
+            }
 
-        if (bossManager.CurrentBoss.Type == Boss.BossType.SpeedUp)
+            if (bossManager.CurrentBoss != null && bossManager.CurrentBoss.Type == Boss.BossType.SpeedUp)
+            {
+                movementFrequency *= 0.5f;
+            }
+        }
+        else
         {
-            movementFrequency *= 0.5f;
+            Debug.LogWarning("BossManager.Instance is null!");
         }
-
 
         remainingMoves = maxMoves;
         SpawnTetromino();
