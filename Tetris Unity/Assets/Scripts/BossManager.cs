@@ -5,16 +5,17 @@ public class BossManager : MonoBehaviour
     // Singleton pattern for easy access across the game
     public static BossManager Instance;
 
-    // Reference to the boss object (you can replace this with a class that represents the boss)
+    // Reference to the boss object
     private GameObject bossObject;
-
-    // The boss prefab to spawn (you'll need to assign this in the Unity inspector)
+    
     public GameObject bossPrefab;
-
     public BossPool bossPool;
 
-    public Boss CurrentBoss { get; private set; } // Expose current boss
-
+    public Boss CurrentBoss { get; private set; } 
+    
+    // Track whether the boss is locked in position
+    public bool IsBossLocked { get; private set; } = false;
+    
     // Tracks whether the boss is currently active in the game
     public bool IsBossActive => CurrentBoss != null;
 
@@ -60,7 +61,10 @@ public class BossManager : MonoBehaviour
             Boss bossComponent = SetupBoss(bossObject);
             CurrentBoss = bossComponent; // Set the current boss reference
 
-            Debug.Log("Boss activated");
+            // Reset lock state when spawning a new boss
+            IsBossLocked = false;
+
+            Debug.Log("Boss activated (unlocked state)");
         }
     }
 
@@ -94,9 +98,31 @@ public class BossManager : MonoBehaviour
         return bossScript;
     }
 
+    // Lock the boss in position
+    public void LockBoss()
+    {
+        if (IsBossActive && !IsBossLocked)
+        {
+            IsBossLocked = true;
+            Debug.Log("Boss has been locked in position!");
+            // You can trigger special effects or behaviors when locked
+        }
+    }
+    
+    // Unlock the boss if needed
+    public void UnlockBoss()
+    {
+        if (IsBossActive && IsBossLocked)
+        {
+            IsBossLocked = false;
+            Debug.Log("Boss has been unlocked!");
+        }
+    }
+
     // Call when boss is defeated
     public void ClearBoss()
     {
         CurrentBoss = null;
+        IsBossLocked = false;
     }
 }

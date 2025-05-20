@@ -58,7 +58,6 @@ public class GridScript : MonoBehaviour
             }
         }
 
-        Debug.Log("Locking the boss...");
         foreach (Transform mino in boss)
         {
             Vector2 pos = Round(mino.position);
@@ -66,13 +65,6 @@ public class GridScript : MonoBehaviour
             {
                 grid[(int)pos.x, (int)pos.y] = mino;
             }
-        }
-        
-        // Get the Boss component and set it as locked
-        Boss bossComponent = boss.GetComponent<Boss>();
-        if (bossComponent != null)
-        {
-            bossComponent.Lock();
         }
     }
 

@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("BossManager.Instance is null!");
         }
 
+        // if there is a boss, don't spawn a tetromino until the boss is unlocked
+        
         remainingMoves = maxMoves;
         SpawnTetromino();
         UpdateMoveText();
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
     {
         // Track time for automatic downward movement
         passedTime += Time.deltaTime;
+        
         // 🧠 Modify speed if boss is active
         if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
         {
@@ -115,11 +118,15 @@ public class GameManager : MonoBehaviour
         if (passedTime >= movementFrequency)
         {
             passedTime -= movementFrequency;
-            MoveTetromino(Vector3.down);
 
-            if (bossManager != null && bossManager.IsBossActive)
+            // Check if boss is active AND not locked
+            if (bossManager != null && bossManager.IsBossActive && !bossManager.IsBossLocked)
             {
                 MoveBoss(Vector3.down);
+            }
+            else if (currentTetromino != null) // Make sure we have a tetromino to move
+            {
+                MoveTetromino(Vector3.down);
             }
         }
         UserInput();
@@ -202,26 +209,19 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void SpawnBossBlock()
-    {
-        Debug.Log("Boss block spawned!");
-        // Example: spawn a block with special behavior or effect
-    }
-
-
     // Create a new random tetromino at the top of the grid
     void SpawnTetromino()
     {
+        // Check if a boss is active and not locked yet
+        if (bossManager != null && bossManager.IsBossActive && !bossManager.IsBossLocked)
+        {
+            Debug.Log("Boss is active but not locked yet. Waiting to spawn tetromino...");
+            return; // Don't spawn tetromino until boss is locked
+        }
+        
         int index = Random.Range(0, Tetrominos.Length);
         currentTetromino = Instantiate(Tetrominos[index], new Vector3(3, 18, 0), Quaternion.identity);
         CreateGhost();
-
-
-        // 🧠 Boss-specific spawn override
-        if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
-        {
-            SpawnBossBlock(); // <-- You define this method to spawn special boss-related block
-        }
 
         // If there's no preview yet, create the first one
         if (nextTetrominoPrefab == null)
@@ -300,6 +300,20 @@ public class GameManager : MonoBehaviour
         if (!GetComponent<GridScript>().IsValidPosition(bossTransform))
         {
             bossTransform.position -= direction; // Move back if invalid
+            
+            // If the boss tried to move down but couldn't, it's at the bottom
+            if (direction == Vector3.down)
+            {
+                // Update the grid with the final boss position
+                GetComponent<GridScript>().UpdateGridWithBoss(bossTransform);
+                
+                // Lock the boss
+                bossManager.LockBoss();
+                
+                // Now that boss is locked, spawn the first tetromino
+                SpawnTetromino();
+            }
+            
             return;
         }
         
