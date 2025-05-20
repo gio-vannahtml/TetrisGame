@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     GameObject GetRandomTetromino()
     {
-        float luckyChance = 0.05f;   // 1%
+        float luckyChance = 0.01f;   // 1%
         float unluckyChance = 0.01f; // 1%
         float roll = Random.value;
 
