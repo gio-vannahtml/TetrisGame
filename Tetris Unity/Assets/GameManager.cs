@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     // Text for the score
     public TextMeshProUGUI scoreText;
 
+    public int totalLinesCleared = 0;
+    public TextMeshProUGUI linesClearedText; // Assign in Inspector
+
     public int maxMoves = 100; // Based on level
 
     private int remainingMoves;
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour
         remainingMoves = maxMoves;
         SpawnTetromino();
         UpdateMoveText();
+        UpdateLineCounter();
     }
 
     // Called each frame - handles automatic downward movement and user input
@@ -236,6 +240,7 @@ public class GameManager : MonoBehaviour
     void CheckForLines()
     {
         int lines = GetComponent<GridScript>().CheckForLines();
+        totalLinesCleared += lines; // Count total lines
         
         switch (lines)
         {
@@ -261,7 +266,20 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        UpdateLineCounter();
         Debug.Log(score);
+    }
+
+    void UpdateLineCounter()
+    {
+        if (linesClearedText != null)
+        {
+            linesClearedText.text = "" + totalLinesCleared;
+        }
+        else
+        {
+            Debug.LogWarning("linesClearedText not assigned in the Inspector.");
+        }
     }
 
     // Indicate that the game has ended when there are no moves remaining
