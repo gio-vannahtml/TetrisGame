@@ -22,6 +22,10 @@ public class GlobalGameManager : MonoBehaviour
     public RunManager Run => runManager;
     public MetaprogressionManager Meta => metaManager;
 
+    public BossManager bossManager; // Assign in the Inspector
+    public BossPool bossPool;       // Assign in the Inspector
+
+
     // Game state variables
     private int currentLevel = 1;  // Current level of the game
 
@@ -37,6 +41,7 @@ public class GlobalGameManager : MonoBehaviour
             // Create new instances of managers
             runManager = new RunManager();
             metaManager = new MetaprogressionManager();
+
         }
         else
         {
