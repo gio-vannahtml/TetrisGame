@@ -233,11 +233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6564205882192962210, guid: 9c02287de46a3414aab9633aba1c5dd5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.810001
+      value: -28.39
       objectReference: {fileID: 0}
     - target: {fileID: 6564205882192962210, guid: 9c02287de46a3414aab9633aba1c5dd5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.62
+      value: 7.61
       objectReference: {fileID: 0}
     - target: {fileID: 6564205882192962210, guid: 9c02287de46a3414aab9633aba1c5dd5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -935,7 +935,7 @@ MonoBehaviour:
   unluckyBlockPrefab: {fileID: 1816949748}
   score: 0
   scoreText: {fileID: 773128521}
-  maxMoves: 100
+  maxMoves: 250
   moveText: {fileID: 1083572522}
   nextPiecePreviewLocation: {fileID: 1919684921}
 --- !u!114 &995211951
