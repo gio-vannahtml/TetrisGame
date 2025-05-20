@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
 
     public BossPool bossPool;
 
+    private GameObject ghostTetromino;
+    public Material ghostMaterial; // Assign in Inspector
+
+
     void Awake()
     {
         
@@ -151,7 +155,7 @@ public class GameManager : MonoBehaviour
             }
             moved = true;
         }
-        
+
         if (moved)
         {
             remainingMoves--;
@@ -160,6 +164,9 @@ public class GameManager : MonoBehaviour
             {
                 EndGame(); // Custom game-over logic
             }
+            
+            UpdateGhostPosition(); // 💡 update here
+
         }
 
         // Speed up movement when down arrow is pressed
@@ -195,6 +202,8 @@ public class GameManager : MonoBehaviour
     {
         int index = Random.Range(0, Tetrominos.Length);
         currentTetromino = Instantiate(Tetrominos[index], new Vector3(3, 18, 0), Quaternion.identity);
+        CreateGhost();
+
 
         // 🧠 Boss-specific spawn override
         if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
@@ -249,14 +258,16 @@ public class GameManager : MonoBehaviour
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
 
                 // Play brick landing sound
-            SoundManager.Instance.PlayBrickSound();
+                SoundManager.Instance.PlayBrickSound();
 
                 CheckForLines();
                 SpawnTetromino();
             }
             return false;
         }
+        UpdateGhostPosition();
         return true;
+        
     }
 
     // Check if the current tetromino position is valid
@@ -296,6 +307,54 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(score);
     }
+
+    void CreateGhost()
+    {
+        if (ghostTetromino != null)
+        {
+            Destroy(ghostTetromino);
+        }
+
+        ghostTetromino = Instantiate(currentTetromino, currentTetromino.transform.position, currentTetromino.transform.rotation);
+        foreach (Transform mino in ghostTetromino.transform)
+        {
+            var sr = mino.GetComponent<SpriteRenderer>();
+            if (sr != null && ghostMaterial != null)
+            {
+                sr.material = ghostMaterial;
+            }
+        }
+
+        // Disable collision and scripts
+        foreach (Collider2D col in ghostTetromino.GetComponentsInChildren<Collider2D>())
+        {
+            col.enabled = false;
+        }
+        foreach (MonoBehaviour comp in ghostTetromino.GetComponentsInChildren<MonoBehaviour>())
+        {
+            comp.enabled = false;
+        }
+
+        UpdateGhostPosition();
+    }
+
+    void UpdateGhostPosition()
+    {
+        ghostTetromino.transform.position = currentTetromino.transform.position;
+        ghostTetromino.transform.rotation = currentTetromino.transform.rotation;
+
+        while (true)
+        {
+            ghostTetromino.transform.position += Vector3.down;
+            if (!GetComponent<GridScript>().IsValidPosition(ghostTetromino.transform))
+            {
+                ghostTetromino.transform.position -= Vector3.down;
+                break;
+            }
+        }
+    }
+
+
 
     // Indicate that the game has ended when there are no moves remaining
     void EndGame()
