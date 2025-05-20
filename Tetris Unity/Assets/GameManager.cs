@@ -221,6 +221,18 @@ public class GameManager : MonoBehaviour
         
         int index = Random.Range(0, Tetrominos.Length);
         currentTetromino = Instantiate(Tetrominos[index], new Vector3(3, 18, 0), Quaternion.identity);
+        
+        // Check if the spawned tetromino is in a valid position
+        if (!IsValidPosition())
+        {
+            // Game over - the spawn area is blocked
+            Debug.Log("Game Over - No space to spawn new tetromino!");
+            Destroy(currentTetromino);
+            currentTetromino = null;
+            EndGame();
+            return;
+        }
+        
         CreateGhost();
 
         // If there's no preview yet, create the first one
@@ -410,8 +422,26 @@ public class GameManager : MonoBehaviour
     // Indicate that the game has ended when there are no moves remaining
     void EndGame()
     {
-        Debug.Log("Out of moves! Game Over...");
-        // Disable input or show game over UI
-        enabled = false; // Disables this script
+        Debug.Log("Game Over!");
+        
+        // Disable input controls
+        enabled = false;
+        
+        // You might want to show a game over UI panel here
+        // gameOverPanel.SetActive(true);
+        
+        // Optional: Play game over sound
+        if (SoundManager.Instance != null)
+        {
+            // SoundManager.Instance.PlayGameOverSound();
+        }
+        
+        // Save high score if applicable
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
+            Debug.Log("New high score: " + score);
+        }
     }
 }
