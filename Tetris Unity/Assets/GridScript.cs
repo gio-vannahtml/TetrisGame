@@ -44,6 +44,38 @@ public class GridScript : MonoBehaviour
         }
     }
 
+    public void UpdateGridWithBoss(Transform boss)
+    {
+        // Clear the grid of blocks that belong to the boss
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (grid[x, y] != null && grid[x, y].parent == boss)
+                {
+                    grid[x, y] = null;
+                }
+            }
+        }
+
+        Debug.Log("Locking the boss...");
+        foreach (Transform mino in boss)
+        {
+            Vector2 pos = Round(mino.position);
+            if (pos.y < height)
+            {
+                grid[(int)pos.x, (int)pos.y] = mino;
+            }
+        }
+        
+        // Get the Boss component and set it as locked
+        Boss bossComponent = boss.GetComponent<Boss>();
+        if (bossComponent != null)
+        {
+            bossComponent.Lock();
+        }
+    }
+
     public static Vector2 Round(Vector2 v)
     {
         return new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));

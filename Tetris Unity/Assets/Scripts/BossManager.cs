@@ -5,9 +5,6 @@ public class BossManager : MonoBehaviour
     // Singleton pattern for easy access across the game
     public static BossManager Instance;
 
-    // Tracks whether the boss is currently active in the game
-    public bool isBossActive = false;
-
     // Reference to the boss object (you can replace this with a class that represents the boss)
     private GameObject bossObject;
 
@@ -17,8 +14,9 @@ public class BossManager : MonoBehaviour
     public BossPool bossPool;
 
     public Boss CurrentBoss { get; private set; } // Expose current boss
-    public bool IsBossActive => CurrentBoss != null; // True if a boss is active
 
+    // Tracks whether the boss is currently active in the game
+    public bool IsBossActive => CurrentBoss != null;
 
     void Awake()
     {
@@ -36,31 +34,41 @@ public class BossManager : MonoBehaviour
     // Apply the boss: spawns the boss in the game
     public void ApplyBoss()
     {
-        if (!isBossActive)
+        Debug.Log("Applying boss...");
+        if (!IsBossActive)
         {
-            isBossActive = true;
+            Debug.Log("Boss is NOT active " + IsBossActive);
 
             // Get a random boss from the pool
+            if (bossPool == null)
+            {
+                Debug.LogError("BossPool is not assigned!");
+                return;
+            }
             GameObject selectedBossPrefab = bossPool.GetRandomBoss();
+            
             if (selectedBossPrefab == null) return;
 
-            // Spawn the boss prefab (you can adjust position as necessary)
-            bossObject = Instantiate(bossPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            // Get spawn position from the boss prefab itself
+            Vector3 bossPosition = selectedBossPrefab.GetComponent<Boss>()?.SpawnPosition ?? Vector3.zero;
+            
+            // Spawn the boss prefab using its own spawn position
+            bossObject = Instantiate(selectedBossPrefab, bossPosition, Quaternion.identity);
+            Debug.Log("Boss instantiated at " + bossPosition);
 
-            // Additional setup for the boss (health, behavior, etc.) can be done here
-            SetupBoss(bossObject);
+            // Set up the boss
+            Boss bossComponent = SetupBoss(bossObject);
+            CurrentBoss = bossComponent; // Set the current boss reference
 
-            Debug.Log("Boss activated: " + CurrentBoss.Type);
+            Debug.Log("Boss activated");
         }
     }
 
     // Revert the game back to normal (removes the boss and resets the state)
     public void RevertToNormal()
     {
-        if (isBossActive)
+        if (IsBossActive)
         {
-            isBossActive = false;
-
             // Destroy the boss object from the scene
             Destroy(bossObject);
 
@@ -69,14 +77,21 @@ public class BossManager : MonoBehaviour
     }
 
     // Set up the boss (e.g., health, special abilities, etc.)
-    private void SetupBoss(GameObject boss)
+    private Boss SetupBoss(GameObject boss)
     {
         // Example: You can assign health, behavior, or other properties here
+        Debug.Log("Setting up boss...");
         Boss bossScript = boss.GetComponent<Boss>();
-        if (bossScript != null)
+        if (bossScript == null)
         {
-            bossScript.Initialize(); // Initialize the boss's properties
+            Debug.LogError("Boss component not found on the boss GameObject!");
+            return null;
         }
+
+        bossScript.Initialize(); // Initialize the boss's properties
+        Debug.Log("Boss properties initialized from script");
+        
+        return bossScript;
     }
 
     // Call when boss is defeated

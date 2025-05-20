@@ -37,9 +37,13 @@ public class GameManager : MonoBehaviour
     
     public static BossManager bossManager;
     public Boss CurrentBoss { get; private set; }
-    public bool IsBossActive => CurrentBoss != null;
 
-    public BossPool bossPool;
+    // This is a property that returns true if there's currently an active boss in the game
+    // It uses expression-bodied syntax to concisely check if CurrentBoss is not null
+    // Allows other scripts to easily check boss status without accessing CurrentBoss directly
+    //public bool IsBossActive => CurrentBoss != null;
+
+    //public BossPool bossPool;
 
     private GameObject ghostTetromino;
     public Material ghostMaterial; // Assign in Inspector
@@ -48,8 +52,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         
-            bossManager = FindFirstObjectByType<BossManager>();
-            bossPool = FindFirstObjectByType<BossPool>();
+            //bossManager = FindFirstObjectByType<BossManager>();
+            //bossPool = FindFirstObjectByType<BossPool>();
         
     }
 
@@ -67,15 +71,18 @@ public class GameManager : MonoBehaviour
 
         if (bossManager != null)
         {
-            if (bossManager.IsBossActive)
+            Debug.Log("BossManager.Instance exists");
+            if (!bossManager.IsBossActive)
             {
-                SpawnBossBlock();
+                Debug.Log("No boss is active, applying boss...");
+                bossManager.ApplyBoss();
             }
 
-            if (bossManager.CurrentBoss != null && bossManager.CurrentBoss.Type == Boss.BossType.SpeedUp)
+            /* if (bossManager.CurrentBoss != null && bossManager.CurrentBoss.Type == Boss.BossType.SpeedUp)
             {
+                Debug.LogWarning("No available bosses in pool!");
                 movementFrequency *= 0.5f;
-            }
+            } */
         }
         else
         {
@@ -109,6 +116,11 @@ public class GameManager : MonoBehaviour
         {
             passedTime -= movementFrequency;
             MoveTetromino(Vector3.down);
+
+            if (bossManager != null && bossManager.IsBossActive)
+            {
+                MoveBoss(Vector3.down);
+            }
         }
         UserInput();
         scoreText.text = "" + score.ToString();
@@ -268,6 +280,31 @@ public class GameManager : MonoBehaviour
         UpdateGhostPosition();
         return true;
         
+    }
+    public void MoveBoss(Vector3 direction)
+    {
+        // Check if BossManager exists and has a CurrentBoss
+        if (BossManager.Instance == null || BossManager.Instance.CurrentBoss == null)
+        {
+            Debug.LogWarning("Attempted to move boss, but no active boss found!");
+            return;
+        }
+
+        // Get the current boss transform
+        Transform bossTransform = BossManager.Instance.CurrentBoss.transform;
+        
+        // Try moving the boss
+        bossTransform.position += direction;
+        
+        // Check if the new position is valid (using your grid validation)
+        if (!GetComponent<GridScript>().IsValidPosition(bossTransform))
+        {
+            bossTransform.position -= direction; // Move back if invalid
+            return;
+        }
+        
+        // Update the grid with the boss's new position
+        GetComponent<GridScript>().UpdateGridWithBoss(bossTransform);
     }
 
     // Check if the current tetromino position is valid

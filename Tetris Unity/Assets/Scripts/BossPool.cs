@@ -38,6 +38,7 @@ public class BossPool : MonoBehaviour
 
     public GameObject GetRandomBoss()
     {
+        Debug.LogWarning("Getting random boss...");
         if (availableBossPrefabs.Count == 0)
         {
             Debug.LogWarning("No available bosses in pool!");
@@ -45,6 +46,8 @@ public class BossPool : MonoBehaviour
         }
 
         int index = Random.Range(0, availableBossPrefabs.Count);
+        Debug.LogWarning("Random boss index: " + index);
+        Debug.LogWarning("Random boss prefab: " + availableBossPrefabs[index].name);
         return availableBossPrefabs[index];
     }
 }
