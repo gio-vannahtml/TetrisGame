@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviour
     {
         if (linesClearedText != null)
         {
-            linesClearedText.text = "" + totalLinesCleared;
+            linesClearedText.text = "Lines: " + totalLinesCleared;
         }
         else
         {
