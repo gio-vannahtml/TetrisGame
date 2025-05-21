@@ -656,7 +656,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375902204}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -695,7 +695,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1193366238}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadShopScene
+        m_MethodName: LoadEasyLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481873069}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -2214,7 +2214,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1193366238}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadEasyLevel
+        m_MethodName: LoadBossLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3065,10 +3065,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70b8764c75754c3ea29eb87bb607445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
-  brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
   musicSource: {fileID: 0}
+  sfxSource: {fileID: 0}
   backgroundMusic: {fileID: 8300000, guid: 97032ebb66d824b3d95401e786b4d77b, type: 3}
+  brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
 --- !u!4 &2033577440
 Transform:
   m_ObjectHideFlags: 0
