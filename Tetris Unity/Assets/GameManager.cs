@@ -17,12 +17,18 @@ public class GameManager : MonoBehaviour
     
     // Reference to the currently active tetromino
     private GameObject currentTetromino;
+    //Reference to special blocks
+    public GameObject luckyBlockPrefab;
+    public GameObject unluckyBlockPrefab;
 
     // Number indicator for the players score
     public int score = 0;
 
     // Text for the score
     public TextMeshProUGUI scoreText;
+
+    public int totalLinesCleared = 0;
+    public TextMeshProUGUI linesClearedText; // Assign in Inspector
 
     public int maxMoves = 100; // Based on level
 
@@ -32,8 +38,6 @@ public class GameManager : MonoBehaviour
 
     public Transform nextPiecePreviewLocation; // Set in Inspector
     private GameObject nextTetrominoPreview;   // The preview instance
-    private GameObject nextTetrominoPrefab;    // The prefab we'll spawn next
-    
     
     public static BossManager bossManager;
     public Boss CurrentBoss { get; private set; }
@@ -48,7 +52,6 @@ public class GameManager : MonoBehaviour
     private GameObject ghostTetromino;
     public Material ghostMaterial; // Assign in Inspector
 
-
     void Awake()
     {
         
@@ -56,13 +59,6 @@ public class GameManager : MonoBehaviour
             //bossPool = FindFirstObjectByType<BossPool>();
         
     }
-
-    public void ApplyBoss()
-    {
-        // Just an example
-        CurrentBoss = new Boss(Boss.BossType.SpeedUp);  // set based on your logic
-    }
-
 
     // Piece pool system
     private List<GameObject> piecePool = new List<GameObject>();
@@ -81,24 +77,17 @@ public class GameManager : MonoBehaviour
                 Debug.Log("No boss is active, applying boss...");
                 bossManager.ApplyBoss();
             }
-
-            /* if (bossManager.CurrentBoss != null && bossManager.CurrentBoss.Type == Boss.BossType.SpeedUp)
-            {
-                Debug.LogWarning("No available bosses in pool!");
-                movementFrequency *= 0.5f;
-            } */
         }
         else
         {
             Debug.LogWarning("BossManager.Instance is null!");
         }
 
-        // if there is a boss, don't spawn a tetromino until the boss is unlocked
-        
         remainingMoves = maxMoves;
         InitializePiecePool();
         SpawnTetromino();
         UpdateMoveText();
+        UpdateLineCounter();
     }
 
     void InitializePiecePool()
@@ -262,7 +251,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Boss is active but not locked yet. Waiting to spawn tetromino...");
             return; // Don't spawn tetromino until boss is locked
         }
-        
+
         if (piecePool.Count == 0)
         {
             InitializePiecePool();
@@ -270,7 +259,7 @@ public class GameManager : MonoBehaviour
 
         // Get the first piece from the pool
         currentTetromino = Instantiate(piecePool[0], new Vector3(3, 18, 0), Quaternion.identity);
-                
+        
         // Check if the spawned tetromino is in a valid position
         if (!IsValidPosition())
         {
@@ -284,11 +273,26 @@ public class GameManager : MonoBehaviour
         
         CreateGhost();
 
+        float luckyChance = 0.01f;   // 1%
+        float unluckyChance = 0.01f; // 1%
+        float roll = Random.value;
+
         // Remove the used piece and add a new one
         piecePool.RemoveAt(0);
-        piecePool.Add(Tetrominos[Random.Range(0, Tetrominos.Length)]);
-        
-        // Update the preview
+        if (roll < luckyChance)
+        {
+            piecePool.Add(luckyBlockPrefab);
+        }
+        else if (roll < luckyChance + unluckyChance)
+        {
+            piecePool.Add(unluckyBlockPrefab);
+        }
+        else
+        {
+            piecePool.Add(Tetrominos[Random.Range(0, Tetrominos.Length)]);
+        }
+
+        // Generate the next preview piece
         ShowNextTetrominoPreview();
     }
 
@@ -303,6 +307,7 @@ public class GameManager : MonoBehaviour
             {
                 // When a tetromino can't move down anymore, lock it in place and spawn a new one
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
+                HandleSpecialBlock(currentTetromino); // Handle special blocks
 
                 // Play brick landing sound
                 SoundManager.Instance.PlayBrickSound();
@@ -312,10 +317,29 @@ public class GameManager : MonoBehaviour
             }
             return false;
         }
+
         UpdateGhostPosition();
         return true;
-        
     }
+    
+    void HandleSpecialBlock(GameObject block)
+    {
+        if (block.CompareTag("Lucky"))
+        {
+            score += 500; // Bonus
+            remainingMoves += 3; // Extra moves
+            Debug.Log("Lucky block landed! Bonus awarded.");
+        }
+        else if (block.CompareTag("Unlucky"))
+        {
+            score -= 200; // Penalty
+            remainingMoves = Mathf.Max(0, remainingMoves - 5); // Lose moves
+            Debug.Log("Unlucky block landed! Penalty applied.");
+        }
+
+        UpdateMoveText();
+    }
+
     public void MoveBoss(Vector3 direction)
     {
         // Check if BossManager exists and has a CurrentBoss
@@ -327,31 +351,31 @@ public class GameManager : MonoBehaviour
 
         // Get the current boss transform
         Transform bossTransform = BossManager.Instance.CurrentBoss.transform;
-        
+
         // Try moving the boss
         bossTransform.position += direction;
-        
+
         // Check if the new position is valid (using your grid validation)
         if (!GetComponent<GridScript>().IsValidPosition(bossTransform))
         {
             bossTransform.position -= direction; // Move back if invalid
-            
+
             // If the boss tried to move down but couldn't, it's at the bottom
             if (direction == Vector3.down)
             {
                 // Update the grid with the final boss position
                 GetComponent<GridScript>().UpdateGridWithBoss(bossTransform);
-                
+
                 // Lock the boss
                 bossManager.LockBoss();
-                
+
                 // Now that boss is locked, spawn the first tetromino
                 SpawnTetromino();
             }
-            
+
             return;
         }
-        
+
         // Update the grid with the boss's new position
         GetComponent<GridScript>().UpdateGridWithBoss(bossTransform);
     }
@@ -366,6 +390,7 @@ public class GameManager : MonoBehaviour
     void CheckForLines()
     {
         int lines = GetComponent<GridScript>().CheckForLines();
+        totalLinesCleared += lines; // Count total lines
         
         switch (lines)
         {
@@ -391,7 +416,20 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        UpdateLineCounter();
         Debug.Log(score);
+    }
+
+    void UpdateLineCounter()
+    {
+        if (linesClearedText != null)
+        {
+            linesClearedText.text = "Lines: " + totalLinesCleared;
+        }
+        else
+        {
+            Debug.LogWarning("linesClearedText not assigned in the Inspector.");
+        }
     }
 
     void CreateGhost()
