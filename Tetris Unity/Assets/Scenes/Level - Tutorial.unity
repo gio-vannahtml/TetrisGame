@@ -9974,7 +9974,7 @@ MonoBehaviour:
   scoreText: {fileID: 328752004}
   totalLinesCleared: 0
   linesClearedText: {fileID: 0}
-  maxMoves: 100
+  maxMoves: 1000
   moveText: {fileID: 2011860619}
   nextPiecePreviewLocation: {fileID: 1401482373}
   ghostMaterial: {fileID: 0}
