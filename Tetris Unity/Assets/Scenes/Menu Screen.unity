@@ -1362,7 +1362,7 @@ GameObject:
   - component: {fileID: 796233460}
   - component: {fileID: 796233459}
   m_Layer: 0
-  m_Name: Brick wall_0
+  m_Name: Brick wall
   m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3127,8 +3127,8 @@ SceneRoots:
   - {fileID: 1193366239}
   - {fileID: 1407398500}
   - {fileID: 524488679}
-  - {fileID: 796233460}
   - {fileID: 579326276}
   - {fileID: 234712674}
   - {fileID: 2108666335}
   - {fileID: 2033577440}
+  - {fileID: 796233460}

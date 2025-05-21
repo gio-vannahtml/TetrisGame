@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tractor button_0: 5715086327032506415
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

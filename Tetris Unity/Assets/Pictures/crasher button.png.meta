@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      crasher button_0: -8061867015929075242
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour
                 MoveTetromino(Vector3.down);
             }
         }
+        
         UserInput();
         scoreText.text = "" + score.ToString();
     }

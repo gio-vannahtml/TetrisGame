@@ -8,7 +8,15 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
-        pauseButton.onClick.AddListener(PauseGame);
+        if (pauseButton != null)
+        {
+            pauseButton.onClick.AddListener(PauseGame);
+        }
+        else
+        {
+            Debug.LogError("PauseManager: pauseButton is not assigned in the Inspector!");
+        }
+
     }
 
     public void PauseGame()
