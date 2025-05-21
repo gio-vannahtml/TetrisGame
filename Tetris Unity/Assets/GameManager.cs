@@ -17,12 +17,17 @@ public class GameManager : MonoBehaviour
     
     // Reference to the currently active tetromino
     private GameObject currentTetromino;
+    public GameObject luckyBlockPrefab;
+    public GameObject unluckyBlockPrefab;
 
     // Number indicator for the players score
     public int score = 0;
 
     // Text for the score
     public TextMeshProUGUI scoreText;
+
+    public int totalLinesCleared = 0;
+    public TextMeshProUGUI linesClearedText; // Assign in Inspector
 
     public int maxMoves = 100; // Based on level
 
@@ -45,6 +50,46 @@ public class GameManager : MonoBehaviour
         InitializePiecePool();
         SpawnTetromino();
         UpdateMoveText();
+        UpdateLineCounter();
+    }
+
+    void InitializePiecePool()
+    {
+        // Clear existing pool
+        piecePool.Clear();
+        
+        // Fill the pool with random pieces
+        for (int i = 0; i < POOL_SIZE; i++)
+        {
+            int index = Random.Range(0, Tetrominos.Length);
+            piecePool.Add(Tetrominos[index]);
+        }
+        
+        // Show initial preview
+        ShowNextTetrominoPreview();
+    }
+
+    void ShowNextTetrominoPreview()
+    {
+        // Remove existing preview, if any
+        if (nextTetrominoPreview != null)
+        {
+            Destroy(nextTetrominoPreview);
+        }
+
+        // Show the first piece in the pool as preview
+        if (piecePool.Count > 0)
+        {
+            nextTetrominoPreview = Instantiate(piecePool[0], nextPiecePreviewLocation.position, Quaternion.identity);
+            nextTetrominoPreview.transform.SetParent(nextPiecePreviewLocation, true);
+            nextTetrominoPreview.transform.localScale = Vector3.one * 0.5f;
+
+            // Disable physics on preview piece
+            foreach (var rb in nextTetrominoPreview.GetComponentsInChildren<Rigidbody2D>())
+            {
+                rb.simulated = false;
+            }
+        }
     }
 
     void InitializePiecePool()
@@ -176,20 +221,56 @@ public class GameManager : MonoBehaviour
     // Create a new random tetromino at the top of the grid
     void SpawnTetromino()
     {
-        if (piecePool.Count == 0)
+        int index = Random.Range(0, Tetrominos.Length);
+
+        currentTetromino = Instantiate(GetRandomTetromino(), new Vector3(3, 18, 0), Quaternion.identity);
+
+        // If there's no preview yet, create the first one
+        if (nextTetrominoPrefab == null)
         {
-            InitializePiecePool();
+            nextTetrominoPrefab = GetRandomTetromino();
+            ShowNextTetrominoPreview();
         }
 
-        // Get the first piece from the pool
-        currentTetromino = Instantiate(piecePool[0], new Vector3(3, 18, 0), Quaternion.identity);
-        
-        // Remove the used piece and add a new one
-        piecePool.RemoveAt(0);
-        piecePool.Add(Tetrominos[Random.Range(0, Tetrominos.Length)]);
-        
-        // Update the preview
+        // Generate the next preview piece
+        nextTetrominoPrefab = GetRandomTetromino();
         ShowNextTetrominoPreview();
+    }
+
+    GameObject GetRandomTetromino()
+    {
+        float luckyChance = 0.01f;   // 1%
+        float unluckyChance = 0.01f; // 1%
+        float roll = Random.value;
+
+        if (roll < luckyChance)
+            return luckyBlockPrefab;
+        else if (roll < luckyChance + unluckyChance)
+            return unluckyBlockPrefab;
+        else
+            return Tetrominos[Random.Range(0, Tetrominos.Length)];
+    }
+
+    void ShowNextTetrominoPreview()
+    {
+        // Remove existing preview, if any
+        if (nextTetrominoPreview != null)
+        {
+            Destroy(nextTetrominoPreview);
+        }
+
+        // Instantiate preview piece
+        nextTetrominoPreview = Instantiate(nextTetrominoPrefab, nextPiecePreviewLocation.position, Quaternion.identity);
+        nextTetrominoPreview.transform.SetParent(nextPiecePreviewLocation, true);
+
+        // Optional: scale it down to fit in preview box
+        nextTetrominoPreview.transform.localScale = Vector3.one * 0.5f;
+
+        // Optional: disable script components or physics on preview
+        foreach (var rb in nextTetrominoPreview.GetComponentsInChildren<Rigidbody2D>())
+        {
+            rb.simulated = false;
+        }
     }
 
     // Move the tetromino in the specified direction if possible
@@ -203,9 +284,8 @@ public class GameManager : MonoBehaviour
             {
                 // When a tetromino can't move down anymore, lock it in place and spawn a new one
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
-
-                // Play brick landing sound
-            SoundManager.Instance.PlayBrickSound();
+                
+                HandleSpecialBlock(currentTetromino); // New line
 
                 CheckForLines();
                 SpawnTetromino();
@@ -213,6 +293,24 @@ public class GameManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    void HandleSpecialBlock(GameObject block)
+    {
+        if (block.CompareTag("Lucky"))
+        {
+            score += 500; // Bonus
+            remainingMoves += 3; // Extra moves
+            Debug.Log("Lucky block landed! Bonus awarded.");
+        }
+        else if (block.CompareTag("Unlucky"))
+        {
+            score -= 200; // Penalty
+            remainingMoves = Mathf.Max(0, remainingMoves - 5); // Lose moves
+            Debug.Log("Unlucky block landed! Penalty applied.");
+        }
+
+        UpdateMoveText();
     }
 
     // Check if the current tetromino position is valid
@@ -225,6 +323,7 @@ public class GameManager : MonoBehaviour
     void CheckForLines()
     {
         int lines = GetComponent<GridScript>().CheckForLines();
+        totalLinesCleared += lines; // Count total lines
         
         switch (lines)
         {
@@ -250,7 +349,20 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        UpdateLineCounter();
         Debug.Log(score);
+    }
+
+    void UpdateLineCounter()
+    {
+        if (linesClearedText != null)
+        {
+            linesClearedText.text = "Lines: " + totalLinesCleared;
+        }
+        else
+        {
+            Debug.LogWarning("linesClearedText not assigned in the Inspector.");
+        }
     }
 
     // Indicate that the game has ended when there are no moves remaining
