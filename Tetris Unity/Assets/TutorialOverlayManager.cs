@@ -7,6 +7,7 @@ public class TutorialOverlayManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 0f; // Pause the game at start
         ShowOverlay(0); // Show the first overlay
     }
 
@@ -29,6 +30,7 @@ public class TutorialOverlayManager : MonoBehaviour
         else
         {
             HideAll();
+            Time.timeScale = 1f;
         }
     }
 
