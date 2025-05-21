@@ -4,41 +4,50 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    public AudioSource audioSource;
-    public AudioClip brickSound;
     public AudioSource musicSource;
-public AudioClip backgroundMusic;
+    public AudioSource sfxSource;
 
-   private void Awake()
-{
-    if (Instance == null)
-        Instance = this;
-    else
-        Destroy(gameObject);
+    public AudioClip backgroundMusic;
+    public AudioClip brickSound;
 
-    // Start background music
-    if (musicSource != null && backgroundMusic != null)
+    void Awake()
     {
-        musicSource.clip = backgroundMusic;
-        musicSource.loop = true;
-        musicSource.Play();
-        musicSource.volume = 0.06f;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (musicSource != null && backgroundMusic != null)
+        {
+            musicSource.clip = backgroundMusic;
+            musicSource.loop = true;
+            musicSource.Play();
+            musicSource.volume = 0.05f;
+        }
     }
-}
 
-public void ToggleBrickSounds(bool enabled)
-{
-    audioSource.mute = !enabled;
-}
+    public void ToggleMusic(bool enabled)
+    {
+        if (musicSource != null)
+            musicSource.mute = !enabled;
+    }
 
-public void ToggleMusic(bool enabled)
-{
-    musicSource.mute = !enabled;
-}
+    public void ToggleBrickSounds(bool enabled)
+    {
+        if (sfxSource != null)
+            sfxSource.mute = !enabled;
+    }
 
     public void PlayBrickSound()
     {
-        audioSource.PlayOneShot(brickSound);
+        if (sfxSource != null && brickSound != null)
+            sfxSource.PlayOneShot(brickSound);
     }
-    
 }
+

@@ -9,6 +9,8 @@ TagManager:
   - Frame
   - Icon
   - Tetromino
+  - Lucky
+  - Unlucky
   layers:
   - Default
   - TransparentFX
