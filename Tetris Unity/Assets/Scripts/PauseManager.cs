@@ -22,6 +22,13 @@ public class PauseManager : MonoBehaviour
     public void PauseGame()
     {
         Debug.Log("PauseGame triggered by button!");
+        
+        if (pauseOverlay == null)
+        {
+            Debug.LogError("Pause Overlay is NOT assigned!");
+            return;
+        }
+
         pauseOverlay.SetActive(true);
         Time.timeScale = 0f;
     }

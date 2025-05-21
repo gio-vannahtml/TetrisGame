@@ -4064,7 +4064,7 @@ GameObject:
   - component: {fileID: 1152801197}
   - component: {fileID: 1152801196}
   m_Layer: 5
-  m_Name: Pause Overlay
+  m_Name: PauseOverlay
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6187,7 +6187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8ff3dc07a0045bd9f148f4e796f138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseOverlay: {fileID: 176567984}
+  pauseOverlay: {fileID: 1152801194}
   pauseButton: {fileID: 2059043017}
 --- !u!224 &1674330123
 RectTransform:
@@ -7811,9 +7811,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1674330122}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: TogglePause
+        m_MethodName: PauseGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7837,7 +7837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7947,14 +7947,15 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1262810409}
+  - {fileID: 1674330123}
   - {fileID: 628306360}
   - {fileID: 2055847847}
+  - {fileID: 274266171}
   - {fileID: 260527605}
   - {fileID: 1505313193}
   - {fileID: 251126125}
   - {fileID: 632952883}
   - {fileID: 1360064277}
-  - {fileID: 274266171}
   - {fileID: 1186839402}
   - {fileID: 278127819}
   - {fileID: 165432196}
@@ -7967,7 +7968,6 @@ SceneRoots:
   - {fileID: 1548677523}
   - {fileID: 75613764}
   - {fileID: 833108772}
-  - {fileID: 1674330123}
   - {fileID: 1494233330}
   - {fileID: 447080242}
   - {fileID: 176567988}
