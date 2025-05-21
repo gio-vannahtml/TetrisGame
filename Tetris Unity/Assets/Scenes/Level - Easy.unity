@@ -4639,12 +4639,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979929044942148091, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979929044942148091, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
       propertyPath: moveWithTransform
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979929044942148091, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
       propertyPath: startDelay.scalar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979929044942148091, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979929044942148091, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979929044942148091, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
