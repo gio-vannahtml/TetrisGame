@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     private GameObject nextTetrominoPreview;   // The preview instance
     private GameObject nextTetrominoPrefab;    // The prefab we'll spawn next
 
+    public int winScore = 2000; // Set your win condition
+    private bool hasWon = false; // To prevent triggering win multiple times
+
     // Initialize the game by spawning the first tetromino
     void Start()
     {
@@ -235,6 +238,12 @@ public class GameManager : MonoBehaviour
         
         UpdateLineCounter();
         Debug.Log(score);
+
+        // ✅ Check win condition here
+        if (!hasWon && score >= winScore)
+        {
+            WinGame();
+        }
     }
 
     void UpdateLineCounter()
@@ -256,4 +265,14 @@ public class GameManager : MonoBehaviour
         // Disable input or show game over UI
         enabled = false; // Disables this script
     }
+
+    void WinGame()
+    {
+        hasWon = true;
+        Debug.Log("You Win!");
+
+        // Stop the game
+        enabled = false; // Disable GameManager script
+    }
+    
 }
