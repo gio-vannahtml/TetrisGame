@@ -357,30 +357,108 @@ public class GridScript : MonoBehaviour
         // Make the grid fall down after destroying blocks
         if (blocksDestroyed > 0)
         {
-            // Use the crusher approach for making blocks fall
+            // Find all unique tetromino parents in the grid
+            HashSet<Transform> tetrominoParents = new HashSet<Transform>();
             for (int x = 0; x < width; x++)
             {
-                List<Transform> columnBlocks = new List<Transform>();
-
-                // Collect all remaining blocks in this column
                 for (int y = 0; y < height; y++)
                 {
-                    if (grid[x, y] != null)
+                    if (grid[x, y] != null && grid[x, y].parent != null)
                     {
-                        columnBlocks.Add(grid[x, y]);
-                        grid[x, y] = null;
+                        tetrominoParents.Add(grid[x, y].parent);
                     }
                 }
-
-                // Place them back starting from the bottom
-                for (int y = 0; y < columnBlocks.Count; y++)
-                {
-                    grid[x, y] = columnBlocks[y];
-                    columnBlocks[y].position = new Vector3(x, y, 0);
-                }
             }
-
-            Debug.Log("Grid has been reorganized after color popping");
+            
+            // Process gravity in multiple passes until stable
+            bool piecesMoved;
+            do
+            {
+                piecesMoved = false;
+                
+                // Check each tetromino parent
+                foreach (Transform parent in tetrominoParents)
+                {
+                    // Skip if parent has been destroyed
+                    if (parent == null) continue;
+                    
+                    // Check if this tetromino can move down
+                    bool canMoveDown = true;
+                    bool hasValidChildren = false;
+                    
+                    // First, remove this tetromino from the grid temporarily
+                    foreach (Transform child in parent)
+                    {
+                        Vector2 pos = Round(child.position);
+                        if (IsInsideBorder(pos))
+                        {
+                            hasValidChildren = true;
+                            grid[(int)pos.x, (int)pos.y] = null;
+                        }
+                    }
+                    
+                    // If no valid children remain (all were destroyed), skip this tetromino
+                    if (!hasValidChildren) continue;
+                    
+                    // Check if we can move this tetromino down
+                    foreach (Transform child in parent)
+                    {
+                        Vector2 pos = Round(child.position);
+                        Vector2 posBelow = new Vector2(pos.x, pos.y - 1);
+                        
+                        // If any part would go out of bounds or hit another tetromino, we can't move down
+                        if (!IsInsideBorder(posBelow) || 
+                            (grid[(int)posBelow.x, (int)posBelow.y] != null && 
+                             grid[(int)posBelow.x, (int)posBelow.y].parent != parent))
+                        {
+                            canMoveDown = false;
+                            break;
+                        }
+                    }
+                    
+                    // Move the tetromino down if possible
+                    if (canMoveDown)
+                    {
+                        parent.position += Vector3.down;
+                        piecesMoved = true;
+                    }
+                    
+                    // Put the tetromino back in the grid at its new position
+                    foreach (Transform child in parent)
+                    {
+                        Vector2 pos = Round(child.position);
+                        if (IsInsideBorder(pos))
+                        {
+                            grid[(int)pos.x, (int)pos.y] = child;
+                        }
+                    }
+                }
+                
+            } while (piecesMoved);
+            
+            // Handle any orphaned blocks (blocks without parents) like in the original method
+            bool blocksMovedThisPass;
+            do
+            {
+                blocksMovedThisPass = false;
+                
+                for (int y = 1; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        // Only move blocks that don't have a parent (orphaned blocks)
+                        if (grid[x, y] != null && (grid[x, y].parent == null || grid[x, y].parent.childCount == 1) && grid[x, y - 1] == null)
+                        {
+                            grid[x, y - 1] = grid[x, y];
+                            grid[x, y] = null;
+                            grid[x, y - 1].position += Vector3.down;
+                            blocksMovedThisPass = true;
+                        }
+                    }
+                }
+            } while (blocksMovedThisPass);
+            
+            Debug.Log("Grid has been reorganized after color popping, preserving tetromino shapes");
         }
     }
     void Update()
