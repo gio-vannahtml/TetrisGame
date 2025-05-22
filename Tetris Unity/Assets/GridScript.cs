@@ -383,6 +383,5 @@ private IEnumerator PlayTractorEffectAndClear()
     {
         throw new System.NotImplementedException();
     }
-   
 
 }
