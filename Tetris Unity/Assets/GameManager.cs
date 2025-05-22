@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     //Reference to special blocks
     public GameObject luckyBlockPrefab;
     public GameObject unluckyBlockPrefab;
+    public GameObject BombBlockPrefab;
 
     // Number indicator for the players score
     public int score = 0;
@@ -255,7 +256,6 @@ public class GameManager : MonoBehaviour
                 continue;
             }
         }
-        
     }
 
     // Create a new random tetromino at the top of the grid
@@ -323,7 +323,24 @@ public class GameManager : MonoBehaviour
             {
                 // When a tetromino can't move down anymore, lock it in place and spawn a new one
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
-                HandleSpecialBlock(currentTetromino); // Handle special blocks
+                
+                // Check if this is a bomb block using tag instead of component
+                if (currentTetromino.CompareTag("Bomb"))
+                {
+                    // Get the position of the bomb
+                    Vector2Int bombPosition = new Vector2Int(
+                        Mathf.RoundToInt(currentTetromino.transform.position.x),
+                        Mathf.RoundToInt(currentTetromino.transform.position.y)
+                    );
+                    
+                    // Trigger bomb explosion directly
+                    GetComponent<GridScript>().TriggerBombAt(bombPosition);
+                }
+                else
+                {
+                    // Only handle special blocks if this is not a bomb
+                    HandleSpecialBlock(currentTetromino);
+                }
 
                 // Play brick landing sound
                 SoundManager.Instance.PlayBrickSound();
@@ -536,5 +553,21 @@ public class GameManager : MonoBehaviour
         // Stop the game
         enabled = false; // Disable GameManager script
     }
-    
+    public void SetNextPieceToBomb()
+    {
+        if (piecePool.Count > 0)
+        {
+            // Replace the upcoming piece (first in pool) with bomb block
+            piecePool[0] = BombBlockPrefab;
+            
+            // Update the preview to show the bomb block
+            ShowNextTetrominoPreview();
+            
+            Debug.Log("Next tetromino changed to Bomb Block!");
+        }
+        else
+        {
+            Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
+        }
+    }
 }
