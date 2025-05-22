@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI moveText; // UI display for moves left
 
+    public int totalLinesCleared = 0;
+    public TextMeshProUGUI linesClearedText; // Assign in Inspect
+
     public Transform nextPiecePreviewLocation; // Set in Inspector
     private GameObject nextTetrominoPreview;   // The preview instance
     private GameObject nextTetrominoPrefab;    // The prefab we'll spawn next
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         remainingMoves = maxMoves;
         SpawnTetromino();
         UpdateMoveText();
+        UpdateLineCounter();
     }
 
     // Called each frame - handles automatic downward movement and user input
@@ -203,7 +207,8 @@ public class GameManager : MonoBehaviour
     void CheckForLines()
     {
         int lines = GetComponent<GridScript>().CheckForLines();
-        
+        totalLinesCleared += lines; // Count total lines
+
         switch (lines)
         {
             case 1:
@@ -227,8 +232,21 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-
+        
+        UpdateLineCounter();
         Debug.Log(score);
+    }
+
+    void UpdateLineCounter()
+    {
+        if (linesClearedText != null)
+        {
+            linesClearedText.text = "" + totalLinesCleared;
+        }
+        else
+        {
+            Debug.LogWarning("linesClearedText not assigned in the Inspector.");
+        }
     }
 
     // Indicate that the game has ended when there are no moves remaining
