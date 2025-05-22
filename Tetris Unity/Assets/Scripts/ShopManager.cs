@@ -1,31 +1,36 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class ShopManager : MonoBehaviour
 {
-    public int playerCurrency = 1000;
     public Text currencyText;
+
+    private void Start()
+    {
+        UpdateCurrencyUI();
+    }
 
     public void BuyItem(int cost, string itemName)
     {
-        if (playerCurrency >= cost)
+        if (CurrencyManager.Instance.currency >= cost)
         {
-            playerCurrency -= cost;
+            CurrencyManager.Instance.SpendCurrency(cost);
             UpdateCurrencyUI();
+
             Debug.Log("Purchased: " + itemName);
 
-            // Add your logic for giving the item here, e.g.:
-            // Inventory.Add(itemName);
+            // TODO: Apply the item effect here
         }
         else
         {
-            Debug.Log("Not enough currency!");
+            Debug.Log("Not enough currency to buy: " + itemName);
         }
     }
 
-    void UpdateCurrencyUI()
+    public void UpdateCurrencyUI()
     {
-        currencyText.text = playerCurrency.ToString();
+        currencyText.text = CurrencyManager.Instance.currency.ToString();
     }
 
     public void BuyBombastic()
@@ -33,18 +38,18 @@ public class ShopManager : MonoBehaviour
         BuyItem(300, "Bombastic");
     }
 
-    public void BuyCrusher()
-    {
-        BuyItem(400, "The Crusher");
-    }
-
     public void BuyTractor()
     {
-        BuyItem(500, "The Tractor");
-    } 
-    
+        BuyItem(400, "The Tractor");
+    }
+
+    public void BuyCrasher()
+    {
+        BuyItem(500, "The Crasher");
+    }
+
     public void BuyColorPopper()
     {
-    BuyItem(600, "Color Popper");
-    } 
+        BuyItem(600, "Color Popper");
+    }
 }
