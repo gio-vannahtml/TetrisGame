@@ -18,7 +18,7 @@ public class InventoryItemUI : MonoBehaviour
                 gridScript.UseCrusher();
                 break;
             case ItemType.Tractor:
-                gridScript.UseTractor();
+                gridScript.UseTractor(); // 💡 This is the only line for Tractor
                 break;
             case ItemType.ColorPopper:
                 gridScript.UseColorPopper();

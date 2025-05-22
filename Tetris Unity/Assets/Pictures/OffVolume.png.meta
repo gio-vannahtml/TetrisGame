@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 93c3fc0480f12264daf5886533afadad
+guid: b0d77b0a8fc2a436a992c94485ff372c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4105164189506151997
-    second: OffMusic_0
+      213: 3645566190595845889
+    second: OffVolume_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OffMusic_0
+      name: OffVolume_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d362b2c841978f830800000000000000
-      internalID: 4105164189506151997
+      spriteID: 10fa3a3a227a79230800000000000000
+      internalID: 3645566190595845889
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      OffMusic_0: 4105164189506151997
+      OffVolume_0: 3645566190595845889
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

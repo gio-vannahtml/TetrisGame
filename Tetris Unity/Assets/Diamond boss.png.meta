@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 93c3fc0480f12264daf5886533afadad
+guid: 0bd0150fae091b84b9b1acebfc3c93bf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4105164189506151997
-    second: OffMusic_0
+      213: 1817078798673515328
+    second: Diamond boss_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OffMusic_0
+      name: Diamond boss_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 218
-        height: 100
+        width: 352
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d362b2c841978f830800000000000000
-      internalID: 4105164189506151997
+      spriteID: 04314d34a8f873910800000000000000
+      internalID: 1817078798673515328
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      OffMusic_0: 4105164189506151997
+      Diamond boss_0: 1817078798673515328
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
