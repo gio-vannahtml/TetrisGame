@@ -98,6 +98,8 @@ public class Modifier
     private void ApplyColorPopperEffect(Block[,] blockGrid, int gridWidth, int gridHeight)
     {
         // Remove blocks that match the color of the color popper
+        GameObject.FindGameObjectsWithTag("YellowColored");
+
         Color colorToRemove = GetColorForPopperEffect(); 
         for (int x = 0; x < gridWidth; x++)
         {

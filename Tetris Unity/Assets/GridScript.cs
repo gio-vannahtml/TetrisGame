@@ -275,72 +275,82 @@ public void UseBombastic(Vector2 center)
 
     // === Color Popper: removes all blocks of one random color ===
     public void UseColorPopper()
-{
-    Dictionary<string, List<Vector2Int>> colorGroups = new Dictionary<string, List<Vector2Int>>();
-    Dictionary<string, Color> colorMap = new Dictionary<string, Color>();
-
-    // Step 1: Group blocks by color (as hex string)
-    for (int y = 0; y < height; y++)
     {
+        // Define possible color tags
+        string[] colorTags = new string[] { "RedColored", "BlueColored", "GreenColored", "YellowColored", "PurpleColored", "PinkColored", "OrangeColored" };
+        
+        // Find colors that are actually present on the grid
+        List<string> availableColors = new List<string>();
+        foreach (string tag in colorTags)
+        {
+            // Check if at least one block of this color exists in our grid
+            bool colorExists = false;
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (grid[x, y] != null && grid[x, y].CompareTag(tag))
+                    {
+                        colorExists = true;
+                        availableColors.Add(tag);
+                        break;
+                    }
+                }
+                if (colorExists) break;
+            }
+        }
+        
+        // If no colors are found, return early
+        if (availableColors.Count == 0)
+        {
+            Debug.Log("Color Popper: No colored blocks found on the grid");
+            return;
+        }
+        
+        // Select a random tag from the available colors
+        string selectedTag = availableColors[Random.Range(0, availableColors.Count)];
+        
+        // Find all game objects with the selected tag (for debugging/verification)
+        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(selectedTag);
+        
+        Debug.Log($"Color Popper removing blocks with tag: {selectedTag} (Found {objectsWithTag.Length} blocks)");
+        
+        // Loop through the grid and destroy blocks with the selected color tag
+        int blocksDestroyed = 0;
         for (int x = 0; x < width; x++)
         {
-            Transform block = grid[x, y];
-            if (block != null)
+            for (int y = 0; y < height; y++)
             {
-                SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
-                if (sr != null)
+                if (grid[x, y] != null && grid[x, y].CompareTag(selectedTag))
                 {
-                    Color color = sr.color;
-                    string hex = ColorUtility.ToHtmlStringRGB(color);
-
-                    if (!colorGroups.ContainsKey(hex))
-                        colorGroups[hex] = new List<Vector2Int>();
-
-                    colorGroups[hex].Add(new Vector2Int(x, y));
-
-                    if (!colorMap.ContainsKey(hex))
-                        colorMap[hex] = color;
+                    // Spawn particle effect before destroying (if you want to show effects)
+                    /* if (blockDestroyEffectPrefab != null)
+                    {
+                        GameObject effect = Instantiate(blockDestroyEffectPrefab, grid[x, y].position, Quaternion.identity);
+                        Destroy(effect, 1f);
+                    } */
+                    
+                    Destroy(grid[x, y].gameObject);
+                    grid[x, y] = null;
+                    blocksDestroyed++;
                 }
             }
         }
-    }
-
-    // Step 2: Find the color with the most blocks
-    string mostCommonHex = "";
-    int maxCount = 0;
-
-    foreach (var kvp in colorGroups)
-    {
-        if (kvp.Value.Count > maxCount)
+        
+        Debug.Log($"Color Popper destroyed {blocksDestroyed} blocks with tag: {selectedTag}");
+        
+        // Make the grid fall down after destroying blocks
+        if (blocksDestroyed > 0)
         {
-            mostCommonHex = kvp.Key;
-            maxCount = kvp.Value.Count;
+            Debug.Log("Blocks destroyed, making grid fall down");
+            // We need to start from the bottom and work our way up
+            for (int y = 0; y < height; y++)
+            {
+                Debug.Log("Grid is falling down");
+                DecreaseRowsAbove(y);
+            }
         }
     }
-
-    if (string.IsNullOrEmpty(mostCommonHex))
-    {
-        Debug.LogWarning("No blocks to pop!");
-        return;
-    }
-
-    Color targetColor = colorMap[mostCommonHex];
-    Debug.Log($"ColorPopper: Popping color {targetColor} with {maxCount} blocks!");
-
-    // Step 3: Destroy blocks of that color
-    foreach (Vector2Int pos in colorGroups[mostCommonHex])
-    {
-        Transform block = grid[pos.x, pos.y];
-        if (block != null)
-        {
-            Destroy(block.gameObject);
-            grid[pos.x, pos.y] = null;
-        }
-    }
-
-    // Step 4: Drop blocks down
-    DecreaseRowsAbove(0);
-}
     void Update()
 {
     if (Input.GetKeyDown(KeyCode.Alpha1))

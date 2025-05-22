@@ -11,6 +11,13 @@ TagManager:
   - Tetromino
   - Lucky
   - Unlucky
+  - YellowColored
+  - PurpleColored
+  - GreenColored
+  - RedColored
+  - OrangeColored
+  - BlueColored
+  - PinkColored
   layers:
   - Default
   - TransparentFX
