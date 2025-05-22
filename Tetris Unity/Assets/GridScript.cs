@@ -361,16 +361,41 @@ private IEnumerator PlayTractorEffectAndClear()
         }
         
         Debug.Log($"Color Popper destroyed {blocksDestroyed} blocks with tag: {selectedTag}");
-        
+
+        // We need to start from the bottom and work our way up
+        /* for (int y = 0; y < height; y++)
+        {
+            Debug.Log($"Checking row {y}");
+            DecreaseRowsAbove(y);
+        } */
+            
         // Make the grid fall down after destroying blocks
         if (blocksDestroyed > 0)
         {
-            // We need to start from the bottom and work our way up
-            for (int y = 0; y < height; y++)
+            // Use the crusher approach for making blocks fall
+            for (int x = 0; x < width; x++)
             {
-                Debug.Log($"Checking row {y}");
-                DecreaseRowsAbove(y);
+                List<Transform> columnBlocks = new List<Transform>();
+
+                // Collect all remaining blocks in this column
+                for (int y = 0; y < height; y++)
+                {
+                    if (grid[x, y] != null)
+                    {
+                        columnBlocks.Add(grid[x, y]);
+                        grid[x, y] = null;
+                    }
+                }
+
+                // Place them back starting from the bottom
+                for (int y = 0; y < columnBlocks.Count; y++)
+                {
+                    grid[x, y] = columnBlocks[y];
+                    columnBlocks[y].position = new Vector3(x, y, 0);
+                }
             }
+
+            Debug.Log("Grid has been reorganized after color popping");
         }
     }
     void Update()
