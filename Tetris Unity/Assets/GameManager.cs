@@ -21,10 +21,6 @@ public class GameManager : MonoBehaviour
     public GameObject luckyBlockPrefab;
     public GameObject unluckyBlockPrefab;
 
-    public GameObject luckyBlockPrefab;
-    
-    public GameObject unluckyBlockPrefab;
-
     // Number indicator for the players score
     public int score = 0;
 
@@ -39,9 +35,6 @@ public class GameManager : MonoBehaviour
     private int remainingMoves;
 
     public TextMeshProUGUI moveText; // UI display for moves left
-
-    public int totalLinesCleared = 0;
-    public TextMeshProUGUI linesClearedText; // Assign in Inspect
 
     public Transform nextPiecePreviewLocation; // Set in Inspector
     private GameObject nextTetrominoPreview;   // The preview instance
@@ -98,8 +91,6 @@ public class GameManager : MonoBehaviour
         SpawnTetromino();
         UpdateMoveText();
         UpdateLineCounter();
-<<<<<<< Updated upstream
-=======
     }
 
     void InitializePiecePool()
@@ -139,7 +130,6 @@ public class GameManager : MonoBehaviour
                 rb.simulated = false;
             }
         }
->>>>>>> Stashed changes
     }
 
     // Called each frame - handles automatic downward movement and user input
@@ -259,16 +249,6 @@ public class GameManager : MonoBehaviour
     // Create a new random tetromino at the top of the grid
     void SpawnTetromino()
     {
-<<<<<<< Updated upstream
-        int index = Random.Range(0, Tetrominos.Length);
-        currentTetromino = Instantiate(GetRandomTetromino(), new Vector3(3, 18, 0), Quaternion.identity);
-
-        // If there's no preview yet, create the first one
-        if (nextTetrominoPrefab == null)
-        {
-            nextTetrominoPrefab = GetRandomTetromino();
-            ShowNextTetrominoPreview();
-=======
         // Check if a boss is active and not locked yet
         if (bossManager != null && bossManager.IsBossActive && !bossManager.IsBossLocked)
         {
@@ -314,21 +294,6 @@ public class GameManager : MonoBehaviour
         else
         {
             piecePool.Add(Tetrominos[Random.Range(0, Tetrominos.Length)]);
->>>>>>> Stashed changes
-        }
-
-        GameObject GetRandomTetromino()
-        {
-            float luckyChance = 0.01f;   // 1%
-            float unluckyChance = 0.01f; // 1%
-            float roll = Random.value;
-
-            if (roll < luckyChance)
-                return luckyBlockPrefab;
-            else if (roll < luckyChance + unluckyChance)
-                return unluckyBlockPrefab;
-            else
-                return Tetrominos[Random.Range(0, Tetrominos.Length)];
         }
 
         // Generate the next preview piece
@@ -346,22 +311,10 @@ public class GameManager : MonoBehaviour
             {
                 // When a tetromino can't move down anymore, lock it in place and spawn a new one
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
-<<<<<<< HEAD
-
-                // Play brick landing sound
-<<<<<<< Updated upstream
-                SoundManager.Instance.PlayBrickSound();
-
-                HandleSpecialBlock(currentTetromino);
-=======
-            SoundManager.Instance.PlayBrickSound();
-=======
                 HandleSpecialBlock(currentTetromino); // Handle special blocks
 
                 // Play brick landing sound
                 SoundManager.Instance.PlayBrickSound();
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
->>>>>>> Stashed changes
 
                 CheckForLines();
                 SpawnTetromino();
@@ -431,25 +384,6 @@ public class GameManager : MonoBehaviour
         GetComponent<GridScript>().UpdateGridWithBoss(bossTransform);
     }
 
-    void HandleSpecialBlock(GameObject block)
-    {
-        if (block.CompareTag("Lucky"))
-        {
-            score += 500; // Bonus
-            remainingMoves += 3; // Extra moves
-            Debug.Log("Lucky block landed! Bonus awarded.");
-        }
-        else if (block.CompareTag("Unlucky"))
-        {
-            score -= 200; // Penalty
-            remainingMoves = Mathf.Max(0, remainingMoves - 5); // Lose moves
-            Debug.Log("Unlucky block landed! Penalty applied.");
-        }
-
-        UpdateMoveText();
-    }
-
-
     // Check if the current tetromino position is valid
     bool IsValidPosition()
     {
@@ -461,11 +395,7 @@ public class GameManager : MonoBehaviour
     {
         int lines = GetComponent<GridScript>().CheckForLines();
         totalLinesCleared += lines; // Count total lines
-<<<<<<< Updated upstream
-
-=======
         
->>>>>>> Stashed changes
         switch (lines)
         {
             case 1:
@@ -489,11 +419,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-<<<<<<< Updated upstream
-        
-=======
 
->>>>>>> Stashed changes
         UpdateLineCounter();
         Debug.Log(score);
 
@@ -501,18 +427,6 @@ public class GameManager : MonoBehaviour
         if (!hasWon && score >= winScore)
         {
             WinGame();
-        }
-    }
-
-    void UpdateLineCounter()
-    {
-        if (linesClearedText != null)
-        {
-            linesClearedText.text = "" + totalLinesCleared;
-        }
-        else
-        {
-            Debug.LogWarning("linesClearedText not assigned in the Inspector.");
         }
     }
 
