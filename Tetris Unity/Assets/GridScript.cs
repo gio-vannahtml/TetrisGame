@@ -227,6 +227,7 @@ public class GridScript : MonoBehaviour
                     }
                 }
             }
+            
         }
 
         // Optional: make the grid fall down after destroying
