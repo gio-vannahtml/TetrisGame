@@ -24,6 +24,7 @@ public class GlobalGameManager : MonoBehaviour
 
     public BossManager bossManager; // Assign in the Inspector
     public BossPool bossPool;       // Assign in the Inspector
+    
 
 
     // Game state variables
