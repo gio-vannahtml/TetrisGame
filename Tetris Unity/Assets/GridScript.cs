@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GridScript : MonoBehaviour
+
 {
+    public Sprite tractorEffectSprite; 
+    public GameObject tractorEffectPrefab;
     public Transform[,] grid;
-    
+
     // Grid dimensions
     public int width = 10, height = 20; // Set default grid size
 
@@ -119,7 +123,7 @@ public class GridScript : MonoBehaviour
                 linesCleared++;
                 DecreaseRowsAbove(y + 1); // Shift lines down after clearing
                 y--;
-                
+
             }
         }
 
@@ -196,33 +200,33 @@ public class GridScript : MonoBehaviour
         }
     }
      */
-// === Bombastic: destroy blocks in 3x3 area ===
-public void UseBombastic(Vector2 center)
-{
-    int radius = 1; // 3x3 area
-    Vector2Int centerInt = Vector2Int.RoundToInt(center);
-
-    for (int dx = -radius; dx <= radius; dx++)
+    // === Bombastic: destroy blocks in 3x3 area ===
+    public void UseBombastic(Vector2 center)
     {
-        for (int dy = -radius; dy <= radius; dy++)
-        {
-            int x = centerInt.x + dx;
-            int y = centerInt.y + dy;
+        int radius = 1; // 3x3 area
+        Vector2Int centerInt = Vector2Int.RoundToInt(center);
 
-            if (x >= 0 && x < width && y >= 0 && y < height)
+        for (int dx = -radius; dx <= radius; dx++)
+        {
+            for (int dy = -radius; dy <= radius; dy++)
             {
-                if (grid[x, y] != null)
+                int x = centerInt.x + dx;
+                int y = centerInt.y + dy;
+
+                if (x >= 0 && x < width && y >= 0 && y < height)
                 {
-                    Destroy(grid[x, y].gameObject);
-                    grid[x, y] = null;
+                    if (grid[x, y] != null)
+                    {
+                        Destroy(grid[x, y].gameObject);
+                        grid[x, y] = null;
+                    }
                 }
             }
         }
-    }
 
-    // Optional: make the grid fall down after destroying
-    DecreaseRowsAbove(centerInt.y - radius);
-}
+        // Optional: make the grid fall down after destroying
+        DecreaseRowsAbove(centerInt.y - radius);
+    }
     // === Crusher: compact each column downward ===
     public void UseCrusher()
     {
@@ -249,29 +253,48 @@ public void UseBombastic(Vector2 center)
 
     // === Tractor: removes bottom row ===
     public void UseTractor()
+{
+    StartCoroutine(PlayTractorEffectAndClear());
+}
+
+private IEnumerator PlayTractorEffectAndClear()
+{
+    float delay = 0.05f;
+
+   for (int x = 0; x < width; x++)
+{
+    if (grid[x, 0] != null)
+    {
+        Transform block = grid[x, 0];
+        SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+
+        if (sr != null)
+        {
+            sr.sprite = tractorEffectSprite; // 👈 New field you'll assign
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        Destroy(block.gameObject);
+        grid[x, 0] = null;
+    }
+
+    yield return new WaitForSeconds(delay);
+}
+
+    for (int y = 1; y < height; y++)
     {
         for (int x = 0; x < width; x++)
         {
-            if (grid[x, 0] != null)
+            if (grid[x, y] != null)
             {
-                Destroy(grid[x, 0].gameObject);
-                grid[x, 0] = null;
-            }
-        }
-
-        for (int y = 1; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (grid[x, y] != null)
-                {
-                    grid[x, y - 1] = grid[x, y];
-                    grid[x, y] = null;
-                    grid[x, y - 1].position += Vector3.down;
-                }
+                grid[x, y - 1] = grid[x, y];
+                grid[x, y] = null;
+                grid[x, y - 1].position += Vector3.down;
             }
         }
     }
+}
 
     // === Color Popper: removes all blocks of one random color ===
     public void UseColorPopper()
@@ -352,22 +375,24 @@ public void UseBombastic(Vector2 center)
         }
     }
     void Update()
-{
-    if (Input.GetKeyDown(KeyCode.Alpha1))
-        UseBomb();
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            UseBomb();
 
-    if (Input.GetKeyDown(KeyCode.Alpha2))
-        UseCrusher();
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            UseCrusher();
 
-    if (Input.GetKeyDown(KeyCode.Alpha3))
-        UseTractor();
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            UseTractor();
 
-    if (Input.GetKeyDown(KeyCode.Alpha4))
-        UseColorPopper();
-}
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            UseColorPopper();
+    }
 
     private void UseBomb()
     {
         throw new System.NotImplementedException();
     }
+   
+
 }
