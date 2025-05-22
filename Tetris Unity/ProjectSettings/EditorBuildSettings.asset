@@ -17,12 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level - Easy.unity
     guid: 0ebd1ab6999ec9e4daf155cb005fc076
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level - Medium.unity
     guid: 47956fe7bed392c48a0412c180bc23dd
   - enabled: 1
     path: Assets/Scenes/Level- Boss level.unity
     guid: c07b1f8ee536b4ff98c1ade78f53d4bc
+  - enabled: 1
+    path: Assets/Scenes/Level - Tutorial.unity
+    guid: 8198ca8efcca444009ed83809ccd454d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
