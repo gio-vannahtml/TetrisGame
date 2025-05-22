@@ -656,7 +656,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375902204}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -695,7 +695,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1193366238}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadEasyLevel
+        m_MethodName: LoadShopScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1362,7 +1362,7 @@ GameObject:
   - component: {fileID: 796233460}
   - component: {fileID: 796233459}
   m_Layer: 0
-  m_Name: Brick wall
+  m_Name: Brick wall_0
   m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481873069}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -2214,7 +2214,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1193366238}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMediumLevel
+        m_MethodName: LoadEasyLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3065,10 +3065,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70b8764c75754c3ea29eb87bb607445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
-  backgroundMusic: {fileID: 8300000, guid: 97032ebb66d824b3d95401e786b4d77b, type: 3}
+  audioSource: {fileID: 0}
   brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
+  musicSource: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: 97032ebb66d824b3d95401e786b4d77b, type: 3}
 --- !u!4 &2033577440
 Transform:
   m_ObjectHideFlags: 0
@@ -3127,8 +3127,8 @@ SceneRoots:
   - {fileID: 1193366239}
   - {fileID: 1407398500}
   - {fileID: 524488679}
+  - {fileID: 796233460}
   - {fileID: 579326276}
   - {fileID: 234712674}
   - {fileID: 2108666335}
   - {fileID: 2033577440}
-  - {fileID: 796233460}
