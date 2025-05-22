@@ -347,11 +347,11 @@ private IEnumerator PlayTractorEffectAndClear()
                 if (grid[x, y] != null && grid[x, y].CompareTag(selectedTag))
                 {
                     // Spawn particle effect before destroying (if you want to show effects)
-                    /* if (blockDestroyEffectPrefab != null)
+                    if (blockDestroyEffectPrefab != null)
                     {
                         GameObject effect = Instantiate(blockDestroyEffectPrefab, grid[x, y].position, Quaternion.identity);
                         Destroy(effect, 1f);
-                    } */
+                    }
                     
                     Destroy(grid[x, y].gameObject);
                     grid[x, y] = null;
@@ -365,11 +365,10 @@ private IEnumerator PlayTractorEffectAndClear()
         // Make the grid fall down after destroying blocks
         if (blocksDestroyed > 0)
         {
-            Debug.Log("Blocks destroyed, making grid fall down");
             // We need to start from the bottom and work our way up
             for (int y = 0; y < height; y++)
             {
-                Debug.Log("Grid is falling down");
+                Debug.Log($"Checking row {y}");
                 DecreaseRowsAbove(y);
             }
         }
