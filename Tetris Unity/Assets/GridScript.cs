@@ -397,4 +397,9 @@ private IEnumerator PlayTractorEffectAndClear()
             UseColorPopper();
     }
 
+    private void UseBomb()
+    {
+        throw new System.NotImplementedException();
+    }
+
 }
