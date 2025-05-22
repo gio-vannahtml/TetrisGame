@@ -4424,10 +4424,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70b8764c75754c3ea29eb87bb607445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 990045661}
-  brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
   musicSource: {fileID: 990045661}
+  sfxSource: {fileID: 0}
   backgroundMusic: {fileID: 8300000, guid: 97032ebb66d824b3d95401e786b4d77b, type: 3}
+  brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
 --- !u!82 &990045661
 AudioSource:
   m_ObjectHideFlags: 0

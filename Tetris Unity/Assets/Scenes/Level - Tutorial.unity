@@ -3405,9 +3405,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "This is your inventory. It holds the special items you\u2019ve collected
-    or bought. Tap an item to use its power; from clearing blocks to changing the
-    game board."
+  m_text: Color Popper is a powerful tool that targets the most common block color
+    on the grid. It removes all blocks of that color in one move, helping you clear
+    space quickly.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5428,7 +5428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7323232, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.7466958, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6728,6 +6728,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875851998}
   m_CullTransparentMesh: 1
+--- !u!1001 &917853003
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1407580562680943672, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_Name
+      value: BlockDestroyEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723763454232134252, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1a2df0da6bca01b4a90e34ed9c0d3770, type: 3}
 --- !u!1 &920534643
 GameObject:
   m_ObjectHideFlags: 0
@@ -9166,7 +9223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9322918, b: 0.8820755, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9452,7 +9509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9103774, b: 0.9103774, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10710,9 +10767,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "This is your inventory. It holds the special items you\u2019ve collected
-    or bought. Tap an item to use its power; from clearing blocks to changing the
-    game board."
+  m_text: Crasher compacts the board by pulling all blocks downward, crushing any
+    empty spaces between them. Use it to tidy up and reclaim control!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10860,7 +10916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7323232, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8022959, b: 0.2688679, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11052,9 +11108,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "This is your inventory. It holds the special items you\u2019ve collected
-    or bought. Tap an item to use its power; from clearing blocks to changing the
-    game board."
+  m_text: "Tractor clears the entire bottom row of the grid. It\u2019s perfect for
+    tight situations where you\u2019re running out of space. Use it wisely to get
+    a second chance."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13468,7 +13524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.90588236, g: 0.69803923, b: 0.13725491, a: 1}
+  m_Color: {r: 1, g: 0.7563776, b: 0.0990566, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -13724,7 +13780,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -261.82, y: -96.53717}
-  m_SizeDelta: {x: 218.3516, y: 210.8537}
+  m_SizeDelta: {x: 218.35, y: 210.854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1853484429
 MonoBehaviour:
@@ -14336,7 +14392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7323232, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8043099, b: 0.18396229, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14568,8 +14624,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 274, y: -78.244}
-  m_SizeDelta: {x: -620.0001, y: -225.27}
+  m_AnchoredPosition: {x: 271.89, y: -78.244}
+  m_SizeDelta: {x: -610.8, y: -225.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1999924492
 MonoBehaviour:
@@ -15705,6 +15761,7 @@ SceneRoots:
   - {fileID: 665925617}
   - {fileID: 1595956722}
   - {fileID: 181987861}
+  - {fileID: 917853003}
   - {fileID: 599936080}
   - {fileID: 795537519}
   - {fileID: 1420829607}

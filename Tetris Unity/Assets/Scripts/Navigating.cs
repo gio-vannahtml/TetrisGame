@@ -23,22 +23,22 @@ public class MenuButtonHandler : MonoBehaviour
 
     public void LoadEasyLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level - Easy");
+        SceneManager.LoadScene("Level - Easy");
     }
 
     public void LoadMediumLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level - Medium");
+        SceneManager.LoadScene("Level - Medium");
     }
 
     public void LoadDifficultLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level - Difficult");
+        SceneManager.LoadScene("Level - Difficult");
     }
 
     public void LoadBossLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level - Boss level");
+        SceneManager.LoadScene("Level - Boss level");
     }
 
 }

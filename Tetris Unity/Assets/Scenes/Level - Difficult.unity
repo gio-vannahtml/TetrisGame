@@ -828,7 +828,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197241287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.5, y: 9.5, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6472,22 +6472,22 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 2046936908}
-  - {fileID: 584291064}
-  - {fileID: 297718015}
-  - {fileID: 415777069}
-  - {fileID: 903926723}
-  - {fileID: 1169632868}
-  - {fileID: 1188524128}
   - {fileID: 197241291}
+  - {fileID: 468030956}
+  - {fileID: 2046936908}
+  - {fileID: 1398838594}
+  - {fileID: 903926723}
   - {fileID: 422417290}
-  - {fileID: 940896839}
-  - {fileID: 49064575}
-  - {fileID: 1291848565}
   - {fileID: 1066665211}
   - {fileID: 724594242}
-  - {fileID: 1398838594}
   - {fileID: 158400731}
+  - {fileID: 584291064}
+  - {fileID: 1188524128}
+  - {fileID: 297718015}
+  - {fileID: 415777069}
+  - {fileID: 1169632868}
+  - {fileID: 940896839}
+  - {fileID: 49064575}
   - {fileID: 766761660}
   - {fileID: 810631785}
   - {fileID: 440050469}
@@ -6495,4 +6495,4 @@ SceneRoots:
   - {fileID: 158503358}
   - {fileID: 1297933224}
   - {fileID: 651392905}
-  - {fileID: 468030956}
+  - {fileID: 1291848565}

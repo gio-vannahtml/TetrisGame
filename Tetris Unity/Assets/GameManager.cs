@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
             passedTime -= movementFrequency;
             MoveTetromino(Vector3.down);
         }
+        
         UserInput();
         scoreText.text = "" + score.ToString();
     }
