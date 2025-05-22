@@ -5487,7 +5487,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066231744}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e9bff84999f5483b90cb55144292a3f, type: 3}
   m_Name: 
@@ -8818,6 +8818,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7281672965392695587, guid: 93676ff8b086b384b86d52b02d794ff3, type: 3}
   m_PrefabInstance: {fileID: 1658106768}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1690678906 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6313616532210960522, guid: f54c0d8ba5a1b7441bf4a9459011cf5b, type: 3}
+  m_PrefabInstance: {fileID: 840706176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1744204193
 GameObject:
   m_ObjectHideFlags: 0
@@ -9433,6 +9438,7 @@ GameObject:
   - component: {fileID: 1855203563}
   - component: {fileID: 1855203560}
   - component: {fileID: 1855203562}
+  - component: {fileID: 1855203565}
   m_Layer: 0
   m_Name: Grid (and GM)
   m_TagString: Untagged
@@ -9561,6 +9567,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855203565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855203559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2376cf65aedfd4b975a6c12bbd4cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossPrefab: {fileID: 1690678906}
+  bossPool: {fileID: 62379542}
 --- !u!1 &1866623081
 GameObject:
   m_ObjectHideFlags: 0
