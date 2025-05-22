@@ -474,6 +474,12 @@ public class GameManager : MonoBehaviour
 
     void UpdateGhostPosition()
     {
+        if (ghostTetromino == null || currentTetromino == null)
+        {
+            Debug.LogWarning("Missing ghost or current tetromino.");
+            return;
+        }
+        
         ghostTetromino.transform.position = currentTetromino.transform.position;
         ghostTetromino.transform.rotation = currentTetromino.transform.rotation;
 

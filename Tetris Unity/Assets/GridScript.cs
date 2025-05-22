@@ -28,12 +28,9 @@ public class GridScript : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                if (grid[x, y] != null)
+                if (grid[x, y] != null && grid[x, y].parent == tetromino)
                 {
-                    if (grid[x, y].parent == tetromino)
-                    {
-                        grid[x, y] = null;
-                    }
+                    grid[x, y] = null;
                 }
             }
         }
@@ -41,8 +38,12 @@ public class GridScript : MonoBehaviour
         foreach (Transform mino in tetromino)
         {
             Vector2 pos = Round(mino.position);
-            if (pos.y < height)
+            if (pos.y < height && pos.x >= 0 && pos.x < width)
             {
+                // Snap the mino to the grid
+                mino.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), 0);
+
+                // Assign to the grid
                 grid[(int)pos.x, (int)pos.y] = mino;
             }
         }
@@ -217,16 +218,28 @@ public class GridScript : MonoBehaviour
                 {
                     if (grid[x, y] != null)
                     {
+                        // ✅ Spawn particle effect and destroy it after 1s
+                        if (blockDestroyEffectPrefab != null)
+                        {
+                            GameObject effect = Instantiate(blockDestroyEffectPrefab, grid[x, y].position, Quaternion.identity);
+                            Destroy(effect, 1f); // Automatically destroy after 1 second
+                        }
+
                         Destroy(grid[x, y].gameObject);
                         grid[x, y] = null;
                     }
                 }
             }
+            
         }
 
         // Optional: make the grid fall down after destroying
         DecreaseRowsAbove(centerInt.y - radius);
+
+        Debug.Log($"UseBombastic called at center {center}");
     }
+
+
     // === Crusher: compact each column downward ===
     public void UseCrusher()
     {
@@ -364,10 +377,15 @@ private IEnumerator PlayTractorEffectAndClear()
         // Step 4: Drop blocks down
         DecreaseRowsAbove(0);
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            UseBomb();
+        {
+            Vector2 center = new Vector2(width / 2, 2); // Try lower area
+            UseBombastic(center);
+        }
+            
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             UseCrusher();
@@ -378,11 +396,5 @@ private IEnumerator PlayTractorEffectAndClear()
         if (Input.GetKeyDown(KeyCode.Alpha4))
             UseColorPopper();
     }
-
-    private void UseBomb()
-    {
-        throw new System.NotImplementedException();
-    }
-   
 
 }

@@ -11,6 +11,7 @@ TagManager:
   - Tetromino
   - Lucky
   - Unlucky
+  - Price
   layers:
   - Default
   - TransparentFX

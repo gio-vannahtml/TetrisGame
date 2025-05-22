@@ -695,7 +695,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1193366238}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadEasyLevel
+        m_MethodName: LoadTutorialLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2263,7 +2263,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1193366238}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadDifficultLevel
+        m_MethodName: LoadLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3040,11 +3040,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-<<<<<<< HEAD
-          m_BoolArgument: 0
-=======
           m_BoolArgument: 1
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
         m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1904073837 stripped
@@ -3270,17 +3266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70b8764c75754c3ea29eb87bb607445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  audioSource: {fileID: 0}
-  brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
-  musicSource: {fileID: 0}
-  backgroundMusic: {fileID: 8300000, guid: 97032ebb66d824b3d95401e786b4d77b, type: 3}
-=======
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
   backgroundMusic: {fileID: 8300000, guid: 97032ebb66d824b3d95401e786b4d77b, type: 3}
   brickSound: {fileID: 8300000, guid: 5e5b7d10677d34165bf98c17fee1dc48, type: 3}
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
 --- !u!4 &2033577440
 Transform:
   m_ObjectHideFlags: 0
