@@ -374,11 +374,7 @@ Transform:
   m_GameObject: {fileID: 1488705438121424389}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< HEAD
   m_LocalPosition: {x: -7, y: 6, z: 0}
-=======
-  m_LocalPosition: {x: -6.97, y: 6, z: 0}
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -535,10 +531,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5126726758984968506}
-<<<<<<< HEAD
-=======
-  - component: {fileID: -3551769765149103536}
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
   m_Layer: 0
   m_Name: X Boss
   m_TagString: Untagged
@@ -607,24 +599,6 @@ Transform:
   - {fileID: 5410882619299755110}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-=======
---- !u!114 &-3551769765149103536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2249596522838749376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee09e74034d0ed4eb5092660f3742e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPosition: {x: 5, y: 12, z: 0}
-  bossType: 0
-  health: 150
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
 --- !u!1 &2507886003302515970
 GameObject:
   m_ObjectHideFlags: 0

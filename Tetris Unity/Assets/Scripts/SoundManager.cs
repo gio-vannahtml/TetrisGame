@@ -4,46 +4,6 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-<<<<<<< HEAD
-    public AudioSource audioSource;
-    public AudioClip brickSound;
-    public AudioSource musicSource;
-public AudioClip backgroundMusic;
-
-   private void Awake()
-{
-    if (Instance == null)
-        Instance = this;
-    else
-        Destroy(gameObject);
-
-    // Start background music
-    if (musicSource != null && backgroundMusic != null)
-    {
-        musicSource.clip = backgroundMusic;
-        musicSource.loop = true;
-        musicSource.Play();
-        musicSource.volume = 0.06f;
-    }
-}
-
-public void ToggleBrickSounds(bool enabled)
-{
-    audioSource.mute = !enabled;
-}
-
-public void ToggleMusic(bool enabled)
-{
-    musicSource.mute = !enabled;
-}
-
-    public void PlayBrickSound()
-    {
-        audioSource.PlayOneShot(brickSound);
-    }
-    
-}
-=======
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
@@ -91,4 +51,3 @@ public void ToggleMusic(bool enabled)
     }
 }
 
->>>>>>> 51e8c47080d3ad4fe23a37069134019be402f7d3
