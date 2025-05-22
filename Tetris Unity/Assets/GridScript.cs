@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridScript : MonoBehaviour
 {
     public Transform[,] grid;
-    
+
     // Grid dimensions
     public int width = 10, height = 20; // Set default grid size
 
@@ -24,12 +24,9 @@ public class GridScript : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                if (grid[x, y] != null)
+                if (grid[x, y] != null && grid[x, y].parent == tetromino)
                 {
-                    if (grid[x, y].parent == tetromino)
-                    {
-                        grid[x, y] = null;
-                    }
+                    grid[x, y] = null;
                 }
             }
         }
@@ -37,8 +34,12 @@ public class GridScript : MonoBehaviour
         foreach (Transform mino in tetromino)
         {
             Vector2 pos = Round(mino.position);
-            if (pos.y < height)
+            if (pos.y < height && pos.x >= 0 && pos.x < width)
             {
+                // Snap the mino to the grid
+                mino.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), 0);
+
+                // Assign to the grid
                 grid[(int)pos.x, (int)pos.y] = mino;
             }
         }
@@ -119,7 +120,7 @@ public class GridScript : MonoBehaviour
                 linesCleared++;
                 DecreaseRowsAbove(y + 1); // Shift lines down after clearing
                 y--;
-                
+
             }
         }
 
@@ -196,33 +197,45 @@ public class GridScript : MonoBehaviour
         }
     }
      */
-// === Bombastic: destroy blocks in 3x3 area ===
-public void UseBombastic(Vector2 center)
-{
-    int radius = 1; // 3x3 area
-    Vector2Int centerInt = Vector2Int.RoundToInt(center);
 
-    for (int dx = -radius; dx <= radius; dx++)
+    // === Bombastic: destroy blocks in 3x3 area ===
+    public void UseBombastic(Vector2 center)
     {
-        for (int dy = -radius; dy <= radius; dy++)
-        {
-            int x = centerInt.x + dx;
-            int y = centerInt.y + dy;
+        int radius = 1; // 3x3 area
+        Vector2Int centerInt = Vector2Int.RoundToInt(center);
 
-            if (x >= 0 && x < width && y >= 0 && y < height)
+        for (int dx = -radius; dx <= radius; dx++)
+        {
+            for (int dy = -radius; dy <= radius; dy++)
             {
-                if (grid[x, y] != null)
+                int x = centerInt.x + dx;
+                int y = centerInt.y + dy;
+
+                if (x >= 0 && x < width && y >= 0 && y < height)
                 {
-                    Destroy(grid[x, y].gameObject);
-                    grid[x, y] = null;
+                    if (grid[x, y] != null)
+                    {
+                        // ✅ Spawn particle effect and destroy it after 1s
+                        if (blockDestroyEffectPrefab != null)
+                        {
+                            GameObject effect = Instantiate(blockDestroyEffectPrefab, grid[x, y].position, Quaternion.identity);
+                            Destroy(effect, 1f); // Automatically destroy after 1 second
+                        }
+
+                        Destroy(grid[x, y].gameObject);
+                        grid[x, y] = null;
+                    }
                 }
             }
         }
+
+        // Optional: make the grid fall down after destroying
+        DecreaseRowsAbove(centerInt.y - radius);
+
+        Debug.Log($"UseBombastic called at center {center}");
     }
 
-    // Optional: make the grid fall down after destroying
-    DecreaseRowsAbove(centerInt.y - radius);
-}
+
     // === Crusher: compact each column downward ===
     public void UseCrusher()
     {
@@ -275,89 +288,91 @@ public void UseBombastic(Vector2 center)
 
     // === Color Popper: removes all blocks of one random color ===
     public void UseColorPopper()
-{
-    Dictionary<string, List<Vector2Int>> colorGroups = new Dictionary<string, List<Vector2Int>>();
-    Dictionary<string, Color> colorMap = new Dictionary<string, Color>();
-
-    // Step 1: Group blocks by color (as hex string)
-    for (int y = 0; y < height; y++)
     {
-        for (int x = 0; x < width; x++)
+        Dictionary<string, List<Vector2Int>> colorGroups = new Dictionary<string, List<Vector2Int>>();
+        Dictionary<string, Color> colorMap = new Dictionary<string, Color>();
+
+        // Step 1: Group blocks by color (as hex string)
+        for (int y = 0; y < height; y++)
         {
-            Transform block = grid[x, y];
-            if (block != null)
+            for (int x = 0; x < width; x++)
             {
-                SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
-                if (sr != null)
+                Transform block = grid[x, y];
+                if (block != null)
                 {
-                    Color color = sr.color;
-                    string hex = ColorUtility.ToHtmlStringRGB(color);
+                    SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+                    if (sr != null)
+                    {
+                        Color color = sr.color;
+                        string hex = ColorUtility.ToHtmlStringRGB(color);
 
-                    if (!colorGroups.ContainsKey(hex))
-                        colorGroups[hex] = new List<Vector2Int>();
+                        if (!colorGroups.ContainsKey(hex))
+                            colorGroups[hex] = new List<Vector2Int>();
 
-                    colorGroups[hex].Add(new Vector2Int(x, y));
+                        colorGroups[hex].Add(new Vector2Int(x, y));
 
-                    if (!colorMap.ContainsKey(hex))
-                        colorMap[hex] = color;
+                        if (!colorMap.ContainsKey(hex))
+                            colorMap[hex] = color;
+                    }
                 }
             }
         }
-    }
 
-    // Step 2: Find the color with the most blocks
-    string mostCommonHex = "";
-    int maxCount = 0;
+        // Step 2: Find the color with the most blocks
+        string mostCommonHex = "";
+        int maxCount = 0;
 
-    foreach (var kvp in colorGroups)
-    {
-        if (kvp.Value.Count > maxCount)
+        foreach (var kvp in colorGroups)
         {
-            mostCommonHex = kvp.Key;
-            maxCount = kvp.Value.Count;
+            if (kvp.Value.Count > maxCount)
+            {
+                mostCommonHex = kvp.Key;
+                maxCount = kvp.Value.Count;
+            }
         }
-    }
 
-    if (string.IsNullOrEmpty(mostCommonHex))
-    {
-        Debug.LogWarning("No blocks to pop!");
-        return;
-    }
-
-    Color targetColor = colorMap[mostCommonHex];
-    Debug.Log($"ColorPopper: Popping color {targetColor} with {maxCount} blocks!");
-
-    // Step 3: Destroy blocks of that color
-    foreach (Vector2Int pos in colorGroups[mostCommonHex])
-    {
-        Transform block = grid[pos.x, pos.y];
-        if (block != null)
+        if (string.IsNullOrEmpty(mostCommonHex))
         {
-            Destroy(block.gameObject);
-            grid[pos.x, pos.y] = null;
+            Debug.LogWarning("No blocks to pop!");
+            return;
         }
+
+        Color targetColor = colorMap[mostCommonHex];
+        Debug.Log($"ColorPopper: Popping color {targetColor} with {maxCount} blocks!");
+
+        // Step 3: Destroy blocks of that color
+        foreach (Vector2Int pos in colorGroups[mostCommonHex])
+        {
+            Transform block = grid[pos.x, pos.y];
+            if (block != null)
+            {
+                Destroy(block.gameObject);
+                grid[pos.x, pos.y] = null;
+            }
+        }
+
+        // Step 4: Drop blocks down
+        DecreaseRowsAbove(0);
     }
 
-    // Step 4: Drop blocks down
-    DecreaseRowsAbove(0);
-}
     void Update()
-{
-    if (Input.GetKeyDown(KeyCode.Alpha1))
-        UseBomb();
-
-    if (Input.GetKeyDown(KeyCode.Alpha2))
-        UseCrusher();
-
-    if (Input.GetKeyDown(KeyCode.Alpha3))
-        UseTractor();
-
-    if (Input.GetKeyDown(KeyCode.Alpha4))
-        UseColorPopper();
-}
-
-    private void UseBomb()
     {
-        throw new System.NotImplementedException();
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Vector2 center = new Vector2(width / 2, 2); // Try lower area
+            UseBombastic(center);
+        }
+            
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            UseCrusher();
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            UseTractor();
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            UseColorPopper();
     }
+
+
 }
