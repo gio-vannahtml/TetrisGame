@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
@@ -77,7 +78,20 @@ public class GameManager : MonoBehaviour
     private List<GameObject> piecePool = new List<GameObject>();
     private const int POOL_SIZE = 5;
 
-    public int winScore = 2000; // Set your win condition
+    private Dictionary<string, int> sceneWinScores = new Dictionary<string, int>()
+{
+    { "Level - Tutorial", 500 }, 
+    { "Level - Neweasy", 2000 },
+    { "Level - Bosstry", 6000 }
+};
+
+    private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
+    {
+    { "Level - Tutorial", 100 },
+    { "Level - Neweasy", 50 },
+    { "Level - Bosstry", 80 }
+    };
+    private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
 
     // Initialize the game by spawning the first tetromino
@@ -85,6 +99,23 @@ public class GameManager : MonoBehaviour
     {
         bossManager = BossManager.Instance;
 
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (sceneWinScores.ContainsKey(currentScene))
+        {
+             winScore = sceneWinScores[currentScene];
+        }
+        else
+        {
+            winScore = 2000; // Fallback default
+        }
+        if (sceneMoveCounts.ContainsKey(currentScene))
+        {
+            maxMoves = sceneMoveCounts[currentScene];
+        }
+        else
+        {
+            maxMoves = 100; // Fallback default
+        }
         if (bossManager != null)
         {
             Debug.Log("BossManager.Instance exists");
@@ -93,10 +124,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("No boss is active, applying boss...");
                 bossManager.ApplyBoss();
             }
-        }
-        else
-        {
-            Debug.LogWarning("BossManager.Instance is null!");
         }
 
         remainingMoves = maxMoves;
@@ -199,9 +226,8 @@ public class GameManager : MonoBehaviour
     // Handle keyboard input for tetromino movement and rotation
     void UserInput()
     {
-        if (remainingMoves <= 0)
-            return; // Prevent input if no moves left
-
+        if (maxMoves != -1 && remainingMoves <= 0)
+            return; // Only block input if not infinite
         bool moved = false;
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -225,7 +251,7 @@ public class GameManager : MonoBehaviour
             moved = true;
         }
 
-        if (moved)
+        if (moved && maxMoves != -1)
         {
             remainingMoves--;
             UpdateMoveText();
@@ -251,9 +277,16 @@ public class GameManager : MonoBehaviour
         // Hard drop tetromino
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            while(MoveTetromino(Vector3.down))
+            while (MoveTetromino(Vector3.down))
             {
                 continue;
+            }
+            remainingMoves--;
+            UpdateMoveText();
+
+            if (remainingMoves <= 0)
+            {
+                EndGame();
             }
         }
     }
