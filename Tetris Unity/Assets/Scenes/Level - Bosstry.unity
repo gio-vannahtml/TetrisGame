@@ -16178,6 +16178,7 @@ MonoBehaviour:
   tractorEffectSprite: {fileID: 6124448547508259807, guid: f258e35794fc97846a584e4c384eeca0, type: 3}
   crusherEffectSprite: {fileID: 6310314394310168212, guid: f023e8f8c3d682043925995b1a732a1e, type: 3}
   tractorEffectPrefab: {fileID: 1717402835596599175, guid: 80d2c27818633448cb134b02ca7f0d26, type: 3}
+  bombSprite: {fileID: -2613247888821195678, guid: 3e8970bf36f2d67498077f89b44cbb1c, type: 3}
   width: 10
   height: 20
   blockDestroyEffectPrefab: {fileID: 240687043}
@@ -18641,7 +18642,7 @@ SceneRoots:
   - {fileID: 835074794}
   - {fileID: 1615535892}
   - {fileID: 1066231746}
-  - {fileID: 414587576}
+  - {fileID: 8121619639478057809}
   - {fileID: 1318875361}
   - {fileID: 613138180}
   - {fileID: 1773811034}

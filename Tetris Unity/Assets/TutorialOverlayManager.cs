@@ -11,6 +11,14 @@ public class TutorialOverlayManager : MonoBehaviour
         ShowOverlay(0); // Show the first overlay
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        {
+            NextOverlay();
+        }
+    }
+
     public void ShowOverlay(int index)
     {
         for (int i = 0; i < overlays.Length; i++)
