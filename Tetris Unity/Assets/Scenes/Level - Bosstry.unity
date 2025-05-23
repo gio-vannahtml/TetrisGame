@@ -17866,6 +17866,55 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1266118724041284694, guid: 2cf3b194675bb2445a5d859ad626ee13, type: 3}
   m_PrefabInstance: {fileID: 2015288550}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2039077085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2039077087}
+  - component: {fileID: 2039077086}
+  m_Layer: 0
+  m_Name: ' PauseManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2039077086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039077085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8ff3dc07a0045bd9f148f4e796f138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseOverlay: {fileID: 1768613672}
+  pauseButton: {fileID: 1520575910}
+  resumeButton: {fileID: 2132005876}
+  restartButton: {fileID: 1911278956}
+  exitButton: {fileID: 1743567171}
+--- !u!4 &2039077087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039077085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 210.00623, y: 152.3113, z: -1.6418641}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2085507501
 GameObject:
   m_ObjectHideFlags: 0
@@ -18598,3 +18647,4 @@ SceneRoots:
   - {fileID: 1454674228}
   - {fileID: 1922863552}
   - {fileID: 414587576}
+  - {fileID: 2039077087}
