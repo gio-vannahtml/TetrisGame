@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
 {
-    public PointsManager pointsManager;
     public static GameManager Instance { get; private set; }
 
     // Array of different tetromino prefabs
@@ -25,6 +24,8 @@ public class GameManager : MonoBehaviour
     public GameObject luckyBlockPrefab;
     public GameObject unluckyBlockPrefab;
     public GameObject BombBlockPrefab;
+
+    public GridScript gridScript;
 
     // Number indicator for the players score
     public int score = 0;
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            /*DontDestroyOnLoad(gameObject); // Optional: keeps GameManager across scene loads*/
+            DontDestroyOnLoad(gameObject); // Optional: keeps GameManager across scene loads
         }
         else if (Instance != this)
         {
@@ -329,7 +330,7 @@ public class GameManager : MonoBehaviour
         
         CreateGhost();
 
-        float luckyChance = 0.01f;   // 1%
+        float luckyChance = 0.05f;   // 5%
         float unluckyChance = 0.01f; // 1%
         float roll = Random.value;
 
@@ -399,18 +400,44 @@ public class GameManager : MonoBehaviour
     {
         if (block.CompareTag("Lucky"))
         {
-            score += 500; // Bonus
-            remainingMoves += 3; // Extra moves
-            Debug.Log("Lucky block landed! Bonus awarded.");
+            ActivateRandomItem(); // Immediately activate a random item
+            score += 200; // Bonus Points
+            remainingMoves = Mathf.Max(0, remainingMoves + 5); // Gain moves
+            Debug.Log("Lucky block landed! Payday!");
         }
         else if (block.CompareTag("Unlucky"))
         {
             score -= 200; // Penalty
             remainingMoves = Mathf.Max(0, remainingMoves - 5); // Lose moves
-            Debug.Log("Unlucky block landed! Penalty applied.");
+            Debug.Log("Unlucky block landed! Budget Cuts...");
         }
 
         UpdateMoveText();
+    }
+
+    public void ActivateRandomItem()
+    {
+        int roll = Random.Range(0, 4); // 4 item types
+
+        switch (roll)
+        {
+            case 0:
+                gridScript.UseBombastic();
+                Debug.Log("Activated Bombastic from Lucky Block!");
+                break;
+            case 1:
+                gridScript.UseCrusher();
+                Debug.Log("Activated Crusher from Lucky Block!");
+                break;
+            case 2:
+                gridScript.UseTractor();
+                Debug.Log("Activated Tractor from Lucky Block!");
+                break;
+            case 3:
+                gridScript.UseColorPopper();
+                Debug.Log("Activated ColorPopper from Lucky Block!");
+                break;
+        }
     }
 
     public void MoveBoss(Vector3 direction)
@@ -561,37 +588,28 @@ public class GameManager : MonoBehaviour
 
     // Indicate that the game has ended when there are no moves remaining
     void EndGame()
-{
-    Debug.Log("Game Over!");
-    enabled = false;
+    {
+        Debug.Log("Game Over!");
 
-    if (SoundManager.Instance != null)
-    {
-        // SoundManager.Instance.PlayGameOverSound();
-    }
+        enabled = false;
 
-    if (score > PlayerPrefs.GetInt("HighScore", 0))
-    {
-        PlayerPrefs.SetInt("HighScore", score);
-        PlayerPrefs.Save();
-        Debug.Log("New high score: " + score);
-    }
+        if (SoundManager.Instance != null)
+        {
+            // SoundManager.Instance.PlayGameOverSound();
+        }
 
-    if (pointsManager != null)
-    {
-        int finalCombos = totalLinesCleared; // or use your own combo logic
-        pointsManager.ShowGameOver(score, finalCombos);
-    }
-    else
-    {
-        Debug.LogWarning("PointsManager not assigned in GameManager!");
-    }
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
+            Debug.Log("New high score: " + score);
+        }
 
-    if (gameOverOverlay != null)
-    {
-        gameOverOverlay.SetActive(true);
+        if (gameOverOverlay != null)
+        {
+            gameOverOverlay.SetActive(true);
+        }
     }
-}
 
     void WinGame()
     {
