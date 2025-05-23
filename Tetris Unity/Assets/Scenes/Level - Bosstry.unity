@@ -1064,10 +1064,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1896853246}
+  - {fileID: 1590791997}
+  - {fileID: 1744204196}
+  - {fileID: 522572022}
 --- !u!4 &111961002
 Transform:
   m_ObjectHideFlags: 0
