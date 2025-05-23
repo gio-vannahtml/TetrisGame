@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 {
     { "Level - Tutorial", 500 }, 
     { "Level - Neweasy", 2000 },
-    { "Level - Bosstry", 300 }
+    { "Level - Bosstry", 3000 }
 };
 
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
