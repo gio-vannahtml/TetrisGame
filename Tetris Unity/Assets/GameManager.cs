@@ -84,18 +84,19 @@ public class GameManager : MonoBehaviour
     private const int POOL_SIZE = 5;
 
     private Dictionary<string, int> sceneWinScores = new Dictionary<string, int>()
-{
-    { "Level - Tutorial", 500 }, 
-    { "Level - Neweasy", 2000 },
-    { "Level - Bosstry", 300 }
-};
+    {
+        { "Level - Tutorial", 500 }, 
+        { "Level - Neweasy", 2000 },
+        { "Level - Bosstry", 2000 }
+    };
 
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
     {
-    { "Level - Tutorial", 100 },
-    { "Level - Neweasy", 50 },
-    { "Level - Bosstry", 80 }
+        { "Level - Tutorial", 100 },
+        { "Level - Neweasy", 50 },
+        { "Level - Bosstry", 100 }
     };
+
     private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
 
