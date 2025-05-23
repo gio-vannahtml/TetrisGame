@@ -4,7 +4,25 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance { get; private set; }
+
     public TMPro.TextMeshProUGUI currencyText;
+    public TMPro.TextMeshProUGUI linesClearedCurrencyText;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // Optional: prevent duplicates
+            return;
+        }
+
+    }
 
     private void Start()
     {
@@ -28,16 +46,28 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void UpdateCurrencyUI()
-    {
-        currencyText.text = CurrencyManager.Instance.currency.ToString();
-    }
 
     private void OnEnable()
     {
         if (CurrencyManager.Instance != null)
             CurrencyManager.Instance.OnCurrencyChanged += UpdateCurrencyUI;
+        UpdateCurrencyUI();
+        UpdateLinesClearedUI();
     }
+
+    public void UpdateCurrencyUI()
+    {
+        currencyText.text = CurrencyManager.Instance.currency.ToString();
+    }
+
+    public void UpdateLinesClearedUI()
+    {
+        if (GameManager.Instance != null)
+        {
+            linesClearedCurrencyText.text = GameManager.Instance.GetLinesCleared().ToString();
+        }
+    }
+
 
     private void OnDisable()
     {
@@ -64,4 +94,20 @@ public class ShopManager : MonoBehaviour
     {
         BuyItem(600, "Color Popper");
     }
+    
+    public void BuyComboUpgrade()
+    {
+        int cost = 10; // Number of lines required
+        if (GameManager.Instance.SpendLines(cost))
+        {
+            Debug.Log("Upgrade bought with lines!");
+            // Apply the upgrade logic here...
+            UpdateLinesClearedUI();
+        }
+        else
+        {
+            Debug.Log("Not enough lines cleared!");
+        }
+    }
+
 }

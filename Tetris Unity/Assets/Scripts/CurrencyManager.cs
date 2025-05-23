@@ -38,7 +38,7 @@ public class CurrencyManager : MonoBehaviour
     // Resets the currency to 0 for a new roguelike run
     public void ResetRun()
     {
-        currency = 1000;
+        currency = 0;
         Debug.Log("Currency reset to: " + currency);
     }
 

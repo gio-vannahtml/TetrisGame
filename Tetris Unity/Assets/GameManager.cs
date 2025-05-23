@@ -6,6 +6,9 @@ using TMPro;
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
 {
+
+    public static GameManager Instance { get; private set; }
+
     // Array of different tetromino prefabs
     public GameObject[] Tetrominos;
     
@@ -54,7 +57,14 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
             //bossManager = FindFirstObjectByType<BossManager>();
             //bossPool = FindFirstObjectByType<BossPool>();
         
@@ -429,6 +439,23 @@ public class GameManager : MonoBehaviour
             WinGame();
         }
     }
+
+    public int GetLinesCleared()
+    {
+        return totalLinesCleared;
+    }
+
+    public bool SpendLines(int amount)
+    {
+        if (totalLinesCleared >= amount)
+        {
+            totalLinesCleared -= amount;
+            UpdateLineCounter(); // Update UI
+            return true;
+        }
+        return false;
+    }
+
 
     void UpdateLineCounter()
     {
