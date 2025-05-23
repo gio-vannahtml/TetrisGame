@@ -11697,8 +11697,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcb3f4fe57ba944ead495c66e790f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tractorEffectSprite: {fileID: 0}
-  tractorEffectPrefab: {fileID: 0}
+  tractorEffectSprite: {fileID: 6124448547508259807, guid: f258e35794fc97846a584e4c384eeca0, type: 3}
+  crusherEffectSprite: {fileID: 6310314394310168212, guid: f023e8f8c3d682043925995b1a732a1e, type: 3}
+  tractorEffectPrefab: {fileID: 1717402835596599175, guid: 80d2c27818633448cb134b02ca7f0d26, type: 3}
   width: 10
   height: 20
   blockDestroyEffectPrefab: {fileID: 240687043}

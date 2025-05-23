@@ -6,7 +6,8 @@ using UnityEngine;
 public class GridScript : MonoBehaviour
 
 {
-    public Sprite tractorEffectSprite;
+    public Sprite tractorEffectSprite; 
+    public Sprite crusherEffectSprite;
     public GameObject tractorEffectPrefab;
     public Transform[,] grid;
 
@@ -225,32 +226,102 @@ public class GridScript : MonoBehaviour
 
     // === Crusher: compact each column downward ===
     public void UseCrusher()
+{
+    StartCoroutine(PlayCrusherEffectAndCompress());
+}
+
+private IEnumerator PlayCrusherEffectAndCompress()
+{
+    float delay = 0.05f;
+
+    // Step 1: Identify blocks to be crushed (i.e., removed)
+    List<Transform> blocksToCrush = new List<Transform>();
+
+    for (int x = 0; x < width; x++)
     {
-        for (int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++)
         {
-            List<Transform> columnBlocks = new List<Transform>();
-
-            for (int y = 0; y < height; y++)
+            if (grid[x, y] != null)
             {
-                if (grid[x, y] != null)
-                {
-                    columnBlocks.Add(grid[x, y]);
-                    grid[x, y] = null;
-                }
-            }
-
-            for (int y = 0; y < columnBlocks.Count; y++)
-            {
-                grid[x, y] = columnBlocks[y];
-                grid[x, y].position = new Vector3(x, y, 0);
+                blocksToCrush.Add(grid[x, y]);
             }
         }
     }
 
+    // Step 2: Show crusher sprite on them for 0.2s
+    foreach (Transform block in blocksToCrush)
+    {
+        SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.sprite = crusherEffectSprite;
+        }
+    }
+
+    yield return new WaitForSeconds(0.5f);
+
+    // Step 3: Remove all blocks
+    for (int x = 0; x < width; x++)
+    {
+        for (int y = 0; y < height; y++)
+        {
+            if (grid[x, y] != null)
+            {
+                Destroy(grid[x, y].gameObject);
+                grid[x, y] = null;
+            }
+        }
+    }
+
+    yield return new WaitForSeconds(delay);
+
+    // Step 4: Compress columns down
+    for (int x = 0; x < width; x++)
+    {
+        List<Transform> columnBlocks = new List<Transform>();
+
+        for (int y = 0; y < height; y++)
+        {
+            if (grid[x, y] != null)
+            {
+                columnBlocks.Add(grid[x, y]);
+                grid[x, y] = null;
+            }
+        }
+
+        for (int y = 0; y < columnBlocks.Count; y++)
+        {
+            grid[x, y] = columnBlocks[y];
+            grid[x, y].position = new Vector3(x, y, 0);
+        }
+    }
+}
+
     // === Tractor: removes bottom row ===
     public void UseTractor()
+{
+    StartCoroutine(PlayTractorEffectAndClear());
+}
+
+private IEnumerator PlayTractorEffectAndClear()
+{
+    float delay = 0.05f;
+
+   for (int x = width - 1; x >= 0; x--)
+{
+    if (grid[x, 0] != null)
     {
-        StartCoroutine(PlayTractorEffectAndClear());
+        Transform block = grid[x, 0];
+        SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+
+        if (sr != null)
+        {
+            sr.sprite = tractorEffectSprite; 
+
+        yield return new WaitForSeconds(0.2f);
+
+        Destroy(block.gameObject);
+        grid[x, 0] = null;
     }
 
     private IEnumerator PlayTractorEffectAndClear()
