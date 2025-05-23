@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keeps GameManager across scene loads
+            /*DontDestroyOnLoad(gameObject); // Optional: keeps GameManager across scene loads*/
         }
         else if (Instance != this)
         {
@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
         // If it's a bomb, set the bomb sprite
 if (currentTetromino.CompareTag("Bomb"))
 {
-    Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
+    Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
     foreach (Transform child in currentTetromino.transform)
     {
         SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
@@ -660,7 +660,7 @@ if (currentTetromino.CompareTag("Bomb"))
             // Try to change preview block’s appearance to bomb sprite
             if (nextTetrominoPreview != null)
             {
-                Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
+                Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
                 foreach (Transform child in nextTetrominoPreview.transform)
                 {
                     SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
