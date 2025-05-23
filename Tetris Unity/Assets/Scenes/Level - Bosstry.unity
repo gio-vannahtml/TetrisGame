@@ -5556,13 +5556,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066231744}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e9bff84999f5483b90cb55144292a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialOverlay1: {fileID: 0}
-  tutorialOverlay2: {fileID: 0}
   overlay1: {fileID: 1099523775}
   overlay2: {fileID: 835074790}
   overlay3: {fileID: 1615535888}
@@ -9572,7 +9570,6 @@ MonoBehaviour:
   moveText: {fileID: 729115836}
   nextPiecePreviewLocation: {fileID: 546650708}
   ghostMaterial: {fileID: 2100000, guid: 62612afca3e00234e918c68f872bbf28, type: 2}
-  winScore: 4000
 --- !u!212 &1855203563
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10850,6 +10847,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 600128938}
   - {fileID: 1601498252}
+  - {fileID: 1099523779}
+  - {fileID: 835074794}
+  - {fileID: 1615535892}
+  - {fileID: 1066231746}
   - {fileID: 414587576}
   - {fileID: 1318875361}
   - {fileID: 613138180}
@@ -10889,10 +10890,6 @@ SceneRoots:
   - {fileID: 286680805}
   - {fileID: 1658106768}
   - {fileID: 85056673}
-  - {fileID: 1099523779}
-  - {fileID: 835074794}
-  - {fileID: 1615535892}
-  - {fileID: 1066231746}
   - {fileID: 2124975174}
   - {fileID: 97537832}
   - {fileID: 178948997}
