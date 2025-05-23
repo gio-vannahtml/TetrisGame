@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     // Array of different tetromino prefabs
     public GameObject[] Tetrominos;
     
@@ -20,6 +23,7 @@ public class GameManager : MonoBehaviour
     //Reference to special blocks
     public GameObject luckyBlockPrefab;
     public GameObject unluckyBlockPrefab;
+    public GameObject BombBlockPrefab;
 
     // Number indicator for the players score
     public int score = 0;
@@ -52,8 +56,21 @@ public class GameManager : MonoBehaviour
     private GameObject ghostTetromino;
     public Material ghostMaterial; // Assign in Inspector
 
+    public GameObject winOverlay;
+    public GameObject gameOverOverlay;
+
     void Awake()
     {
+        // Singleton pattern implementation
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Optional: keeps GameManager across scene loads
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
         
             //bossManager = FindFirstObjectByType<BossManager>();
             //bossPool = FindFirstObjectByType<BossPool>();
@@ -64,7 +81,20 @@ public class GameManager : MonoBehaviour
     private List<GameObject> piecePool = new List<GameObject>();
     private const int POOL_SIZE = 5;
 
-    public int winScore = 2000; // Set your win condition
+    private Dictionary<string, int> sceneWinScores = new Dictionary<string, int>()
+{
+    { "Level - Tutorial", 500 }, 
+    { "Level - Neweasy", 2000 },
+    { "Level - Bosstry", 6000 }
+};
+
+    private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
+    {
+    { "Level - Tutorial", 100 },
+    { "Level - Neweasy", 50 },
+    { "Level - Bosstry", 80 }
+    };
+    private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
 
     // Initialize the game by spawning the first tetromino
@@ -72,6 +102,23 @@ public class GameManager : MonoBehaviour
     {
         bossManager = BossManager.Instance;
 
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (sceneWinScores.ContainsKey(currentScene))
+        {
+            winScore = sceneWinScores[currentScene];
+        }
+        else
+        {
+            winScore = 2000; // Fallback default
+        }
+        if (sceneMoveCounts.ContainsKey(currentScene))
+        {
+            maxMoves = sceneMoveCounts[currentScene];
+        }
+        else
+        {
+            maxMoves = 100; // Fallback default
+        }
         if (bossManager != null)
         {
             Debug.Log("BossManager.Instance exists");
@@ -81,16 +128,15 @@ public class GameManager : MonoBehaviour
                 bossManager.ApplyBoss();
             }
         }
-        else
-        {
-            Debug.LogWarning("BossManager.Instance is null!");
-        }
 
         remainingMoves = maxMoves;
         InitializePiecePool();
         SpawnTetromino();
         UpdateMoveText();
         UpdateLineCounter();
+        
+        if (winOverlay != null) winOverlay.SetActive(false);
+        if (gameOverOverlay != null) gameOverOverlay.SetActive(false);
     }
 
     void InitializePiecePool()
@@ -186,9 +232,8 @@ public class GameManager : MonoBehaviour
     // Handle keyboard input for tetromino movement and rotation
     void UserInput()
     {
-        if (remainingMoves <= 0)
-            return; // Prevent input if no moves left
-
+        if (maxMoves != -1 && remainingMoves <= 0)
+            return; // Only block input if not infinite
         bool moved = false;
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -212,7 +257,7 @@ public class GameManager : MonoBehaviour
             moved = true;
         }
 
-        if (moved)
+        if (moved && maxMoves != -1)
         {
             remainingMoves--;
             UpdateMoveText();
@@ -238,12 +283,18 @@ public class GameManager : MonoBehaviour
         // Hard drop tetromino
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            while(MoveTetromino(Vector3.down))
+            while (MoveTetromino(Vector3.down))
             {
                 continue;
             }
+            remainingMoves--;
+            UpdateMoveText();
+
+            if (remainingMoves <= 0)
+            {
+                EndGame();
+            }
         }
-        
     }
 
     // Create a new random tetromino at the top of the grid
@@ -311,7 +362,24 @@ public class GameManager : MonoBehaviour
             {
                 // When a tetromino can't move down anymore, lock it in place and spawn a new one
                 GetComponent<GridScript>().UpdateGrid(currentTetromino.transform);
-                HandleSpecialBlock(currentTetromino); // Handle special blocks
+                
+                // Check if this is a bomb block using tag instead of component
+                if (currentTetromino.CompareTag("Bomb"))
+                {
+                    // Get the position of the bomb
+                    Vector2Int bombPosition = new Vector2Int(
+                        Mathf.RoundToInt(currentTetromino.transform.position.x),
+                        Mathf.RoundToInt(currentTetromino.transform.position.y)
+                    );
+                    
+                    // Trigger bomb explosion directly
+                    GetComponent<GridScript>().TriggerBombAt(bombPosition);
+                }
+                else
+                {
+                    // Only handle special blocks if this is not a bomb
+                    HandleSpecialBlock(currentTetromino);
+                }
 
                 // Play brick landing sound
                 SoundManager.Instance.PlayBrickSound();
@@ -494,25 +562,24 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         Debug.Log("Game Over!");
-        
-        // Disable input controls
+
         enabled = false;
-        
-        // You might want to show a game over UI panel here
-        // gameOverPanel.SetActive(true);
-        
-        // Optional: Play game over sound
+
         if (SoundManager.Instance != null)
         {
             // SoundManager.Instance.PlayGameOverSound();
         }
-        
-        // Save high score if applicable
+
         if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
             PlayerPrefs.SetInt("HighScore", score);
             PlayerPrefs.Save();
             Debug.Log("New high score: " + score);
+        }
+
+        if (gameOverOverlay != null)
+        {
+            gameOverOverlay.SetActive(true);
         }
     }
 
@@ -523,6 +590,26 @@ public class GameManager : MonoBehaviour
 
         // Stop the game
         enabled = false; // Disable GameManager script
+        if (winOverlay != null)
+        {
+        winOverlay.SetActive(true);
+        }
     }
-    
+    public void SetNextPieceToBomb()
+    {
+        if (piecePool.Count > 0)
+        {
+            // Replace the upcoming piece (first in pool) with bomb block
+            piecePool[0] = BombBlockPrefab;
+            
+            // Update the preview to show the bomb block
+            ShowNextTetrominoPreview();
+            
+            Debug.Log("Next tetromino changed to Bomb Block!");
+        }
+        else
+        {
+            Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
+        }
+    }
 }

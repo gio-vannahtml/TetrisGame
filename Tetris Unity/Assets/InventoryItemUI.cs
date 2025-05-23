@@ -12,7 +12,7 @@ public class InventoryItemUI : MonoBehaviour
         switch (itemType)
         {
             case ItemType.Bombastic:
-                gridScript.UseBombastic(new Vector2(gridScript.width / 2, gridScript.height / 2));
+                gridScript.UseBombastic();
                 break;
             case ItemType.Crusher:
                 gridScript.UseCrusher();

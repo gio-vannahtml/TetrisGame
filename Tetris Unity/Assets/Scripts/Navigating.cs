@@ -38,7 +38,22 @@ public class MenuButtonHandler : MonoBehaviour
 
     public void LoadBossLevel()
     {
-        SceneManager.LoadScene("Level - Boss level");
+        SceneManager.LoadScene("Level- Boss level");
+    }
+
+    public void LoadBosstryLevel()
+    {
+        SceneManager.LoadScene("Level- Bosstry");
+    }
+
+    public void LoadTutorialLevel()
+    {
+        SceneManager.LoadScene("Level - Tutorial");
+    }
+
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene("AllLevels");
     }
 
 }

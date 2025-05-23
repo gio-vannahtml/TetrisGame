@@ -7,14 +7,16 @@ public class Overlay : MonoBehaviour
     public GameObject overlay2;
     public GameObject overlay3;
 
-void Start()
+    void Start()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 0f; // Pause the game at start
         StartCoroutine(ShowOverlays());
     }
 
     IEnumerator ShowOverlays()
     {
+        // Pause the game globally
+        Time.timeScale = 0f;
         // Show overlay 1
         overlay1.SetActive(true);
         yield return new WaitForSecondsRealtime(2f);
@@ -30,7 +32,7 @@ void Start()
         yield return new WaitForSecondsRealtime(2f);
         overlay3.SetActive(false);
 
-        // Now game starts (you can call any game start logic here)
+        // Resume the game
         Time.timeScale = 1f;
         Debug.Log("Game starts!");
     }
