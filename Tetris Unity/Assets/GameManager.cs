@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
 {
-    public PointsManager pointsManager;
     public static GameManager Instance { get; private set; }
 
     // Array of different tetromino prefabs
@@ -575,37 +574,28 @@ if (currentTetromino.CompareTag("Bomb"))
 
     // Indicate that the game has ended when there are no moves remaining
     void EndGame()
-{
-    Debug.Log("Game Over!");
-    enabled = false;
+    {
+        Debug.Log("Game Over!");
 
-    if (SoundManager.Instance != null)
-    {
-        // SoundManager.Instance.PlayGameOverSound();
-    }
+        enabled = false;
 
-    if (score > PlayerPrefs.GetInt("HighScore", 0))
-    {
-        PlayerPrefs.SetInt("HighScore", score);
-        PlayerPrefs.Save();
-        Debug.Log("New high score: " + score);
-    }
+        if (SoundManager.Instance != null)
+        {
+            // SoundManager.Instance.PlayGameOverSound();
+        }
 
-    if (pointsManager != null)
-    {
-        int finalCombos = totalLinesCleared; // or use your own combo logic
-        pointsManager.ShowGameOver(score, finalCombos);
-    }
-    else
-    {
-        Debug.LogWarning("PointsManager not assigned in GameManager!");
-    }
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
+            Debug.Log("New high score: " + score);
+        }
 
-    if (gameOverOverlay != null)
-    {
-        gameOverOverlay.SetActive(true);
+        if (gameOverOverlay != null)
+        {
+            gameOverOverlay.SetActive(true);
+        }
     }
-}
 
     void WinGame()
     {
@@ -619,36 +609,35 @@ if (currentTetromino.CompareTag("Bomb"))
         winOverlay.SetActive(true);
         }
     }
-    public void SetNextPieceToBomb()
+public void SetNextPieceToBomb()
+{
+    if (piecePool.Count > 0)
     {
-        if (piecePool.Count > 0)
+        // Replace the upcoming piece (first in pool) with bomb block
+        piecePool[0] = BombBlockPrefab;
+
+        // Update the preview to show the bomb block
+        ShowNextTetrominoPreview();
+
+        // Try to change preview block’s appearance to bomb sprite
+        if (nextTetrominoPreview != null)
         {
-            // Replace the upcoming piece (first in pool) with bomb block
-            piecePool[0] = BombBlockPrefab;
-
-            // Update the preview to show the bomb block
-            ShowNextTetrominoPreview();
-
-            // Try to change preview block’s appearance to bomb sprite
-            if (nextTetrominoPreview != null)
+            Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
+            foreach (Transform child in nextTetrominoPreview.transform)
             {
-                Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
-                foreach (Transform child in nextTetrominoPreview.transform)
+                SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+                if (sr != null && bombSprite != null)
                 {
-                    SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-                    if (sr != null && bombSprite != null)
-                    {
-                        sr.sprite = bombSprite;
-                    }
+                    sr.sprite = bombSprite;
                 }
             }
+        }
 
-            Debug.Log("Next tetromino changed to Bomb Block!");
-        }
-        else
-        {
-            Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
-        }
+        Debug.Log("Next tetromino changed to Bomb Block!");
     }
-
+    else
+    {
+        Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
+    }
+}
 }
