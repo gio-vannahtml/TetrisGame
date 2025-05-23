@@ -16081,7 +16081,7 @@ MonoBehaviour:
   width: 10
   height: 20
   blockDestroyEffectPrefab: {fileID: 240687043}
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 1855203562}
 --- !u!114 &1855203562
 MonoBehaviour:
   m_ObjectHideFlags: 0
