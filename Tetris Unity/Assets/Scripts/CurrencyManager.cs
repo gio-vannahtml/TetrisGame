@@ -10,6 +10,9 @@ public class CurrencyManager : MonoBehaviour
     // Current amount of currency the player has in this run
     public int currency;
 
+    public event System.Action OnCurrencyChanged;
+
+
     private void Awake()
     {
         // Singleton pattern setup
@@ -35,7 +38,7 @@ public class CurrencyManager : MonoBehaviour
     // Resets the currency to 0 for a new roguelike run
     public void ResetRun()
     {
-        currency = 0;
+        currency = 1000;
         Debug.Log("Currency reset to: " + currency);
     }
 
@@ -44,6 +47,7 @@ public class CurrencyManager : MonoBehaviour
     {
         currency += amount;
         Debug.Log("Currency added: +" + amount + " (Total: " + currency + ")");
+        OnCurrencyChanged?.Invoke(); // Notify listeners
     }
 
     // Deducts the specified amount from the player's currency
@@ -51,5 +55,26 @@ public class CurrencyManager : MonoBehaviour
     {
         currency -= amount;
         Debug.Log("Currency spent: -" + amount + " (Total: " + currency + ")");
+        OnCurrencyChanged?.Invoke(); // Notify listeners
     }
+
+    public void OnLevelComplete(int pointsEarned)
+    {
+        Instance.AddCurrency(pointsEarned);
+        // Load next level or show win screen
+    }
+        
+    public void SaveCurrency()
+    {
+        PlayerPrefs.SetInt("Currency", currency);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadCurrency()
+    {
+        currency = PlayerPrefs.GetInt("Currency", 0);
+        Debug.Log("Currency loaded: " + currency);
+    }
+
+
 }

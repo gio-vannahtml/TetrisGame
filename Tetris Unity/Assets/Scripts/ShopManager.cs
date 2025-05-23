@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
-    public Text currencyText;
+    public TMPro.TextMeshProUGUI currencyText;
 
     private void Start()
     {
@@ -32,6 +32,18 @@ public class ShopManager : MonoBehaviour
     {
         currencyText.text = CurrencyManager.Instance.currency.ToString();
     }
+
+    private void OnEnable()
+    {
+        if (CurrencyManager.Instance != null)
+            CurrencyManager.Instance.OnCurrencyChanged += UpdateCurrencyUI;
+    }
+
+    private void OnDisable()
+    {
+        CurrencyManager.Instance.OnCurrencyChanged -= UpdateCurrencyUI;
+    }
+
 
     public void BuyBombastic()
     {
