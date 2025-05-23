@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour
     private GameObject ghostTetromino;
     public Material ghostMaterial; // Assign in Inspector
 
+    public GameObject winOverlay;
+    public GameObject gameOverOverlay;
+
     void Awake()
     {
         // Singleton pattern implementation
@@ -102,7 +105,7 @@ public class GameManager : MonoBehaviour
         string currentScene = SceneManager.GetActiveScene().name;
         if (sceneWinScores.ContainsKey(currentScene))
         {
-             winScore = sceneWinScores[currentScene];
+            winScore = sceneWinScores[currentScene];
         }
         else
         {
@@ -131,6 +134,9 @@ public class GameManager : MonoBehaviour
         SpawnTetromino();
         UpdateMoveText();
         UpdateLineCounter();
+        
+        if (winOverlay != null) winOverlay.SetActive(false);
+        if (gameOverOverlay != null) gameOverOverlay.SetActive(false);
     }
 
     void InitializePiecePool()
@@ -556,25 +562,24 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         Debug.Log("Game Over!");
-        
-        // Disable input controls
+
         enabled = false;
-        
-        // You might want to show a game over UI panel here
-        // gameOverPanel.SetActive(true);
-        
-        // Optional: Play game over sound
+
         if (SoundManager.Instance != null)
         {
             // SoundManager.Instance.PlayGameOverSound();
         }
-        
-        // Save high score if applicable
+
         if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
             PlayerPrefs.SetInt("HighScore", score);
             PlayerPrefs.Save();
             Debug.Log("New high score: " + score);
+        }
+
+        if (gameOverOverlay != null)
+        {
+            gameOverOverlay.SetActive(true);
         }
     }
 
@@ -585,6 +590,10 @@ public class GameManager : MonoBehaviour
 
         // Stop the game
         enabled = false; // Disable GameManager script
+        if (winOverlay != null)
+        {
+        winOverlay.SetActive(true);
+        }
     }
     public void SetNextPieceToBomb()
     {
