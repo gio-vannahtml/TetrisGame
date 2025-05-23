@@ -2036,6 +2036,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseOverlay: {fileID: 0}
   pauseButton: {fileID: 425533295}
+  resumeButton: {fileID: 0}
+  restartButton: {fileID: 0}
+  exitButton: {fileID: 0}
 --- !u!224 &751206490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2674,10 +2677,12 @@ MonoBehaviour:
   scoreText: {fileID: 773128521}
   totalLinesCleared: 0
   linesClearedText: {fileID: 1729047925}
+  combosText: {fileID: 0}
   maxMoves: 1000
   moveText: {fileID: 1083572522}
   nextPiecePreviewLocation: {fileID: 1919684921}
   ghostMaterial: {fileID: 2100000, guid: 62612afca3e00234e918c68f872bbf28, type: 2}
+  winScore: 2000
 --- !u!114 &995211951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2690,6 +2695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcb3f4fe57ba944ead495c66e790f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tractorEffectSprite: {fileID: 0}
+  tractorEffectPrefab: {fileID: 0}
   width: 10
   height: 20
   blockDestroyEffectPrefab: {fileID: 1249386172}
@@ -2776,7 +2783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 1632059648}
-  bossPool: {fileID: 0}
+  bossPool: {fileID: 958249427}
 --- !u!1 &998690378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,6 +3029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: 0
+  combos: 0
 --- !u!4 &1011248434
 Transform:
   m_ObjectHideFlags: 0

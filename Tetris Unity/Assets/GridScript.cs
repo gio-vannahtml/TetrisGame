@@ -15,6 +15,10 @@ public class GridScript : MonoBehaviour
 
     public GameObject blockDestroyEffectPrefab; // Drag prefab in Inspector
 
+    void Awake()
+    {
+        grid = new Transform[width, height];
+    }
 
     // Initialize the grid with specified dimensions
     void Start()
