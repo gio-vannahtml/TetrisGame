@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 1154055571}
   - component: {fileID: 1154055570}
   m_Layer: 5
-  m_Name: Tutorial
+  m_Name: Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,7 +978,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0.49019608}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1003,9 +1003,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1474603712}
+      - m_Target: {fileID: 1474603711}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
-        m_MethodName: LoadTutorialLevel
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1334,7 +1334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TUTORIAL
+  m_text: LOCKED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0be93bd1ca4114dcbacf3a0943dd3242, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 89c14655fafd14ef1b4f5cb727837e87, type: 2}
@@ -2041,9 +2041,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseOverlay: {fileID: 0}
   pauseButton: {fileID: 0}
-  resumeButton: {fileID: 0}
-  restartButton: {fileID: 0}
-  exitButton: {fileID: 0}
 --- !u!224 &1968454271
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2146,7 +2143,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1474603712}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
         m_MethodName: LoadMenuScene
         m_Mode: 1

@@ -7,7 +7,6 @@ public class GridScript : MonoBehaviour
     public Sprite tractorEffectSprite; 
     public Sprite crusherEffectSprite;
     public GameObject tractorEffectPrefab;
-    public Sprite bombSprite;
     public Transform[,] grid;
 
     public int width = 10, height = 20;
