@@ -9,6 +9,7 @@ public class CurrencyManager : MonoBehaviour
 
     // Current amount of currency the player has in this run
     public int currency;
+    public int combos;
 
     public event System.Action OnCurrencyChanged;
 
@@ -39,7 +40,22 @@ public class CurrencyManager : MonoBehaviour
     public void ResetRun()
     {
         currency = 0;
+        combos = 0;
         Debug.Log("Currency reset to: " + currency);
+    }
+
+    public void SetCombos(int value)
+    {
+        combos = value;
+        OnCurrencyChanged?.Invoke(); // Notify UI listeners
+    }
+    
+    // Resets combos (e.g., on fail or level reset)
+    public void ResetCombos()
+    {
+        combos = 0;
+        Debug.Log("Combos reset.");
+        OnCurrencyChanged?.Invoke();
     }
 
     // Adds the specified amount to the player's currency
@@ -48,6 +64,27 @@ public class CurrencyManager : MonoBehaviour
         currency += amount;
         Debug.Log("Currency added: +" + amount + " (Total: " + currency + ")");
         OnCurrencyChanged?.Invoke(); // Notify listeners
+    }
+
+    // Adds a combo (can customize to increase by more than 1 if needed)
+    public void AddCombo(int amount)
+    {
+        combos += amount;
+        Debug.Log("Combo added: +" + amount + " (Total: " + combos + ")");
+        OnCurrencyChanged?.Invoke(); // Reuse event if UI is listening
+    }
+
+    // Optional: Save and load combos
+    public void SaveCombos()
+    {
+        PlayerPrefs.SetInt("Combos", combos);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadCombos()
+    {
+        combos = PlayerPrefs.GetInt("Combos", 0);
+        Debug.Log("Combos loaded: " + combos);
     }
 
     // Deducts the specified amount from the player's currency

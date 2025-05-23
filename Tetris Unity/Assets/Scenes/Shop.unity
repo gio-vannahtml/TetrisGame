@@ -714,10 +714,10 @@ RectTransform:
   - {fileID: 424078554}
   - {fileID: 729348909}
   - {fileID: 527631597}
-  - {fileID: 164289776}
   - {fileID: 1007449844}
-  - {fileID: 915431253}
   - {fileID: 71283678}
+  - {fileID: 164289776}
+  - {fileID: 915431253}
   - {fileID: 1384586299}
   - {fileID: 403338770}
   - {fileID: 1232016774}
@@ -1430,7 +1430,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyText: {fileID: 1007449845}
-  linesClearedCurrencyText: {fileID: 915431254}
+  combosText: {fileID: 915431254}
+  linesClearedCurrencyText: {fileID: 0}
 --- !u!1 &471099393
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,8 +2858,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 349.00003, y: 158}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 349.00003, y: 171.58}
+  m_SizeDelta: {x: 200, y: 22.839}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915431254
 MonoBehaviour:
@@ -3072,8 +3073,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 349.00003, y: 179.99998}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 349.00003, y: 193.42}
+  m_SizeDelta: {x: 200, y: 23.161}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1007449845
 MonoBehaviour:
@@ -4407,6 +4408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: 0
+  combos: 0
 --- !u!4 &1756244749
 Transform:
   m_ObjectHideFlags: 0

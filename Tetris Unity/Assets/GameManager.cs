@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     public int totalLinesCleared = 0;
     public TextMeshProUGUI linesClearedText; // Assign in Inspector
+    public TextMeshProUGUI combosText;
 
     public int maxMoves = 100; // Based on level
 
@@ -405,18 +406,32 @@ public class GameManager : MonoBehaviour
     {
         int lines = GetComponent<GridScript>().CheckForLines();
         totalLinesCleared += lines; // Count total lines
-        
+
+        if (CurrencyManager.Instance != null)
+        {
+            CurrencyManager.Instance.SetCombos(totalLinesCleared); // ✅ Set combo currency
+        }
+        else
+        {
+            Debug.LogWarning("CurrencyManager instance not found! Make sure it's in the scene.");
+        }
+
+        if (ShopManager.Instance != null)
+        {
+            ShopManager.Instance.UpdateLinesClearedUI();
+        }
+
         switch (lines)
         {
             case 1:
                 score += 100;
-                    break;
+                break;
             case 2:
                 score += 300;
-                    break;
+                break;
             case 3:
                 score += 500;
-                    break;
+                break;
             case 4:
                 score += 800;
                 if (CurrencyManager.Instance != null)
@@ -461,7 +476,8 @@ public class GameManager : MonoBehaviour
     {
         if (linesClearedText != null)
         {
-            linesClearedText.text = "" + totalLinesCleared;
+            linesClearedText.text = "Combos: " + totalLinesCleared;
+            combosText.text = "Combos: " + CurrencyManager.Instance.combos;
         }
         else
         {

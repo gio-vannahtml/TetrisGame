@@ -7,6 +7,9 @@ public class ShopManager : MonoBehaviour
     public static ShopManager Instance { get; private set; }
 
     public TMPro.TextMeshProUGUI currencyText;
+    public TMPro.TextMeshProUGUI combosText;
+    public TMPro.TextMeshProUGUI upgradeMessageText;
+
     public TMPro.TextMeshProUGUI linesClearedCurrencyText;
 
     void Awake()
@@ -26,6 +29,8 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        CurrencyManager.Instance.OnCurrencyChanged += UpdateCurrencyUI;
+
         UpdateCurrencyUI();
     }
 
@@ -46,6 +51,21 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    public void BuyUpgradeWithCombos(int cost, string upgradeName)
+    {
+        if (CurrencyManager.Instance.combos >= cost)
+        {
+            CurrencyManager.Instance.combos -= cost;
+            Debug.Log("Upgrade purchased with combos: " + upgradeName);
+            UpdateCurrencyUI(); // Refresh UI
+        }
+        else
+        {   
+            Debug.Log("Not enough combos to buy: " + upgradeName);
+            if (upgradeMessageText != null)
+                upgradeMessageText.text = "Not enough combos to buy: " + upgradeName;
+        }      
+    }
 
     private void OnEnable()
     {
@@ -57,17 +77,21 @@ public class ShopManager : MonoBehaviour
 
     public void UpdateCurrencyUI()
     {
-        currencyText.text = CurrencyManager.Instance.currency.ToString();
+        if (currencyText != null)
+            currencyText.text = "" + CurrencyManager.Instance.currency;
+
+        if (combosText != null)
+            combosText.text = CurrencyManager.Instance.combos.ToString();
+
     }
 
     public void UpdateLinesClearedUI()
     {
-        if (GameManager.Instance != null)
+        if (linesClearedCurrencyText != null)
         {
             linesClearedCurrencyText.text = GameManager.Instance.GetLinesCleared().ToString();
         }
     }
-
 
     private void OnDisable()
     {
@@ -94,20 +118,24 @@ public class ShopManager : MonoBehaviour
     {
         BuyItem(600, "Color Popper");
     }
-    
-    public void BuyComboUpgrade()
+
+    public void BuyBombasticUpgrade()
     {
-        int cost = 10; // Number of lines required
-        if (GameManager.Instance.SpendLines(cost))
-        {
-            Debug.Log("Upgrade bought with lines!");
-            // Apply the upgrade logic here...
-            UpdateLinesClearedUI();
-        }
-        else
-        {
-            Debug.Log("Not enough lines cleared!");
-        }
+        BuyUpgradeWithCombos(300, "Bombastic");
     }
 
+    public void BuyCrusherUpgrade()
+    {
+        BuyUpgradeWithCombos(300, "The Crasher");
+    }
+
+    public void BuyTractorUpgrade()
+    {
+        BuyUpgradeWithCombos(300, "The Tractor");
+    }
+    
+    public void BuyColorPUpgrade()
+    {
+        BuyUpgradeWithCombos(300, "Color Popper");
+    }
 }
