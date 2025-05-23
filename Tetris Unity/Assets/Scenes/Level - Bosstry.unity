@@ -12208,6 +12208,7 @@ MonoBehaviour:
   luckyBlockPrefab: {fileID: 568037961}
   unluckyBlockPrefab: {fileID: 1592128983}
   BombBlockPrefab: {fileID: 1106416168}
+  gridScript: {fileID: 1855203560}
   score: 0
   scoreText: {fileID: 40722530}
   totalLinesCleared: 0
