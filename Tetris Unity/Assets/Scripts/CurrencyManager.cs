@@ -40,7 +40,6 @@ public class CurrencyManager : MonoBehaviour
     public void ResetRun()
     {
         currency = 0;
-        combos = 0;
         Debug.Log("Currency reset to: " + currency);
     }
 
@@ -49,7 +48,7 @@ public class CurrencyManager : MonoBehaviour
         combos = value;
         OnCurrencyChanged?.Invoke(); // Notify UI listeners
     }
-    
+
     // Resets combos (e.g., on fail or level reset)
     public void ResetCombos()
     {
