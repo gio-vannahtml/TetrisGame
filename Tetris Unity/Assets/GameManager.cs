@@ -477,11 +477,19 @@ public class GameManager : MonoBehaviour
         if (linesClearedText != null)
         {
             linesClearedText.text = "Combos: " + totalLinesCleared;
-            combosText.text = "Combos: " + CurrencyManager.Instance.combos;
         }
         else
         {
             Debug.LogWarning("linesClearedText not assigned in the Inspector.");
+        }
+
+        if (combosText != null && CurrencyManager.Instance != null)
+        {
+            combosText.text = "Combos: " + CurrencyManager.Instance.combos;
+        }
+        else
+        {
+            Debug.LogWarning("combosText not assigned, or CurrencyManager.Instance is null.");
         }
     }
 
