@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject unluckyBlockPrefab;
     public GameObject BombBlockPrefab;
 
+    public GridScript gridScript;
+
     // Number indicator for the players score
     public int score = 0;
 
@@ -86,14 +88,14 @@ public class GameManager : MonoBehaviour
 {
     { "Level - Tutorial", 500 }, 
     { "Level - Neweasy", 2000 },
-    { "Level - Bosstry", 6000 }
+    { "Level - Bosstry", 4000 }
 };
 
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
     {
-    { "Level - Tutorial", 100 },
-    { "Level - Neweasy", 50 },
-    { "Level - Bosstry", 80 }
+    { "Level - Tutorial", 200 },
+    { "Level - Neweasy", 10 },
+    { "Level - Bosstry", 200 }
     };
     private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
@@ -343,7 +345,7 @@ if (currentTetromino.CompareTag("Bomb"))
         
         CreateGhost();
 
-        float luckyChance = 0.01f;   // 1%
+        float luckyChance = 0.05f;   // 5%
         float unluckyChance = 0.01f; // 1%
         float roll = Random.value;
 
@@ -413,18 +415,44 @@ if (currentTetromino.CompareTag("Bomb"))
     {
         if (block.CompareTag("Lucky"))
         {
-            score += 500; // Bonus
-            remainingMoves += 3; // Extra moves
-            Debug.Log("Lucky block landed! Bonus awarded.");
+            ActivateRandomItem(); // Immediately activate a random item
+            score += 200; // Bonus Points
+            remainingMoves = Mathf.Max(0, remainingMoves + 5); // Gain moves
+            Debug.Log("Lucky block landed! Payday!");
         }
         else if (block.CompareTag("Unlucky"))
         {
             score -= 200; // Penalty
             remainingMoves = Mathf.Max(0, remainingMoves - 5); // Lose moves
-            Debug.Log("Unlucky block landed! Penalty applied.");
+            Debug.Log("Unlucky block landed! Budget Cuts...");
         }
 
         UpdateMoveText();
+    }
+
+    public void ActivateRandomItem()
+    {
+        int roll = Random.Range(0, 4); // 4 item types
+
+        switch (roll)
+        {
+            case 0:
+                gridScript.UseBombastic();
+                Debug.Log("Activated Bombastic from Lucky Block!");
+                break;
+            case 1:
+                gridScript.UseCrusher();
+                Debug.Log("Activated Crusher from Lucky Block!");
+                break;
+            case 2:
+                gridScript.UseTractor();
+                Debug.Log("Activated Tractor from Lucky Block!");
+                break;
+            case 3:
+                gridScript.UseColorPopper();
+                Debug.Log("Activated ColorPopper from Lucky Block!");
+                break;
+        }
     }
 
     public void MoveBoss(Vector3 direction)
