@@ -3530,7 +3530,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1509846160}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TutorialOverlayManager, Assembly-CSharp
         m_MethodName: NextOverlay
         m_Mode: 1
@@ -5151,6 +5151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb598acdc689cf40b356c3de8235099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointsManager: {fileID: 0}
   Tetrominos:
   - {fileID: 976659251}
   - {fileID: 1533027058}
@@ -6302,7 +6303,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1509846160}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TutorialOverlayManager, Assembly-CSharp
         m_MethodName: NextOverlay
         m_Mode: 1
@@ -7119,7 +7120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1509846161}
-  - component: {fileID: 1509846160}
+  - component: {fileID: 1509846162}
   m_Layer: 0
   m_Name: TutorialOverlayManager
   m_TagString: Untagged
@@ -7159,6 +7160,25 @@ Transform:
   - {fileID: 2024354322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1509846162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509846159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb11e4decf82c43e9ae2419026f9b870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialOverlays:
+  - {fileID: 1283310352}
+  - {fileID: 2024354321}
+  timedOverlays:
+  - {fileID: 804836320}
+  - {fileID: 706895950}
+  - {fileID: 1518726868}
 --- !u!1 &1516825035
 GameObject:
   m_ObjectHideFlags: 0
@@ -10512,6 +10532,5 @@ SceneRoots:
   - {fileID: 951284220}
   - {fileID: 1518726872}
   - {fileID: 804836324}
-  - {fileID: 28025262}
   - {fileID: 706895954}
   - {fileID: 1509846161}
