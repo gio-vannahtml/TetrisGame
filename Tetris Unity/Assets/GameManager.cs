@@ -85,14 +85,14 @@ public class GameManager : MonoBehaviour
 {
     { "Level - Tutorial", 500 }, 
     { "Level - Neweasy", 2000 },
-    { "Level - Bosstry", 300 }
+    { "Level - Bosstry", 4000 }
 };
 
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
     {
-    { "Level - Tutorial", 100 },
-    { "Level - Neweasy", 50 },
-    { "Level - Bosstry", 80 }
+    { "Level - Tutorial", 200 },
+    { "Level - Neweasy", 10 },
+    { "Level - Bosstry", 200 }
     };
     private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
