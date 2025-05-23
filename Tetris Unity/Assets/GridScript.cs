@@ -2,25 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GridScript : MonoBehaviour
-
 {
     public Sprite tractorEffectSprite; 
+    public Sprite crusherEffectSprite;
     public GameObject tractorEffectPrefab;
+    public Sprite bombSprite;
     public Transform[,] grid;
 
-    // Grid dimensions
-    public int width = 10, height = 20; // Set default grid size
+    public int width = 10, height = 20;
 
-    public GameObject blockDestroyEffectPrefab; // Drag prefab in Inspector
+    public GameObject blockDestroyEffectPrefab;
+    public GameManager gameManager;
 
-    void Awake()
-    {
-        grid = new Transform[width, height];
-    }
-
-    // Initialize the grid with specified dimensions
     void Start()
     {
         grid = new Transform[width, height];
@@ -44,10 +38,7 @@ public class GridScript : MonoBehaviour
             Vector2 pos = Round(mino.position);
             if (pos.y < height && pos.x >= 0 && pos.x < width)
             {
-                // Snap the mino to the grid
                 mino.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), 0);
-
-                // Assign to the grid
                 grid[(int)pos.x, (int)pos.y] = mino;
             }
         }
@@ -55,7 +46,6 @@ public class GridScript : MonoBehaviour
 
     public void UpdateGridWithBoss(Transform boss)
     {
-        // Clear the grid of blocks that belong to the boss
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -101,12 +91,8 @@ public class GridScript : MonoBehaviour
         foreach (Transform mino in tetromino)
         {
             Vector2 pos = Round(mino.position);
-            if (!IsInsideBorder(pos))
-            {
-                return false;
-            }
-
-            if (GetTransformAtGridPosition(pos) != null && GetTransformAtGridPosition(pos).parent != tetromino)
+            if (!IsInsideBorder(pos) || 
+                (GetTransformAtGridPosition(pos) != null && GetTransformAtGridPosition(pos).parent != tetromino))
             {
                 return false;
             }
@@ -114,24 +100,19 @@ public class GridScript : MonoBehaviour
         return true;
     }
 
-    // Checks for completed lines and removes them
     public int CheckForLines()
     {
         int linesCleared = 0;
-
-        // Loop through all rows in the grid and check if they are full
         for (int y = 0; y < height; y++)
         {
-            if (LineIsFull(y))  // Check if a line is full
+            if (LineIsFull(y))
             {
-                DeleteLine(y); // Clear the line
+                DeleteLine(y);
                 linesCleared++;
-                DecreaseRowsAbove(y + 1); // Shift lines down after clearing
+                DecreaseRowsAbove(y + 1);
                 y--;
-
             }
         }
-
         return linesCleared;
     }
 
@@ -139,10 +120,8 @@ public class GridScript : MonoBehaviour
     {
         for (int x = 0; x < width; x++)
         {
-            if (grid[x, y] == null)  // If any cell in the row is empty
-            {
+            if (grid[x, y] == null)
                 return false;
-            }
         }
         return true;
     }
@@ -156,19 +135,16 @@ public class GridScript : MonoBehaviour
                 Transform block = grid[x, y];
                 Vector3 spawnPos = block.position;
 
-                // Spawn particle effect exactly where the block was
                 GameObject effect = Instantiate(blockDestroyEffectPrefab, spawnPos, Quaternion.identity);
-                effect.transform.localScale = Vector3.one * 1.5f; // Scale if needed
+                effect.transform.localScale = Vector3.one * 1.5f;
 
                 ParticleSystem ps = effect.GetComponent<ParticleSystem>();
                 if (ps != null) ps.Play();
 
-                // Detach particle effect from block and delay block destruction slightly to sync visuals
-                grid[x, y] = null; // Clear grid reference
+                grid[x, y] = null;
                 Destroy(effect, 1f);
-                Destroy(block.gameObject, 0.01f); // Slight delay so particles aren't cut off
+                Destroy(block.gameObject, 0.01f);
             }
-
         }
     }
 
@@ -188,65 +164,61 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    /* Giovanna:
-    void DecreaseRowsAbove(int startRow)
+    public void UseBombastic()
     {
-        for (int y = startRow; y < height - 1; y++)  // Iterate from the cleared row to the top
+        Debug.Log("UseBombastic called");
+        if (GameManager.Instance != null)
         {
-            for (int x = 0; x < width; x++)
-            {
-                if (grid[x, y + 1] != null)
-                {
-                    grid[x, y] = grid[x, y + 1];  // Move the block down
-                    grid[x, y + 1] = null;  // Set the original position to null
-                    grid[x, y].position += Vector3.down;  // Move the GameObject down
-                }
-            }
+            GameManager.Instance.SetNextPieceToBomb();
+        }
+        else
+        {
+            Debug.LogError("GameManager not found!");
         }
     }
-     */
-    // === Bombastic: destroy blocks in 3x3 area ===
-    public void UseBombastic(Vector2 center)
-    {
-        int radius = 1; // 3x3 area
-        Vector2Int centerInt = Vector2Int.RoundToInt(center);
 
-        for (int dx = -radius; dx <= radius; dx++)
-        {
-            for (int dy = -radius; dy <= radius; dy++)
-            {
-                int x = centerInt.x + dx;
-                int y = centerInt.y + dy;
-
-                if (x >= 0 && x < width && y >= 0 && y < height)
-                {
-                    if (grid[x, y] != null)
-                    {
-                        // ✅ Spawn particle effect and destroy it after 1s
-                        if (blockDestroyEffectPrefab != null)
-                        {
-                            GameObject effect = Instantiate(blockDestroyEffectPrefab, grid[x, y].position, Quaternion.identity);
-                            Destroy(effect, 1f); // Automatically destroy after 1 second
-                        }
-
-                        Destroy(grid[x, y].gameObject);
-                        grid[x, y] = null;
-                    }
-                }
-            }
-            
-        }
-
-        // Optional: make the grid fall down after destroying
-        DecreaseRowsAbove(centerInt.y - radius);
-
-        Debug.Log($"UseBombastic called at center {center}");
-    }
-
-
-    // === Crusher: compact each column downward ===
     public void UseCrusher()
     {
+        StartCoroutine(PlayCrusherEffectAndCompress());
+    }
+
+    private IEnumerator PlayCrusherEffectAndCompress()
+    {
+        float delay = 0.05f;
+
+        List<Transform> blocksToCrush = new List<Transform>();
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid[x, y] != null)
+                    blocksToCrush.Add(grid[x, y]);
+            }
+        }
+
+        foreach (Transform block in blocksToCrush)
+        {
+            SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.sprite = crusherEffectSprite;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid[x, y] != null)
+                {
+                    Destroy(grid[x, y].gameObject);
+                    grid[x, y] = null;
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(delay);
+
         for (int x = 0; x < width; x++)
         {
             List<Transform> columnBlocks = new List<Transform>();
@@ -268,58 +240,53 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    // === Tractor: removes bottom row ===
     public void UseTractor()
-{
-    StartCoroutine(PlayTractorEffectAndClear());
-}
-
-private IEnumerator PlayTractorEffectAndClear()
-{
-    float delay = 0.05f;
-
-   for (int x = 0; x < width; x++)
-{
-    if (grid[x, 0] != null)
     {
-        Transform block = grid[x, 0];
-        SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
-
-        if (sr != null)
-        {
-            sr.sprite = tractorEffectSprite; // 👈 New field you'll assign
-        }
-
-        yield return new WaitForSeconds(0.2f);
-
-        Destroy(block.gameObject);
-        grid[x, 0] = null;
+        StartCoroutine(PlayTractorEffectAndClear());
     }
 
-    yield return new WaitForSeconds(delay);
-}
-
-    for (int y = 1; y < height; y++)
+    private IEnumerator PlayTractorEffectAndClear()
     {
-        for (int x = 0; x < width; x++)
+        float delay = 0.05f;
+
+        for (int x = width - 1; x >= 0; x--)
         {
-            if (grid[x, y] != null)
+            if (grid[x, 0] != null)
             {
-                grid[x, y - 1] = grid[x, y];
-                grid[x, y] = null;
-                grid[x, y - 1].position += Vector3.down;
+                Transform block = grid[x, 0];
+                SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+
+                if (sr != null)
+                    sr.sprite = tractorEffectSprite;
+
+                yield return new WaitForSeconds(0.2f);
+
+                Destroy(block.gameObject);
+                grid[x, 0] = null;
+            }
+
+            yield return new WaitForSeconds(delay);
+        }
+
+        for (int y = 1; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (grid[x, y] != null)
+                {
+                    grid[x, y - 1] = grid[x, y];
+                    grid[x, y] = null;
+                    grid[x, y - 1].position += Vector3.down;
+                }
             }
         }
     }
-}
 
-    // === Color Popper: removes all blocks of one random color ===
     public void UseColorPopper()
     {
         Dictionary<string, List<Vector2Int>> colorGroups = new Dictionary<string, List<Vector2Int>>();
         Dictionary<string, Color> colorMap = new Dictionary<string, Color>();
 
-        // Step 1: Group blocks by color (as hex string)
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -330,22 +297,19 @@ private IEnumerator PlayTractorEffectAndClear()
                     SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
                     if (sr != null)
                     {
-                        Color color = sr.color;
-                        string hex = ColorUtility.ToHtmlStringRGB(color);
+                        string hex = ColorUtility.ToHtmlStringRGB(sr.color);
 
                         if (!colorGroups.ContainsKey(hex))
                             colorGroups[hex] = new List<Vector2Int>();
-
                         colorGroups[hex].Add(new Vector2Int(x, y));
 
                         if (!colorMap.ContainsKey(hex))
-                            colorMap[hex] = color;
+                            colorMap[hex] = sr.color;
                     }
                 }
             }
         }
 
-        // Step 2: Find the color with the most blocks
         string mostCommonHex = "";
         int maxCount = 0;
 
@@ -364,10 +328,6 @@ private IEnumerator PlayTractorEffectAndClear()
             return;
         }
 
-        Color targetColor = colorMap[mostCommonHex];
-        Debug.Log($"ColorPopper: Popping color {targetColor} with {maxCount} blocks!");
-
-        // Step 3: Destroy blocks of that color
         foreach (Vector2Int pos in colorGroups[mostCommonHex])
         {
             Transform block = grid[pos.x, pos.y];
@@ -378,27 +338,166 @@ private IEnumerator PlayTractorEffectAndClear()
             }
         }
 
-        // Step 4: Drop blocks down
         DecreaseRowsAbove(0);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Vector2 center = new Vector2(width / 2, 2); // Try lower area
-            UseBombastic(center);
-        }
-            
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            UseCrusher();
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            UseTractor();
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            UseColorPopper();
+        if (Input.GetKeyDown(KeyCode.Alpha1)) UseBombastic();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) UseCrusher();
+        if (Input.GetKeyDown(KeyCode.Alpha3)) UseTractor();
+        if (Input.GetKeyDown(KeyCode.Alpha4)) UseColorPopper();
     }
 
+    // Method to trigger the bomb effect at a specific position
+    public void TriggerBombAt(Vector2Int position)
+    {
+        Debug.Log($"Bomb triggered at position {position}");
+
+        int blocksDestroyed = 0; // Keep track of blocks destroyed
+
+        // Define the 3x3 area centered on the bomb
+        for (int offsetX = -1; offsetX <= 1; offsetX++)
+        {
+            for (int offsetY = -1; offsetY <= 1; offsetY++)
+            {
+                int x = position.x + offsetX;
+                int y = position.y + offsetY;
+
+                // Check if this position is within grid bounds
+                if (x >= 0 && x < width && y >= 0 && y < height)
+                {
+                    // If there's a block here, destroy it
+                    if (grid[x, y] != null)
+                    {
+                        Transform block = grid[x, y];
+                        blocksDestroyed++;
+
+                        // Spawn explosion effect
+                        if (blockDestroyEffectPrefab != null)
+                        {
+                            GameObject effect = Instantiate(blockDestroyEffectPrefab, block.position, Quaternion.identity);
+                            effect.transform.localScale = Vector3.one * 1.5f;
+
+                            ParticleSystem ps = effect.GetComponent<ParticleSystem>();
+                            if (ps != null) ps.Play();
+
+                            Destroy(effect, 1f);
+                        }
+
+                        // Destroy the block and clear grid reference
+                        Destroy(block.gameObject);
+                        grid[x, y] = null;
+                    }
+                }
+            }
+        }
+
+        // After bombing, make remaining blocks fall while preserving tetromino shapes
+        if (blocksDestroyed > 0)
+        {
+            // Find all unique tetromino parents in the grid
+            HashSet<Transform> tetrominoParents = new HashSet<Transform>();
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (grid[x, y] != null && grid[x, y].parent != null)
+                    {
+                        tetrominoParents.Add(grid[x, y].parent);
+                    }
+                }
+            }
+            
+            // Process gravity in multiple passes until stable
+            bool piecesMoved;
+            do
+            {
+                piecesMoved = false;
+                
+                // Check each tetromino parent
+                foreach (Transform parent in tetrominoParents)
+                {
+                    // Skip if parent has been destroyed
+                    if (parent == null) continue;
+                    
+                    // Check if this tetromino can move down
+                    bool canMoveDown = true;
+                    bool hasValidChildren = false;
+                    
+                    // First, remove this tetromino from the grid temporarily
+                    foreach (Transform child in parent)
+                    {
+                        Vector2 pos = Round(child.position);
+                        if (IsInsideBorder(pos))
+                        {
+                            hasValidChildren = true;
+                            grid[(int)pos.x, (int)pos.y] = null;
+                        }
+                    }
+                    
+                    // If no valid children remain (all were destroyed), skip this tetromino
+                    if (!hasValidChildren) continue;
+                    
+                    // Check if we can move this tetromino down
+                    foreach (Transform child in parent)
+                    {
+                        Vector2 pos = Round(child.position);
+                        Vector2 posBelow = new Vector2(pos.x, pos.y - 1);
+                        
+                        // If any part would go out of bounds or hit another tetromino, we can't move down
+                        if (!IsInsideBorder(posBelow) || 
+                            (grid[(int)posBelow.x, (int)posBelow.y] != null && 
+                             grid[(int)posBelow.x, (int)posBelow.y].parent != parent))
+                        {
+                            canMoveDown = false;
+                            break;
+                        }
+                    }
+                    
+                    // Move the tetromino down if possible
+                    if (canMoveDown)
+                    {
+                        parent.position += Vector3.down;
+                        piecesMoved = true;
+                    }
+                    
+                    // Put the tetromino back in the grid at its new position
+                    foreach (Transform child in parent)
+                    {
+                        Vector2 pos = Round(child.position);
+                        if (IsInsideBorder(pos))
+                        {
+                            grid[(int)pos.x, (int)pos.y] = child;
+                        }
+                    }
+                }
+                
+            } while (piecesMoved);
+            
+            // Handle any orphaned blocks (blocks without parents)
+            bool blocksMovedThisPass;
+            do
+            {
+                blocksMovedThisPass = false;
+                
+                for (int y = 1; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        // Only move blocks that don't have a parent (orphaned blocks)
+                        if (grid[x, y] != null && (grid[x, y].parent == null || grid[x, y].parent.childCount == 1) && grid[x, y - 1] == null)
+                        {
+                            grid[x, y - 1] = grid[x, y];
+                            grid[x, y] = null;
+                            grid[x, y - 1].position += Vector3.down;
+                            blocksMovedThisPass = true;
+                        }
+                    }
+                }
+            } while (blocksMovedThisPass);
+            
+            Debug.Log("Grid has been reorganized after bombing, preserving tetromino shapes");
+        }
+    }
 }

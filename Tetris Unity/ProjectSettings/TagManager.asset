@@ -12,6 +12,7 @@ TagManager:
   - Lucky
   - Unlucky
   - Price
+  - Bomb
   layers:
   - Default
   - TransparentFX
