@@ -90,10 +90,11 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
     {
-    { "Level - Tutorial", 100 },
-    { "Level - Neweasy", 50 },
-    { "Level - Bosstry", 80 }
+        { "Level - Tutorial", 100 },
+        { "Level - Neweasy", 50 },
+        { "Level - Bosstry", 100 }
     };
+
     private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
 
