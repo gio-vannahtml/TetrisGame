@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator ShowOverlays()
     {
         // Optionally show overlays or do intro animation here
-        yield return new WaitForSeconds(2f); // Adjust delay as needed
+        yield return new WaitForSeconds(10f); // Adjust delay as needed
         gameReady = true;
     }
 
