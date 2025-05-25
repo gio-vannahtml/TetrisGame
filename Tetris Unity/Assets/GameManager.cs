@@ -91,8 +91,8 @@ public class GameManager : MonoBehaviour
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
     {
         { "Level - Tutorial", 100 },
-        { "Level - Neweasy", 50 },
-        { "Level - Bosstry", 100 }
+        { "Level - Neweasy", 150 },
+        { "Level - Bosstry", 250 }
     };
 
     private int winScore;
@@ -548,7 +548,7 @@ if (currentTetromino.CompareTag("Bomb"))
     {
         if (linesClearedText != null)
         {
-            linesClearedText.text = "Combos: " + totalLinesCleared;
+            linesClearedText.text = "" + totalLinesCleared;
         }
         else
         {
