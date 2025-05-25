@@ -9656,9 +9656,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9bff84999f5483b90cb55144292a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameReady: 1
   overlay1: {fileID: 82580408}
   overlay2: {fileID: 411761217}
   overlay3: {fileID: 1489535804}
+  overlays: {fileID: 0}
 --- !u!4 &872696552
 Transform:
   m_ObjectHideFlags: 0

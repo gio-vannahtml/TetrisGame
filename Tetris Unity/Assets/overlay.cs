@@ -22,7 +22,7 @@ public class Overlay : MonoBehaviour
             overlays.SetActive(true);
 
             // Wait for it to finish
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(3.5f);
 
             overlays.SetActive(false);
 
