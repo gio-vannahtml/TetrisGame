@@ -23,7 +23,7 @@ public class MenuButtonHandler : MonoBehaviour
 
     public void LoadEasyLevel()
     {
-        SceneManager.LoadScene("Level-New Easy");
+        SceneManager.LoadScene("Level-NewEasy");
     }
 
     public void LoadBosstryLevel()
