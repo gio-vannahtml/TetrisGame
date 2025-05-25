@@ -7869,6 +7869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb11e4decf82c43e9ae2419026f9b870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlay1: {fileID: 82580408}
+  overlay2: {fileID: 411761217}
+  overlay3: {fileID: 1489535804}
   tutorialOverlays:
   - {fileID: 1475060198}
   - {fileID: 616184937}
@@ -7882,10 +7885,7 @@ MonoBehaviour:
   - {fileID: 753405566}
   - {fileID: 28481642}
   - {fileID: 24896170}
-  timedOverlays:
-  - {fileID: 82580408}
-  - {fileID: 411761217}
-  - {fileID: 1489535804}
+  timedOverlays: []
 --- !u!4 &738346190
 Transform:
   m_ObjectHideFlags: 0

@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator ShowOverlays()
     {
         // Optionally show overlays or do intro animation here
-        yield return new WaitForSeconds(10f); // Adjust delay as needed
+        yield return new WaitForSeconds(2.5f); // Adjust delay as needed
         gameReady = true;
     }
 
@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("No boss is active, applying boss...");
                 bossManager.ApplyBoss();
+
             }
         }
 
@@ -221,6 +222,9 @@ public class GameManager : MonoBehaviour
             if (bossManager != null && bossManager.IsBossActive && !bossManager.IsBossLocked)
             {
                 MoveBoss(Vector3.down);
+                Debug.Log("Boss Active: " + bossManager.IsBossActive);
+                Debug.Log("Boss Locked: " + bossManager.IsBossLocked);
+
             }
             else if (currentTetromino != null) // Make sure we have a tetromino to move
             {
@@ -343,8 +347,6 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (!gameReady)
-            return;
         }
 
 

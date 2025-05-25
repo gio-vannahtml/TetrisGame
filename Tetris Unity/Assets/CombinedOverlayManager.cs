@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class CombinedOverlayManager : MonoBehaviour
 {
+    public GameObject overlay1;
+    public GameObject overlay2;
+    public GameObject overlay3;
+
     [Header("Manual Tutorial Overlays (Click to advance)")]
     public GameObject[] tutorialOverlays;
 
@@ -62,26 +66,24 @@ public class CombinedOverlayManager : MonoBehaviour
 
     IEnumerator PlayTimedOverlays()
     {
-        foreach (GameObject overlay in timedOverlays)
-        {
-            overlay.SetActive(true);
-            yield return new WaitForSecondsRealtime(3f); // Show each overlay for 3 seconds
-            overlay.SetActive(false);
-        }
+         yield return null;
 
-        // ✅ Now resume gameplay after final overlay (e.g., overlay3)
+        overlay1.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        overlay1.SetActive(false);
+
+        overlay2.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        overlay2.SetActive(false);
+
+        overlay3.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        overlay3.SetActive(false);
+
+        // Now resume gameplay after final overlay
         Time.timeScale = 1f;
+        yield return null; // let physics and deltaTime stabilize
         gameStarted = true;
         Debug.Log("Game starts!");
-
-        SpawnTetromino();
-    }
-
-    void SpawnTetromino()
-    {
-        Debug.Log("SpawnTetromino called. Implement spawning logic here.");
-
-        // Example:
-        // Instantiate(tetrominoPrefab, spawnPosition, Quaternion.identity);
     }
 }

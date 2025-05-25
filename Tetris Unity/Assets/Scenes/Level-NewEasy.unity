@@ -1958,13 +1958,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb11e4decf82c43e9ae2419026f9b870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlay1: {fileID: 804836320}
+  overlay2: {fileID: 706895950}
+  overlay3: {fileID: 1518726868}
   tutorialOverlays:
   - {fileID: 1283310352}
   - {fileID: 2024354321}
-  timedOverlays:
-  - {fileID: 804836320}
-  - {fileID: 706895950}
-  - {fileID: 1518726868}
+  timedOverlays: []
 --- !u!4 &371546122
 Transform:
   m_ObjectHideFlags: 0

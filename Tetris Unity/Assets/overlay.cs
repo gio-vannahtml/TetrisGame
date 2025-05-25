@@ -11,7 +11,7 @@ public class overlay : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1f; // Pause gameplay
+        Time.timeScale = 0f; // Pause gameplay
         StartCoroutine(PlayOverlays());
     }
 
@@ -34,12 +34,5 @@ public class overlay : MonoBehaviour
         gameStarted = true;
 
         Debug.Log("Game starts!");
-        SpawnTetromino();
-
-        // Placeholder method for spawning a Tetromino
-        void SpawnTetromino()
-        {
-            Debug.Log("SpawnTetromino called. Implement spawning logic here.");
-        }
     }
 }
