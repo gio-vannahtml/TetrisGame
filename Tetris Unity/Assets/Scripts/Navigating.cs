@@ -18,7 +18,7 @@ public class MenuButtonHandler : MonoBehaviour
 
     public void OpenUpgradesTab()
     {
-        SceneManager.LoadScene("Shop - Upgrades"); // Exact name of the Upgrades scene
+        SceneManager.LoadScene("Shop-Upgrades"); // Exact name of the Upgrades scene
     }
 
     public void LoadEasyLevel()
