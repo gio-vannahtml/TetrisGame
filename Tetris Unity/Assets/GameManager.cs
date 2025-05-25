@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 // Main controller for the Tetris game, handling tetromino spawning, movement and game logic
 public class GameManager : MonoBehaviour
 {
+    private bool gameReady = false;
+
     /*public PointsManager pointsManager;*/
     public static GameManager Instance { get; private set; }
 
@@ -82,11 +84,11 @@ public class GameManager : MonoBehaviour
     private const int POOL_SIZE = 5;
 
     private Dictionary<string, int> sceneWinScores = new Dictionary<string, int>()
-{
-    { "Level - Tutorial", 500 }, 
-    { "Level - Neweasy", 2000 },
-    { "Level - Bosstry", 6000 }
-};
+    {
+        { "Level - Tutorial", 500 }, 
+        { "Level - Neweasy", 2000 },
+        { "Level - Bosstry", 6000 }
+    };
 
     private Dictionary<string, int> sceneMoveCounts = new Dictionary<string, int>()
     {
@@ -98,9 +100,19 @@ public class GameManager : MonoBehaviour
     private int winScore;
     private bool hasWon = false; // To prevent triggering win multiple times
 
+    // Coroutine to show overlays and set gameReady after a short delay
+    private IEnumerator ShowOverlays()
+    {
+        // Optionally show overlays or do intro animation here
+        yield return new WaitForSeconds(2f); // Adjust delay as needed
+        gameReady = true;
+    }
+
     // Initialize the game by spawning the first tetromino
     void Start()
     {
+        StartCoroutine(ShowOverlays());
+
         bossManager = BossManager.Instance;
 
         string currentScene = SceneManager.GetActiveScene().name;
@@ -184,7 +196,10 @@ public class GameManager : MonoBehaviour
     {
         // Track time for automatic downward movement
         passedTime += Time.deltaTime;
-        
+
+        if (!gameReady)
+        return;
+
         // 🧠 Modify speed if boss is active
         if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
         {
@@ -316,20 +331,23 @@ public class GameManager : MonoBehaviour
         // Get the first piece from the pool
         currentTetromino = Instantiate(piecePool[0], new Vector3(3, 18, 0), Quaternion.identity);
         // If it's a bomb, set the bomb sprite
-if (currentTetromino.CompareTag("Bomb"))
-{
-    Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
-    foreach (Transform child in currentTetromino.transform)
-    {
-        SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-        if (sr != null && bombSprite != null)
+        if (currentTetromino.CompareTag("Bomb"))
         {
-            sr.sprite = bombSprite;
-        }
-    }
-}
+            Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
+            foreach (Transform child in currentTetromino.transform)
+            {
+                SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+                if (sr != null && bombSprite != null)
+                {
+                    sr.sprite = bombSprite;
+                }
+            }
 
-        
+            if (!gameReady)
+            return;
+        }
+
+
         // Check if the spawned tetromino is in a valid position
         if (!IsValidPosition())
         {
@@ -340,7 +358,7 @@ if (currentTetromino.CompareTag("Bomb"))
             EndGame();
             return;
         }
-        
+
         CreateGhost();
 
         float luckyChance = 0.01f;   // 1%
