@@ -1170,6 +1170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: 0
+  combos: 0
 --- !u!4 &178877203
 Transform:
   m_ObjectHideFlags: 0
@@ -4534,7 +4535,7 @@ GameObject:
   - component: {fileID: 834727225}
   - component: {fileID: 834727224}
   m_Layer: 0
-  m_Name: ' PauseManager'
+  m_Name: PauseManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6987,11 +6988,11 @@ MonoBehaviour:
   luckyBlockPrefab: {fileID: 6567874744071162135, guid: 49282fe1777c84e48af325b76b303829, type: 3}
   unluckyBlockPrefab: {fileID: 1679671867223730606, guid: 48eddc82a08e342468d6190bc1d99fb9, type: 3}
   BombBlockPrefab: {fileID: 870669210}
-  gridScript: {fileID: 1192862102}
   score: 0
   scoreText: {fileID: 1691282158}
   totalLinesCleared: 0
   linesClearedText: {fileID: 1844991079}
+  combosText: {fileID: 0}
   maxMoves: 250
   moveText: {fileID: 1527506980}
   nextPiecePreviewLocation: {fileID: 1825328938}

@@ -9779,7 +9779,7 @@ GameObject:
   - component: {fileID: 893880199}
   - component: {fileID: 893880198}
   m_Layer: 0
-  m_Name: ' PauseManager'
+  m_Name: PauseManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14272,11 +14272,11 @@ MonoBehaviour:
   luckyBlockPrefab: {fileID: 6567874744071162135, guid: 49282fe1777c84e48af325b76b303829, type: 3}
   unluckyBlockPrefab: {fileID: 1679671867223730606, guid: 48eddc82a08e342468d6190bc1d99fb9, type: 3}
   BombBlockPrefab: {fileID: 0}
-  gridScript: {fileID: 1234546559}
   score: 0
   scoreText: {fileID: 328752004}
   totalLinesCleared: 0
   linesClearedText: {fileID: 1061297980}
+  combosText: {fileID: 0}
   maxMoves: 1000
   moveText: {fileID: 2011860619}
   nextPiecePreviewLocation: {fileID: 1401482373}
@@ -17622,6 +17622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: 0
+  combos: 0
 --- !u!4 &1612297863
 Transform:
   m_ObjectHideFlags: 0
