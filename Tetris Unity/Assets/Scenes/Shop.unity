@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 347087788}
   - component: {fileID: 347087787}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: MenuBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,7 +1444,7 @@ GameObject:
   - component: {fileID: 471099395}
   - component: {fileID: 471099394}
   m_Layer: 0
-  m_Name: Square (4)
+  m_Name: BobTextBoxBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4303,7 +4303,7 @@ GameObject:
   - component: {fileID: 1645035070}
   - component: {fileID: 1645035069}
   m_Layer: 0
-  m_Name: Square (9)
+  m_Name: BobTextBoxBg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
