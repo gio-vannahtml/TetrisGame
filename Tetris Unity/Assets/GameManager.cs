@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject luckyBlockPrefab;
     public GameObject unluckyBlockPrefab;
     public GameObject BombBlockPrefab;
+    public PointsManager pointsManager;
 
     // Number indicator for the players score
     public int score = 0;
@@ -651,11 +652,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("New high score: " + score);
     }
 
-    /*if (pointsManager != null)
+    if (pointsManager != null)
     {
         int finalCombos = totalLinesCleared; // or use your own combo logic
         pointsManager.ShowGameOver(score, finalCombos);
-    }*/
+    }
     else
     {
         Debug.LogWarning("PointsManager not assigned in GameManager!");
@@ -680,8 +681,17 @@ public class GameManager : MonoBehaviour
         }
     }
     public void SetNextPieceToBomb()
+{
+    if (piecePool.Count > 0)
     {
-        if (piecePool.Count > 0)
+        // Replace the upcoming piece (first in pool) with bomb block
+        piecePool[0] = BombBlockPrefab;
+
+        // Update the preview to show the bomb block
+        ShowNextTetrominoPreview();
+
+        // Try to change preview block’s appearance to bomb sprite
+        if (nextTetrominoPreview != null)
         {
             // Replace the upcoming piece (first in pool) with bomb block
             piecePool[0] = BombBlockPrefab;
@@ -708,7 +718,23 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
+            Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
+            foreach (Transform child in nextTetrominoPreview.transform)
+            {
+                SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+                if (sr != null && bombSprite != null)
+                {
+                    sr.sprite = bombSprite;
+                }
+            }
         }
+
+        Debug.Log("Next tetromino changed to Bomb Block!");
     }
+    else
+    {
+        Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
+    }
+}
 
 }

@@ -16284,6 +16284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb598acdc689cf40b356c3de8235099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointsManager: {fileID: 1373057341}
   Tetrominos:
   - {fileID: 1953895206}
   - {fileID: 1839974626}
@@ -18611,3 +18612,4 @@ SceneRoots:
   - {fileID: 1922863552}
   - {fileID: 414587576}
   - {fileID: 2039077087}
+  - {fileID: 1373057342}
