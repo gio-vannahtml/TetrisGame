@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: 
 /// MetaprogressionManager handles persistent player progression,
 /// such as unlocked features, goals, and saved game data.
 /// It is separate from in-run logic and tracks long-term progress.

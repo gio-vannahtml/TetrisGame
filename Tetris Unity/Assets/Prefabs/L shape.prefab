@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8965454371581986898}
   m_Layer: 0
   m_Name: blueStone (1)
-  m_TagString: Untagged
+  m_TagString: BlueColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8918110730912786537}
   m_Layer: 0
   m_Name: blueStone
-  m_TagString: Untagged
+  m_TagString: BlueColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 941387669585389843}
   m_Layer: 0
   m_Name: blueStone (3)
-  m_TagString: Untagged
+  m_TagString: BlueColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 6823587436951489580}
   m_Layer: 0
   m_Name: blueStone (2)
-  m_TagString: Untagged
+  m_TagString: BlueColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

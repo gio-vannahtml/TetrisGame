@@ -13,6 +13,13 @@ TagManager:
   - Unlucky
   - Price
   - Bomb
+  - YellowColored
+  - PurpleColored
+  - GreenColored
+  - RedColored
+  - OrangeColored
+  - BlueColored
+  - PinkColored
   layers:
   - Default
   - TransparentFX
