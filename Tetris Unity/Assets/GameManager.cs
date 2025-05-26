@@ -640,7 +640,7 @@ public class GameManager : MonoBehaviour
     if (pointsManager != null)
     {
         int finalCombos = totalLinesCleared; // or use your own combo logic
-        pointsManager.ShowGameOver(score, finalCombos);
+        pointsManager.ShowGameOverData(score, finalCombos);
     }
     else
     {
@@ -658,11 +658,22 @@ public class GameManager : MonoBehaviour
         hasWon = true;
         Debug.Log("You Win!");
 
+        if (pointsManager != null)
+        {
+            int finalCombos = totalLinesCleared; // or use your own combo logic
+            pointsManager.ShowWinData(score, finalCombos);
+        }
+        else
+        {
+            Debug.LogWarning("PointsManager not assigned in GameManager!");
+        }
+
         // Stop the game
         enabled = false; // Disable GameManager script
+
         if (winOverlay != null)
         {
-        winOverlay.SetActive(true);
+            winOverlay.SetActive(true);
         }
     }
     public void SetNextPieceToBomb()
