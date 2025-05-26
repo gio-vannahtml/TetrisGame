@@ -20,15 +20,15 @@ public class overlay : MonoBehaviour
         yield return null;
 
         overlay1.SetActive(true);
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(1.5f);
         overlay1.SetActive(false);
 
         overlay2.SetActive(true);
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(1.5f);
         overlay2.SetActive(false);
 
         overlay3.SetActive(true);
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(1.5f);
         overlay3.SetActive(false);
 
         gameStarted = true;
