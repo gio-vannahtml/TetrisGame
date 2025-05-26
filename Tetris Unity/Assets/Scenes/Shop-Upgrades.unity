@@ -3047,6 +3047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyText: {fileID: 1985047518}
   combosText: {fileID: 681654214}
+  upgradeMessageText: {fileID: 0}
   linesClearedCurrencyText: {fileID: 0}
 --- !u!4 &1500770672
 Transform:
@@ -4836,7 +4837,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1901096968}
         m_TargetAssemblyTypeName: MenuButtonHandler, Assembly-CSharp
         m_MethodName: LoadMenuScene
         m_Mode: 1
