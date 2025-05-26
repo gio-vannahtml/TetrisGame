@@ -563,7 +563,7 @@ public class GameManager : MonoBehaviour
 
         if (combosText != null && CurrencyManager.Instance != null)
         {
-            combosText.text = "Combos: " + CurrencyManager.Instance.combos;
+            combosText.text = CurrencyManager.Instance.combos.ToString();
         }
         else
         {
