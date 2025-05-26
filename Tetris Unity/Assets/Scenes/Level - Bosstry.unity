@@ -4105,7 +4105,7 @@ GameObject:
   - component: {fileID: 506447870}
   - component: {fileID: 506447869}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: GameOverPoints Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5064,7 +5064,7 @@ GameObject:
   - component: {fileID: 575582351}
   - component: {fileID: 575582350}
   m_Layer: 5
-  m_Name: PointsLabel
+  m_Name: CombosLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5934,7 +5934,7 @@ GameObject:
   - component: {fileID: 628256664}
   - component: {fileID: 628256663}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: WinCombos Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8952,7 +8952,7 @@ GameObject:
   - component: {fileID: 1016440766}
   - component: {fileID: 1016440765}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: GameOverCombos Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10717,7 +10717,7 @@ GameObject:
   - component: {fileID: 1237904759}
   - component: {fileID: 1237904758}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: WinPoints Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12322,8 +12322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c73cbcffa9d542bfb31af3076b6866e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsText: {fileID: 506447869}
-  combosText: {fileID: 1016440765}
+  GameOverpointsText: {fileID: 506447869}
+  GameOvercombosText: {fileID: 1016440765}
+  WinpointsText: {fileID: 1237904758}
+  WincombosText: {fileID: 628256663}
   walletPoints: 0
 --- !u!224 &1373057342
 RectTransform:

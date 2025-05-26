@@ -3001,7 +3001,7 @@ GameObject:
   - component: {fileID: 225958397}
   - component: {fileID: 225958396}
   m_Layer: 5
-  m_Name: PointsLabel
+  m_Name: CombosLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4428,7 +4428,7 @@ GameObject:
   - component: {fileID: 355640400}
   - component: {fileID: 355640399}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: Win Points Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4725,7 +4725,7 @@ GameObject:
   - component: {fileID: 375149370}
   - component: {fileID: 375149369}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: GameOver Combos Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6889,8 +6889,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c73cbcffa9d542bfb31af3076b6866e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsText: {fileID: 1830839011}
-  combosText: {fileID: 375149369}
+  GameOverpointsText: {fileID: 1830839011}
+  GameOvercombosText: {fileID: 375149369}
+  WinpointsText: {fileID: 355640399}
+  WincombosText: {fileID: 1005756300}
   walletPoints: 0
 --- !u!224 &538583209
 RectTransform:
@@ -11952,7 +11954,7 @@ GameObject:
   - component: {fileID: 961099766}
   - component: {fileID: 961099765}
   m_Layer: 5
-  m_Name: PointsLabel
+  m_Name: CombosLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12510,7 +12512,7 @@ GameObject:
   - component: {fileID: 1005756301}
   - component: {fileID: 1005756300}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: Win Combos Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15579,7 +15581,6 @@ MonoBehaviour:
   tractorEffectSprite: {fileID: 6124448547508259807, guid: f258e35794fc97846a584e4c384eeca0, type: 3}
   crusherEffectSprite: {fileID: 6310314394310168212, guid: f023e8f8c3d682043925995b1a732a1e, type: 3}
   tractorEffectPrefab: {fileID: 1275157084}
-  bombSprite: {fileID: -2613247888821195678, guid: 3e8970bf36f2d67498077f89b44cbb1c, type: 3}
   width: 10
   height: 20
   blockDestroyEffectPrefab: {fileID: 1275157084}
@@ -20778,7 +20779,7 @@ GameObject:
   - component: {fileID: 1830839012}
   - component: {fileID: 1830839011}
   m_Layer: 5
-  m_Name: Points Value
+  m_Name: GameOver Points Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
