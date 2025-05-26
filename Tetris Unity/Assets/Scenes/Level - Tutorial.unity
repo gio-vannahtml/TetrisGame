@@ -11171,7 +11171,7 @@ GameObject:
   - component: {fileID: 917592866}
   - component: {fileID: 917592865}
   m_Layer: 0
-  m_Name: new block_0
+  m_Name: NextBlockBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

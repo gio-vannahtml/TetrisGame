@@ -4784,7 +4784,7 @@ GameObject:
   - component: {fileID: 839513795}
   - component: {fileID: 839513794}
   m_Layer: 0
-  m_Name: new block_0
+  m_Name: NextBlockBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
