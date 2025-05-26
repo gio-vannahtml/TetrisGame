@@ -34,12 +34,23 @@ public class SoundManager : MonoBehaviour
 
     public void ToggleMusic(bool enabled)
     {
-        if (musicSource != null)
-            musicSource.mute = !enabled;
+        Debug.Log("ToggleMusic called with enabled: " + enabled);
+        if (musicSource == null)
+        {
+            Debug.LogWarning("Music source is not assigned.");
+            return;
+        }
+        musicSource.mute = !enabled;     
     }
 
     public void ToggleBrickSounds(bool enabled)
     {
+        Debug.Log("ToggleMusic called with enabled: " + enabled);
+        if (musicSource == null)
+        {
+            Debug.LogWarning("Music source is not assigned.");
+            return;
+        }
         if (sfxSource != null)
             sfxSource.mute = !enabled;
     }
