@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 40722529}
   - component: {fileID: 40722530}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: ScoreNumbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2509,7 +2509,7 @@ GameObject:
   - component: {fileID: 241208474}
   - component: {fileID: 241208473}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: CombosBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3237,7 +3237,7 @@ GameObject:
   - component: {fileID: 382664896}
   - component: {fileID: 382664897}
   m_Layer: 5
-  m_Name: LinesClearedText
+  m_Name: CombosNumbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3373,7 +3373,7 @@ GameObject:
   - component: {fileID: 394065065}
   - component: {fileID: 394065064}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: MovesBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7103,7 +7103,7 @@ GameObject:
   - component: {fileID: 729115837}
   - component: {fileID: 729115836}
   m_Layer: 5
-  m_Name: MoveText
+  m_Name: MoveNumbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7939,7 +7939,7 @@ GameObject:
   - component: {fileID: 796604217}
   - component: {fileID: 796604216}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ScoreBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14128,7 +14128,7 @@ GameObject:
   - component: {fileID: 1520575911}
   - component: {fileID: 1520575910}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15968,7 +15968,7 @@ GameObject:
   - component: {fileID: 1793060906}
   - component: {fileID: 1793060905}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: CombosText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16263,7 +16263,7 @@ GameObject:
   - component: {fileID: 1843627790}
   - component: {fileID: 1843627789}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MovesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17010,7 +17010,7 @@ GameObject:
   - component: {fileID: 1933085133}
   - component: {fileID: 1933085132}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: NextBlockText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17893,7 +17893,7 @@ GameObject:
   - component: {fileID: 1995569302}
   - component: {fileID: 1995569301}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
