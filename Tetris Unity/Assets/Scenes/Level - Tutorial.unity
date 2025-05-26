@@ -15607,7 +15607,7 @@ MonoBehaviour:
   movementFrequency: 0.8
   luckyBlockPrefab: {fileID: 6567874744071162135, guid: 49282fe1777c84e48af325b76b303829, type: 3}
   unluckyBlockPrefab: {fileID: 1679671867223730606, guid: 48eddc82a08e342468d6190bc1d99fb9, type: 3}
-  BombBlockPrefab: {fileID: 2925523931220217975, guid: 2c5530df6c81047ceb4a66d3e24b63b7, type: 3}
+  BombBlockPrefab: {fileID: 1679671867223730606, guid: 24fe49efb4572c7469af5a304aab008b, type: 3}
   pointsManager: {fileID: 538583208}
   score: 0
   scoreText: {fileID: 328752004}
