@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 2578887617150094285}
   m_Layer: 0
   m_Name: pinkStone
-  m_TagString: Untagged
+  m_TagString: PinkColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 6020751172130868739}
   m_Layer: 0
   m_Name: pinkStone (3)
-  m_TagString: Untagged
+  m_TagString: PinkColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 2592219086831528200}
   m_Layer: 0
   m_Name: pinkStone (2)
-  m_TagString: Untagged
+  m_TagString: PinkColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 3758776933367332445}
   m_Layer: 0
   m_Name: pinkStone (1)
-  m_TagString: Untagged
+  m_TagString: PinkColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

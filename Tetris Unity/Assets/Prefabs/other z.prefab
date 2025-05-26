@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2229745761361680792}
   m_Layer: 0
   m_Name: redStone (1)
-  m_TagString: Untagged
+  m_TagString: RedColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2414060109075781183}
   m_Layer: 0
   m_Name: redStone
-  m_TagString: Untagged
+  m_TagString: RedColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 1836968968115456241}
   m_Layer: 0
   m_Name: redStone (2)
-  m_TagString: Untagged
+  m_TagString: RedColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 5399604427852134231}
   m_Layer: 0
   m_Name: redStone (3)
-  m_TagString: Untagged
+  m_TagString: RedColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

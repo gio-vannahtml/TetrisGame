@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2813335692050315228}
   m_Layer: 0
   m_Name: greenStone (2)
-  m_TagString: Untagged
+  m_TagString: GreenColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 6460345493874647769}
   m_Layer: 0
   m_Name: greenStone (1)
-  m_TagString: Untagged
+  m_TagString: GreenColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 4063098401694894900}
   m_Layer: 0
   m_Name: greenStone
-  m_TagString: Untagged
+  m_TagString: GreenColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 829205382459094987}
   m_Layer: 0
   m_Name: greenStone (3)
-  m_TagString: Untagged
+  m_TagString: GreenColored
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
