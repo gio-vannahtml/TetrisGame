@@ -335,21 +335,6 @@ public class GameManager : MonoBehaviour
 
         // Get the first piece from the pool
         currentTetromino = Instantiate(piecePool[0], new Vector3(3, 18, 0), Quaternion.identity);
-        // If it's a bomb, set the bomb sprite
-        if (currentTetromino.CompareTag("Bomb"))
-        {
-            Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
-            foreach (Transform child in currentTetromino.transform)
-            {
-                SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-                if (sr != null && bombSprite != null)
-                {
-                    sr.sprite = bombSprite;
-                }
-            }
-
-        }
-
 
         // Check if the spawned tetromino is in a valid position
         if (!IsValidPosition())
@@ -681,17 +666,8 @@ public class GameManager : MonoBehaviour
         }
     }
     public void SetNextPieceToBomb()
-{
-    if (piecePool.Count > 0)
     {
-        // Replace the upcoming piece (first in pool) with bomb block
-        piecePool[0] = BombBlockPrefab;
-
-        // Update the preview to show the bomb block
-        ShowNextTetrominoPreview();
-
-        // Try to change preview block’s appearance to bomb sprite
-        if (nextTetrominoPreview != null)
+        if (piecePool.Count > 0)
         {
             // Replace the upcoming piece (first in pool) with bomb block
             piecePool[0] = BombBlockPrefab;
@@ -699,42 +675,12 @@ public class GameManager : MonoBehaviour
             // Update the preview to show the bomb block
             ShowNextTetrominoPreview();
 
-            // Try to change preview block’s appearance to bomb sprite
-            if (nextTetrominoPreview != null)
-            {
-                Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
-                foreach (Transform child in nextTetrominoPreview.transform)
-                {
-                    SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-                    if (sr != null && bombSprite != null)
-                    {
-                        sr.sprite = bombSprite;
-                    }
-                }
-            }
-
             Debug.Log("Next tetromino changed to Bomb Block!");
         }
         else
         {
             Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
-            Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
-            foreach (Transform child in nextTetrominoPreview.transform)
-            {
-                SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-                if (sr != null && bombSprite != null)
-                {
-                    sr.sprite = bombSprite;
-                }
-            }
         }
-
-        Debug.Log("Next tetromino changed to Bomb Block!");
     }
-    else
-    {
-        Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
-    }
-}
 
 }
