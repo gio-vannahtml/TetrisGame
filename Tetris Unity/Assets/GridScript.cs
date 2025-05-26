@@ -196,6 +196,7 @@ public class GridScript : MonoBehaviour
             }
         }
 
+        /*TODO: Saved for later, use sprites to show the crusher effect
         foreach (Transform block in blocksToCrush)
         {
             SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
@@ -205,7 +206,7 @@ public class GridScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        for (int x = 0; x < width; x++)
+         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
@@ -215,7 +216,7 @@ public class GridScript : MonoBehaviour
                     grid[x, y] = null;
                 }
             }
-        }
+        } */
 
         yield return new WaitForSeconds(delay);
 
