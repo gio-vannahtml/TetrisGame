@@ -3,14 +3,23 @@ using UnityEngine;
 
 public class CombinedOverlayManager : MonoBehaviour
 {
-    public GameObject[] tutorialOverlays;  // Manual overlays shown on click
-    public GameObject[] timedOverlays;     // Auto overlays shown with delay
+    public GameObject overlay1;
+    public GameObject overlay2;
+    public GameObject overlay3;
+
+    [Header("Manual Tutorial Overlays (Click to advance)")]
+    public GameObject[] tutorialOverlays;
+
+    [Header("Timed Overlays (Auto-play after tutorial)")]
+    public GameObject[] timedOverlays;
+
     private int tutorialIndex = 0;
     private bool tutorialDone = false;
+    public static bool gameStarted = false;
 
     void Start()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 0f; // Pause all movement including Tetromino falling
         if (tutorialOverlays.Length > 0)
         {
             ShowTutorialOverlay(0);
@@ -57,14 +66,24 @@ public class CombinedOverlayManager : MonoBehaviour
 
     IEnumerator PlayTimedOverlays()
     {
-        foreach (GameObject overlay in timedOverlays)
-        {
-            overlay.SetActive(true);
-            yield return new WaitForSecondsRealtime(2f);
-            overlay.SetActive(false);
-        }
+         yield return null;
 
-        Time.timeScale = 1f; // Resume the game
+        overlay1.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        overlay1.SetActive(false);
+
+        overlay2.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        overlay2.SetActive(false);
+
+        overlay3.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        overlay3.SetActive(false);
+
+        // Now resume gameplay after final overlay
+        Time.timeScale = 1f;
+        yield return null; // let physics and deltaTime stabilize
+        gameStarted = true;
         Debug.Log("Game starts!");
     }
 }

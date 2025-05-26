@@ -8,7 +8,7 @@ public class PauseManager : MonoBehaviour
     public Button pauseButton;
     public Button resumeButton;
     public Button restartButton;
-    public Button exitButton;  // ⬅ Add this
+    public Button exitButton;
 
     private bool isPaused = false;
 
