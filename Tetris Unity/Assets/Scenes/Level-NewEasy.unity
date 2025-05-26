@@ -3032,7 +3032,7 @@ GameObject:
   - component: {fileID: 551693806}
   - component: {fileID: 551693805}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MovesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4109,7 +4109,7 @@ GameObject:
   - component: {fileID: 771967790}
   - component: {fileID: 771967789}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: CombosText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5888,7 +5888,7 @@ GameObject:
   - component: {fileID: 1004569423}
   - component: {fileID: 1004569422}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10252,7 +10252,7 @@ GameObject:
   - component: {fileID: 1527506981}
   - component: {fileID: 1527506980}
   m_Layer: 5
-  m_Name: MoveText
+  m_Name: MoveNumbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10879,7 +10879,7 @@ GameObject:
   - component: {fileID: 1691282159}
   - component: {fileID: 1691282158}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: ScoreNumbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12200,7 +12200,7 @@ GameObject:
   - component: {fileID: 1877322985}
   - component: {fileID: 1877322984}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13784,7 +13784,7 @@ GameObject:
   - component: {fileID: 2116431327}
   - component: {fileID: 2116431326}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: NextblockText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
