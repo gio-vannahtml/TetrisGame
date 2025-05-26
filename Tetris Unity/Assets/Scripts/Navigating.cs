@@ -41,4 +41,9 @@ public class MenuButtonHandler : MonoBehaviour
         SceneManager.LoadScene("AllLevels");
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }
