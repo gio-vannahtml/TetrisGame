@@ -43,11 +43,53 @@ public class ShopManager : MonoBehaviour
 
             Debug.Log("Purchased: " + itemName);
 
-            // TODO: Apply the item effect here
+            // 🧠 Add the item to inventory
+            switch (itemName)
+            {
+                case "Bombastic":
+                    AddItemToInventory(InventoryItemUI.ItemType.Bombastic);
+                    break;
+                case "The Tractor":
+                    AddItemToInventory(InventoryItemUI.ItemType.Tractor);
+                    break;
+                case "The Crasher":
+                    AddItemToInventory(InventoryItemUI.ItemType.Crusher);
+                    break;
+                case "Color Popper":
+                    AddItemToInventory(InventoryItemUI.ItemType.ColorPopper);
+                    break;
+            }
         }
         else
         {
             Debug.Log("Not enough currency to buy: " + itemName);
+        }
+    }
+
+    private void AddItemToInventory(InventoryItemUI.ItemType type)
+    {
+        InventoryUI inventory = FindFirstObjectByType<InventoryUI>();
+        if (inventory != null)
+        {
+            inventory.AddItem(null, () =>
+            {
+                GridScript grid = FindFirstObjectByType<GridScript>();
+                switch (type)
+                {
+                    case InventoryItemUI.ItemType.Bombastic:
+                        grid.UseBombastic();
+                        break;
+                    case InventoryItemUI.ItemType.Crusher:
+                        grid.UseCrusher();
+                        break;
+                    case InventoryItemUI.ItemType.Tractor:
+                        grid.UseTractor();
+                        break;
+                    case InventoryItemUI.ItemType.ColorPopper:
+                        grid.UseColorPopper();
+                        break;
+                }
+            });
         }
     }
 

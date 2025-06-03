@@ -1431,8 +1431,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyText: {fileID: 1007449845}
   combosText: {fileID: 915431254}
-  upgradeMessageText: {fileID: 0}
-  linesClearedCurrencyText: {fileID: 0}
+  upgradeMessageText: {fileID: 1007449845}
+  linesClearedCurrencyText: {fileID: 915431254}
 --- !u!1 &471099393
 GameObject:
   m_ObjectHideFlags: 0
