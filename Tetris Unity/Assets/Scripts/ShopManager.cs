@@ -102,11 +102,11 @@ public class ShopManager : MonoBehaviour
             UpdateCurrencyUI(); // Refresh UI
         }
         else
-        {   
+        {
             Debug.Log("Not enough combos to buy: " + upgradeName);
             if (upgradeMessageText != null)
                 upgradeMessageText.text = "Not enough combos to buy: " + upgradeName;
-        }      
+        }
     }
 
     private void OnEnable()
@@ -175,9 +175,17 @@ public class ShopManager : MonoBehaviour
     {
         BuyUpgradeWithCombos(300, "The Tractor");
     }
-    
+
     public void BuyColorPUpgrade()
     {
         BuyUpgradeWithCombos(300, "Color Popper");
     }
+    
+    public void ResetAllProgress()
+    {
+        CurrencyManager.Instance.ResetRun();
+        CurrencyManager.Instance.ResetCombos();
+        FindFirstObjectByType<InventoryUI>()?.ClearAllSlots();
+    }
+
 }

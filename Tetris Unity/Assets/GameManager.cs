@@ -621,46 +621,64 @@ public class GameManager : MonoBehaviour
 
     // Indicate that the game has ended when there are no moves remaining
     void EndGame()
-{
-    Debug.Log("Game Over!");
-    enabled = false;
+    {
+        int finalCombos = totalLinesCleared;
 
-    if (SoundManager.Instance != null)
-    {
-        // SoundManager.Instance.PlayGameOverSound();
-    }
+        pointsManager.ShowWinData(score, finalCombos);
 
-    if (score > PlayerPrefs.GetInt("HighScore", 0))
-    {
-        PlayerPrefs.SetInt("HighScore", score);
-        PlayerPrefs.Save();
-        Debug.Log("New high score: " + score);
-    }
+        pointsManager.AddToWallet(score); // points collected
+        CurrencyManager.Instance.AddCurrency(score);
+        CurrencyManager.Instance.SetCombos(finalCombos);
 
-    if (pointsManager != null)
-    {
-        int finalCombos = totalLinesCleared; // or use your own combo logic
-        pointsManager.ShowGameOverData(score, finalCombos);
-    }
-    else
-    {
-        Debug.LogWarning("PointsManager not assigned in GameManager!");
-    }
 
-    if (gameOverOverlay != null)
-    {
-        gameOverOverlay.SetActive(true);
+        Debug.Log("Game Over!");
+        enabled = false;
+
+        if (SoundManager.Instance != null)
+        {
+            // SoundManager.Instance.PlayGameOverSound();
+        }
+
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
+            Debug.Log("New high score: " + score);
+        }
+
+        if (pointsManager != null)
+        {
+            finalCombos = totalLinesCleared; // or use your own combo logic
+            pointsManager.ShowGameOverData(score, finalCombos);
+        }
+        else
+        {
+            Debug.LogWarning("PointsManager not assigned in GameManager!");
+        }
+
+        if (gameOverOverlay != null)
+        {
+            gameOverOverlay.SetActive(true);
+        }
     }
-}
 
     void WinGame()
     {
+        int finalCombos = totalLinesCleared;
+
+        pointsManager.ShowWinData(score, finalCombos);
+
+        pointsManager.AddToWallet(score); // points collected
+        CurrencyManager.Instance.AddCurrency(score);
+        CurrencyManager.Instance.SetCombos(finalCombos);
+
+
         hasWon = true;
         Debug.Log("You Win!");
 
         if (pointsManager != null)
         {
-            int finalCombos = totalLinesCleared; // or use your own combo logic
+            finalCombos = totalLinesCleared; // or use your own combo logic
             pointsManager.ShowWinData(score, finalCombos);
         }
         else

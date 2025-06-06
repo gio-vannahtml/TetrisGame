@@ -2,9 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
+    public TextMeshProUGUI inventoryCountText; // assign in Inspector
+    private int totalItems = 0;
+
     [Header("Assign your 4 item buttons (top to bottom):")]
     public List<Button> itemSlots = new List<Button>();
 
@@ -23,19 +27,26 @@ public class InventoryUI : MonoBehaviour
 
         Button slot = itemSlots[currentSlot];
 
-        // Set icon
-        Image iconImage = slot.transform.Find("Icon")?.GetComponent<Image>();
-        if (iconImage != null)
+        if (icon != null)
         {
-            iconImage.sprite = icon;
-            iconImage.enabled = true;
+            Image iconImage = slot.transform.Find("Icon")?.GetComponent<Image>();
+            if (iconImage != null)
+            {
+                iconImage.sprite = icon;
+                iconImage.enabled = true;
+            }
         }
 
-        // Set click behavior
         slot.onClick.RemoveAllListeners();
         slot.onClick.AddListener(() => onClick.Invoke());
 
         currentSlot++;
+        totalItems++;
+
+        if (inventoryCountText != null)
+        {
+            inventoryCountText.text = "Items: " + totalItems;
+        }
     }
 
     /// <summary>
