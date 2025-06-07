@@ -13495,6 +13495,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060507911}
   m_CullTransparentMesh: 1
+--- !u!1 &2070722423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2070722425}
+  - component: {fileID: 2070722424}
+  m_Layer: 0
+  m_Name: FloatingTextManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2070722424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070722423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e082afde6917941b54e32926126b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatingTextPrefab: {fileID: 9167474626029261830, guid: 658528214bbf637479e586f5e70f8102, type: 3}
+  floatSpeed: 1
+  fadeTime: 1
+  scaleMultiplier: 1.2
+  pointsColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  comboColor: {r: 1, g: 0.5, b: 0, a: 1}
+  multiplierColor: {r: 0, g: 1, b: 0.5, a: 1}
+--- !u!4 &2070722425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070722423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.847322, y: 10.992742, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2089019313
 GameObject:
   m_ObjectHideFlags: 0
@@ -13833,3 +13884,4 @@ SceneRoots:
   - {fileID: 2027992356}
   - {fileID: 775359736}
   - {fileID: 84472976}
+  - {fileID: 2070722425}

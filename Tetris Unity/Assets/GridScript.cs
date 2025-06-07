@@ -103,16 +103,47 @@ public class GridScript : MonoBehaviour
     public int CheckForLines()
     {
         int linesCleared = 0;
+        int consecutiveLines = 0;
+        float yPos = 0;
+        
         for (int y = 0; y < height; y++)
         {
             if (LineIsFull(y))
             {
+                // Track the position for the floating text
+                if (consecutiveLines == 0) {
+                    yPos = y;
+                }
+                
                 DeleteLine(y);
                 linesCleared++;
+                consecutiveLines++;
                 DecreaseRowsAbove(y + 1);
                 y--;
             }
         }
+        
+        // Show floating text if lines were cleared
+        if (consecutiveLines > 0 && FloatingTextManager.Instance != null)
+        {
+            // Calculate points based on your game's scoring system
+            int basePoints = 100;
+            int multiplier = consecutiveLines;
+            int points = basePoints * multiplier;
+            
+            // World position where lines were cleared (center of the grid)
+            Vector3 position = transform.position + new Vector3(width / 2f, yPos, -1);
+            
+            // Show the floating text
+            FloatingTextManager.Instance.ShowPointsText(position, points, multiplier);
+            
+            // Show combo text if there's a combo of multiple lines
+            if (consecutiveLines >= 2)
+            {
+                FloatingTextManager.Instance.ShowComboText(position, consecutiveLines);
+            }
+        }
+        
         return linesCleared;
     }
 
