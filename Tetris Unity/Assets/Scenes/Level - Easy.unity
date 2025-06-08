@@ -408,8 +408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossManager: {fileID: 0}
   bossPool: {fileID: 0}
-  bossManager: {fileID: 0}
-  bossPool: {fileID: 0}
 --- !u!4 &383900721
 Transform:
   m_ObjectHideFlags: 0
@@ -600,6 +598,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseOverlay: {fileID: 0}
   pauseButton: {fileID: 425533295}
+  resumeButton: {fileID: 0}
+  restartButton: {fileID: 0}
+  exitButton: {fileID: 0}
 --- !u!224 &751206490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1156,6 +1157,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Lucky
       objectReference: {fileID: 0}
+    - target: {fileID: 8063041346691384888, guid: 49282fe1777c84e48af325b76b303829, type: 3}
+      propertyPath: m_TagString
+      value: Lucky
+      objectReference: {fileID: 0}
     - target: {fileID: 8579559214082152430, guid: 49282fe1777c84e48af325b76b303829, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1214,14 +1219,19 @@ MonoBehaviour:
   movementFrequency: 0.8
   luckyBlockPrefab: {fileID: 1018724005}
   unluckyBlockPrefab: {fileID: 1816949748}
+  BombBlockPrefab: {fileID: 0}
+  pointsManager: {fileID: 0}
   score: 0
   scoreText: {fileID: 773128521}
   totalLinesCleared: 0
   linesClearedText: {fileID: 1729047925}
+  combosText: {fileID: 0}
   maxMoves: 250
   moveText: {fileID: 1083572522}
   nextPiecePreviewLocation: {fileID: 1919684921}
   ghostMaterial: {fileID: 2100000, guid: 62612afca3e00234e918c68f872bbf28, type: 2}
+  winOverlay: {fileID: 0}
+  gameOverOverlay: {fileID: 0}
 --- !u!114 &995211951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1234,9 +1244,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcb3f4fe57ba944ead495c66e790f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tractorEffectSprite: {fileID: 0}
+  crusherEffectSprite: {fileID: 0}
+  tractorEffectPrefab: {fileID: 0}
+  bombSprite: {fileID: 0}
   width: 10
   height: 20
   blockDestroyEffectPrefab: {fileID: 1249386172}
+  gameManager: {fileID: 0}
 --- !u!212 &995211952
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1351,6 +1366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: 0
+  combos: 0
 --- !u!4 &1011248434
 Transform:
   m_ObjectHideFlags: 0
@@ -3189,6 +3205,10 @@ PrefabInstance:
     - target: {fileID: 2021108286630805620, guid: 48eddc82a08e342468d6190bc1d99fb9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2971265618351573446, guid: 48eddc82a08e342468d6190bc1d99fb9, type: 3}
+      propertyPath: m_TagString
+      value: Unlucky
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -4796,6 +4796,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Lucky
       objectReference: {fileID: 0}
+    - target: {fileID: 8063041346691384888, guid: 49282fe1777c84e48af325b76b303829, type: 3}
+      propertyPath: m_TagString
+      value: Lucky
+      objectReference: {fileID: 0}
     - target: {fileID: 8579559214082152430, guid: 49282fe1777c84e48af325b76b303829, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -14284,6 +14288,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2971265618351573446, guid: 48eddc82a08e342468d6190bc1d99fb9, type: 3}
+      propertyPath: m_TagString
+      value: Unlucky
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16284,7 +16292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb598acdc689cf40b356c3de8235099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsManager: {fileID: 1373057341}
   Tetrominos:
   - {fileID: 1953895206}
   - {fileID: 1839974626}
@@ -16299,6 +16306,7 @@ MonoBehaviour:
   luckyBlockPrefab: {fileID: 568037961}
   unluckyBlockPrefab: {fileID: 1592128983}
   BombBlockPrefab: {fileID: 1106416168}
+  pointsManager: {fileID: 1373057341}
   score: 0
   scoreText: {fileID: 40722530}
   totalLinesCleared: 0

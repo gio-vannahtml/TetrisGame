@@ -430,23 +430,22 @@ public class GameManager : MonoBehaviour
         return true;
     }
     
-    void HandleSpecialBlock(GameObject block)
-    {
-        if (block.CompareTag("Lucky"))
-        {
-            score += 500; // Bonus
-            remainingMoves += 3; // Extra moves
-            Debug.Log("Lucky block landed! Bonus awarded.");
-        }
-        else if (block.CompareTag("Unlucky"))
-        {
-            score -= 200; // Penalty
-            remainingMoves = Mathf.Max(0, remainingMoves - 5); // Lose moves
-            Debug.Log("Unlucky block landed! Penalty applied.");
-        }
+  void HandleSpecialBlock(GameObject block)
+{
+    // Lucky/Unlucky effects now trigger on line clear only
+    if (block.CompareTag("Lucky") || block.CompareTag("Unlucky"))
+        return;
 
-        UpdateMoveText();
+    // Bomb logic is still handled on drop
+    if (block.CompareTag("Bomb"))
+    {
+        // You might already trigger bomb effects elsewhere,
+        // so this can stay empty or be removed if unneeded.
     }
+
+    UpdateMoveText();
+}
+
 
     public void MoveBoss(Vector3 direction)
     {
@@ -681,17 +680,8 @@ public class GameManager : MonoBehaviour
         }
     }
     public void SetNextPieceToBomb()
-{
-    if (piecePool.Count > 0)
     {
-        // Replace the upcoming piece (first in pool) with bomb block
-        piecePool[0] = BombBlockPrefab;
-
-        // Update the preview to show the bomb block
-        ShowNextTetrominoPreview();
-
-        // Try to change preview block’s appearance to bomb sprite
-        if (nextTetrominoPreview != null)
+        if (piecePool.Count > 0)
         {
             // Replace the upcoming piece (first in pool) with bomb block
             piecePool[0] = BombBlockPrefab;
@@ -702,7 +692,32 @@ public class GameManager : MonoBehaviour
             // Try to change preview block’s appearance to bomb sprite
             if (nextTetrominoPreview != null)
             {
-                Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
+                // Replace the upcoming piece (first in pool) with bomb block
+                piecePool[0] = BombBlockPrefab;
+
+                // Update the preview to show the bomb block
+                ShowNextTetrominoPreview();
+
+                // Try to change preview block’s appearance to bomb sprite
+                if (nextTetrominoPreview != null)
+                {
+                    Sprite bombSprite = FindFirstObjectByType<GridScript>().bombSprite;
+                    foreach (Transform child in nextTetrominoPreview.transform)
+                    {
+                        SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+                        if (sr != null && bombSprite != null)
+                        {
+                            sr.sprite = bombSprite;
+                        }
+                    }
+                }
+
+                Debug.Log("Next tetromino changed to Bomb Block!");
+            }
+            else
+            {
+                Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
+                Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
                 foreach (Transform child in nextTetrominoPreview.transform)
                 {
                     SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
@@ -718,23 +733,22 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
-            Sprite bombSprite = FindObjectOfType<GridScript>().bombSprite;
-            foreach (Transform child in nextTetrominoPreview.transform)
-            {
-                SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-                if (sr != null && bombSprite != null)
-                {
-                    sr.sprite = bombSprite;
-                }
-            }
         }
+    }
+public void ApplyLuckyEffect()
+{
+    score += 500;
+    remainingMoves += 3;
+    UpdateMoveText();
+    Debug.Log("Lucky block cleared! Bonus awarded.");
+}
 
-        Debug.Log("Next tetromino changed to Bomb Block!");
-    }
-    else
-    {
-        Debug.LogWarning("Piece pool is empty, cannot set next piece to bomb!");
-    }
+public void ApplyUnluckyEffect()
+{
+    score -= 200;
+    remainingMoves = Mathf.Max(0, remainingMoves - 5);
+    UpdateMoveText();
+    Debug.Log("Unlucky block cleared! Penalty applied.");
 }
 
 }

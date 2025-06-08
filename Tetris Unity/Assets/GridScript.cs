@@ -126,27 +126,45 @@ public class GridScript : MonoBehaviour
         return true;
     }
 
-    void DeleteLine(int y)
+   void DeleteLine(int y)
+{
+    for (int x = 0; x < width; x++)
     {
-        for (int x = 0; x < width; x++)
+        if (grid[x, y] != null)
         {
-            if (grid[x, y] != null)
-            {
-                Transform block = grid[x, y];
-                Vector3 spawnPos = block.position;
+            Transform block = grid[x, y];
+            Vector3 spawnPos = block.position;
 
+            // 🧠 Check and apply effects BEFORE destroying the block
+            if (block.CompareTag("Lucky"))
+            {
+                GameManager.Instance.ApplyLuckyEffect();
+            }
+            else if (block.CompareTag("Unlucky"))
+            {
+                GameManager.Instance.ApplyUnluckyEffect();
+            }
+
+            // 💥 Optional particle effect
+            if (blockDestroyEffectPrefab != null)
+            {
                 GameObject effect = Instantiate(blockDestroyEffectPrefab, spawnPos, Quaternion.identity);
                 effect.transform.localScale = Vector3.one * 1.5f;
 
                 ParticleSystem ps = effect.GetComponent<ParticleSystem>();
                 if (ps != null) ps.Play();
 
-                grid[x, y] = null;
                 Destroy(effect, 1f);
-                Destroy(block.gameObject, 0.01f);
             }
+
+            // 🧹 Clean up block
+            grid[x, y] = null;
+            Destroy(block.gameObject, 0.01f);
         }
     }
+}
+
+
 
     void DecreaseRowsAbove(int startRow)
     {
