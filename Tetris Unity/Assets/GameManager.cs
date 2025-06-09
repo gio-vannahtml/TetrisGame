@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour
         if (!gameReady)
         return;
 
-        // 🧠 Modify speed if boss is active
+        // Modify speed if boss is active
         if (BossManager.Instance != null && BossManager.Instance.IsBossActive)
         {
             if (BossManager.Instance.CurrentBoss.Type == Boss.BossType.SpeedUp)
@@ -526,7 +526,7 @@ public class GameManager : MonoBehaviour
         UpdateLineCounter();
         Debug.Log(score);
 
-        // ✅ Check win condition here
+        // Check win condition here
         if (!hasWon && score >= winScore)
         {
             WinGame();
