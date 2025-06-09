@@ -69,28 +69,22 @@ public class ShopManager : MonoBehaviour
     private void AddItemToInventory(InventoryItemUI.ItemType type)
     {
         InventoryUI inventory = FindFirstObjectByType<InventoryUI>();
-        if (inventory != null)
-        {
-            inventory.AddItem(null, () =>
-            {
-                GridScript grid = FindFirstObjectByType<GridScript>();
-                switch (type)
-                {
-                    case InventoryItemUI.ItemType.Bombastic:
-                        grid.UseBombastic();
-                        break;
-                    case InventoryItemUI.ItemType.Crusher:
-                        grid.UseCrusher();
-                        break;
-                    case InventoryItemUI.ItemType.Tractor:
-                        grid.UseTractor();
-                        break;
-                    case InventoryItemUI.ItemType.ColorPopper:
-                        grid.UseColorPopper();
-                        break;
-                }
-            });
-        }
+        if (inventory == null) return;
+
+        // Find the correct slot for this item type
+        var slot = inventory.itemSlots.Find(s => s.itemType == type);
+        if (slot == null) return;
+
+        // Get or add InventoryItemUI component to the button
+        InventoryItemUI item = slot.button.GetComponent<InventoryItemUI>();
+        if (item == null)
+            item = slot.button.gameObject.AddComponent<InventoryItemUI>();
+
+        item.itemType = type;
+        item.gridScript = FindFirstObjectByType<GridScript>();
+
+        // Assuming you don't have a sprite or action to provide, pass null for those, and use the type variable
+        inventory.AddItem(null, null, type);
     }
 
     public void BuyUpgradeWithCombos(int cost, string upgradeName)
@@ -143,22 +137,42 @@ public class ShopManager : MonoBehaviour
 
     public void BuyBombastic()
     {
-        BuyItem(300, "Bombastic");
+        if (CurrencyManager.Instance.currency >= 300)
+        {
+            CurrencyManager.Instance.SpendCurrency(300);
+            AddItemToInventory(InventoryItemUI.ItemType.Bombastic);
+            Debug.Log("Purchased Bombastic");
+        }
     }
 
     public void BuyTractor()
     {
-        BuyItem(400, "The Tractor");
+        if (CurrencyManager.Instance.currency >= 400)
+        {
+            CurrencyManager.Instance.SpendCurrency(400);
+            AddItemToInventory(InventoryItemUI.ItemType.Tractor);
+            Debug.Log("Purchased Tractor");
+        }
     }
 
     public void BuyCrasher()
     {
-        BuyItem(500, "The Crasher");
+        if (CurrencyManager.Instance.currency >= 500)
+        {
+            CurrencyManager.Instance.SpendCurrency(500);
+            AddItemToInventory(InventoryItemUI.ItemType.Crusher);
+            Debug.Log("Purchased Crusher");
+        }
     }
 
     public void BuyColorPopper()
     {
-        BuyItem(600, "Color Popper");
+        if (CurrencyManager.Instance.currency >= 600)
+        {
+            CurrencyManager.Instance.SpendCurrency(600);
+            AddItemToInventory(InventoryItemUI.ItemType.ColorPopper);
+            Debug.Log("Purchased Color Popper");
+        }
     }
 
     public void BuyBombasticUpgrade()

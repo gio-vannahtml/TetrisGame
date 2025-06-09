@@ -9,6 +9,12 @@ public class InventoryItemUI : MonoBehaviour
 
     public void UseItem()
     {
+        if (gridScript == null)
+        {
+            Debug.LogWarning("GridScript is not assigned!");
+            return;
+        }
+
         switch (itemType)
         {
             case ItemType.Bombastic:
@@ -18,14 +24,19 @@ public class InventoryItemUI : MonoBehaviour
                 gridScript.UseCrusher();
                 break;
             case ItemType.Tractor:
-                gridScript.UseTractor(); // 💡 This is the only line for Tractor
+                gridScript.UseTractor();
                 break;
             case ItemType.ColorPopper:
                 gridScript.UseColorPopper();
                 break;
         }
 
+        InventoryUI inventory = FindFirstObjectByType<InventoryUI>();
+        if (inventory != null)
+        {
+            inventory.RemoveItem(itemType); // update counter
+        }
+
         Debug.Log($"{itemType} used!");
-        Destroy(gameObject); // Optional: remove item after use
     }
 }
