@@ -864,67 +864,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258225490}
   m_CullTransparentMesh: 1
---- !u!1 &314152363
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 314152365}
-  - component: {fileID: 314152364}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &314152364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314152363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb598acdc689cf40b356c3de8235099, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Tetrominos: []
-  movementFrequency: 0.8
-  luckyBlockPrefab: {fileID: 0}
-  unluckyBlockPrefab: {fileID: 0}
-  BombBlockPrefab: {fileID: 0}
-  pointsManager: {fileID: 0}
-  score: 0
-  scoreText: {fileID: 0}
-  totalLinesCleared: 0
-  linesClearedText: {fileID: 0}
-  combosText: {fileID: 0}
-  maxMoves: 100
-  moveText: {fileID: 0}
-  nextPiecePreviewLocation: {fileID: 0}
-  ghostMaterial: {fileID: 0}
-  winOverlay: {fileID: 0}
-  gameOverOverlay: {fileID: 0}
---- !u!4 &314152365
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314152363}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.4453, y: 4.0588, z: 0}
-  m_LocalScale: {x: 4.338555, y: 1.3104273, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &335366130
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,8 +4408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a970eefa4fe6fb74d9fa770837799b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currency: 2147483647
-  combos: 2147483647
+  currency: 0
+  combos: 0
 --- !u!4 &1756244749
 Transform:
   m_ObjectHideFlags: 0
@@ -5269,7 +5208,6 @@ SceneRoots:
   - {fileID: 1431304904}
   - {fileID: 1756244749}
   - {fileID: 438495103}
-  - {fileID: 314152365}
   - {fileID: 2098438724}
   - {fileID: 197929776}
   - {fileID: 2145074215}
