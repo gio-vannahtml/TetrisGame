@@ -72,7 +72,10 @@ public class ShopManager : MonoBehaviour
         if (inventory == null) return;
 
         // Find the correct slot for this item type
-        var slot = inventory.itemSlots.Find(s => s.itemType == type);
+        var slot = inventory.itemSlots.Find(s => {
+            var itemUI = s.button.GetComponent<InventoryItemUI>();
+            return itemUI != null && itemUI.itemType == type;
+        });
         if (slot == null) return;
 
         // Get or add InventoryItemUI component to the button
